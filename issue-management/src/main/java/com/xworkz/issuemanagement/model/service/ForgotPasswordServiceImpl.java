@@ -2,7 +2,7 @@ package com.xworkz.issuemanagement.model.service;
 
 
 import com.xworkz.issuemanagement.dto.SignUpDTO;
-import com.xworkz.issuemanagement.model.repository.ResetPasswordRepo;
+import com.xworkz.issuemanagement.model.repository.ForgotPasswordRepo;
 import com.xworkz.issuemanagement.util.EmailPasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,26 +10,26 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ResetPasswordServiceImpl implements ResetPasswordService {
+public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 
     @Autowired
-    private ResetPasswordRepo resetPasswordRepo;
+    private ForgotPasswordRepo forgotPasswordRepo;
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender;  //MailConfiguration
 
 
     @Autowired
-    private MailService mailService;
+    private MailService mailService; //
 
     @Override
     public boolean resetPassword(String email) {
         System.out.println("resetPassword method running in ResetPasswordServiceImpl");
 
-        SignUpDTO user = resetPasswordRepo.findByEmail(email);
+        SignUpDTO user = forgotPasswordRepo.findByEmail(email);
         if (user != null) {
             String newPassword = EmailPasswordGenerator.generatePassword();
-            resetPasswordRepo.updatePassword(email, newPassword);
+            forgotPasswordRepo.updatePassword(email, newPassword);
 
             // Reset failed attempts
             mailService.resetFailedAttempts(email);

@@ -30,7 +30,7 @@
 
         <a class="navbar-brand  text-white" href="SignIn.jsp"><b>SignIn</b></a>
 
-         <a class="navbar-brand  text-white" href="ResetPassword.jsp"><b>ResetPassword</b></a>
+         <a class="navbar-brand  text-white" href="ForgotPassword.jsp"><b></b></a>
 
 
 

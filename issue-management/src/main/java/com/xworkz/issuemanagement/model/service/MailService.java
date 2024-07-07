@@ -24,7 +24,7 @@ public interface MailService {
     void lockAccount(String email);
 
 
-    //to unlock when i new password generate
+    //to unlock when I new password generate
     void unlockAccount(String email);
 
 }

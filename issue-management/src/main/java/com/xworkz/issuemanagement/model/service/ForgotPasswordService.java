@@ -1,6 +1,6 @@
 package com.xworkz.issuemanagement.model.service;
 
-public interface ResetPasswordService {
+public interface ForgotPasswordService {
 
     boolean resetPassword(String email);
 

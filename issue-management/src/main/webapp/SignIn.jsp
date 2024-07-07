@@ -6,9 +6,18 @@
 <meta charset="ISO-8859-1">
 <title>Login Page</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="/IssuesManagement/js/login.js"></script>
+
+<!--<script src="/issue-management/js/login.js"></script>--!>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<style>
+        .oval-btn {
+            border-radius: 50px; /* Adjust the value as needed for an oval shape */
+            padding: 10px 20px;  /* Adjust the padding to control the button size */
+        }
+    </style>
 
 
 <!--<style>
@@ -56,6 +65,7 @@
 
 
 
+
         <form action="sign-in" method="post">
 
             <div class="row mb-3">
@@ -73,12 +83,13 @@
             </div>
 
 
- <div class="mb-3">
-                <a href="ResetPassword.jsp" class="link-primary">Forgot Password?</a>
+          <div class="mb-3">
+                <a href="ForgotPassword.jsp" class="link-primary">Forgot Password?</a>
             </div>
 
-            <div>
-                <input type="submit"  value="SignIn" class="btn btn-primary" id="signInButton" >
+
+            <div class="d-flex justify-content-center mt-3">
+                <input type="submit"  value="SignIn" class="btn btn-primary oval-btn" id="signInButton" >
             </div>
         </form>
 

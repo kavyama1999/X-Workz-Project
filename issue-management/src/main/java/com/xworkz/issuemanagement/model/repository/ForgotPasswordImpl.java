@@ -11,7 +11,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 @Repository
-public class ResetPasswordImpl implements ResetPasswordRepo {
+public class ForgotPasswordImpl implements ForgotPasswordRepo {
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;
@@ -34,7 +34,7 @@ public class ResetPasswordImpl implements ResetPasswordRepo {
         }
     }
 
-    @Transactional
+    //@Transactional
     @Override
     public void updatePassword(String email, String newPassword) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();

@@ -1,129 +1,127 @@
 //package com.xworkz.issuemanagement.model.repository;
 //
-//import com.xworkz.issuemanagement.dto.SignUpDTO;
-//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Repository;
-//
-//import javax.persistence.*;
-//import java.util.List;
+//import javax.persistence.EntityManager;
+//import javax.persistence.PersistenceContext;
+//import javax.transaction.Transactional;
 //
 //@Repository
-//public class MailRepoImpl implements MailRepo {
+//public class PasswordResetRepoImpl implements PasswordResetRepo {
 //
-//
-//    @Autowired
-//    private EntityManagerFactory entityManagerFactory;
-//
+//    @PersistenceContext
+//    private EntityManager entityManager;
 //
 //    @Override
-//    public SignUpDTO findByEmailAndPassword(String email, String password) {
-//
-//
-//        EntityManager entityManager = entityManagerFactory.createEntityManager();
-//        EntityTransaction entityTransaction = entityManager.getTransaction();
-//
-//        try {
-//            entityTransaction.begin();
-//            String query = "SELECT s FROM SignUpDTO s where s.email=:email AND s.password=:password";
-//            Query query1 = entityManager.createQuery(query);
-//            query1.setParameter("email", email);
-//            query1.setParameter("password", password);
-//            SignUpDTO signUpDTO = (SignUpDTO) query1.getSingleResult();
-//            System.out.println(signUpDTO);
-//            entityTransaction.commit();
-//            return signUpDTO;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            entityTransaction.rollback();
-//        } finally {
-//            entityManager.close();
-//        }
-//        return null;
-//    }
-//
-//
-//    //pruthvi
-//    @Override
-//    public SignUpDTO findByEmail(String email) {
-//        EntityManager entityManager = entityManagerFactory.createEntityManager();
-//        try {
-//            Query query = entityManager.createQuery("select c from SignUpDTO c where email=:email");
-//            query.setParameter("email", email);
-//
-//            List<SignUpDTO> resultList = query.getResultList();
-//            if (resultList.isEmpty()) {
-//                return null;
-//            } else if (resultList.size() == 1) {
-//                return resultList.get(0);
-//            } else {
-//                throw new NonUniqueResultException("Multiple results found for email: " + email);
-//            }
-//        } catch (NoResultException e) {
-//            return null;
-//        } finally {
-//            entityManager.close();
-//        }
-//
+//    public boolean emailExists(String email) {
+//        // Implementation to check if the email exists in the database
+//        // Example:
+//        Long count = (Long) entityManager.createQuery("SELECT COUNT(u) FROM User u WHERE u.email = :email")
+//                .setParameter("email", email)
+//                .getSingleResult();
+//        return count > 0;
 //    }
 //
 //    @Override
-//    public boolean update(SignUpDTO signUpDto) {
-//        EntityManager entityManager = entityManagerFactory.createEntityManager();
-//        EntityTransaction tx = entityManager.getTransaction();
+//    public boolean verifyOldPassword(String email, String oldPassword) {
+//        // Implementation to verify the old password
+//        // Example:
+//        Long count = (Long) entityManager.createQuery("SELECT COUNT(u) FROM User u WHERE u.email = :email AND u.password = :password")
+//                .setParameter("email", email)
+//                .setParameter("password", oldPassword)
+//                .getSingleResult();
+//        return count > 0;
+//    }
 //
-//        try {
-//            tx.begin();
-//            entityManager.merge(signUpDto);
-//            tx.commit();
-//        } catch (PersistenceException persistenceException) {
-//            persistenceException.printStackTrace();
-//            tx.rollback();
-//            return false;
-//        } finally {
-//            entityManager.close();
-//        }
-//        return true;
+//    @Override
+//    @Transactional
+//    public void updatePassword(String email, String newPassword) {
+//        // Implementation to update the password
+//        // Example:
+//        entityManager.createQuery("UPDATE User u SET u.password = :password WHERE u.email = :email")
+//                .setParameter("password", newPassword)
+//                .setParameter("email", email)
+//                .executeUpdate();
 //    }
 //}
+//////////////////
+
+//package com.xworkz.issuemanagement.controller;
+
+//import com.xworkz.issuemanagement.model.service.PasswordResetService;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
 //
-///////////////////////
-
-
-
-//@Service
-//public class ResetPasswordServiceImpl implements ResetPasswordService {
+//@Controller
+//@RequestMapping("/")
+//public class PasswordResetController {
 //
 //    @Autowired
-//    private ResetPasswordRepo resetPasswordRepo;
-////
-////    @Autowired
+//    private PasswordResetService passwordResetService;
+//
+//    public PasswordResetController() {
+//        System.out.println("No param constructor created for PasswordResetController...");
+//    }
+//
+//    @PostMapping("reset-password")
+//    public String passwordReset(Model model, String email, String oldPassword, String newPassword, String confirmPassword) {
+//        boolean resetSuccessful = passwordResetService.resetPassword(email, oldPassword, newPassword, confirmPassword);
+//        if (resetSuccessful) {
+//            model.addAttribute("passwordResetMessage", "Password reset successful");
+//        } else {
+//            model.addAttribute("passwordResetError", "Failed to reset password. Please check your details and try again.");
+//        }
+//        return "PasswordReset";
+//    }
+//}
+
+
+
+//////////////////passwordReset impl
+
+
+//package com.xworkz.issuemanagement.model.service;
+//
+//import com.xworkz.issuemanagement.model.repository.PasswordResetRepo;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.mail.SimpleMailMessage;
+//import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.stereotype.Service;
+//
+//@Service
+//public class PasswordResetServiceImpl implements PasswordResetService {
+//
+//    @Autowired
+//    private PasswordResetRepo passwordResetRepo;
+
+//    @Autowired
 //    private JavaMailSender javaMailSender;
 //
-//    @Autowired
-//    private MailService mailService;
+//    @Override
+//    public boolean resetPassword(String email, String oldPassword, String newPassword, String confirmPassword) {
+//        if (!passwordResetRepo.emailExists(email)) {
+//            return false;
+//        }
+//        if (!passwordResetRepo.verifyOldPassword(email, oldPassword)) {
+//            return false;
+//        }
+//        if (!newPassword.equals(confirmPassword)) {
+//            return false;
+//        }
+//        passwordResetRepo.updatePassword(email, newPassword);
+//        sendPasswordEmail(email, "Password Reset Successful", "Your password has been successfully reset.");
+//        return true;
+//    }
 //
 //    @Override
-//    public boolean resetPassword(String email) {
-//        System.out.println("resetPassword method running in ResetPasswordServiceImpl");
-//
-//        SignUpDTO user = resetPasswordRepo.findByEmail(email);
-//        if (user != null) {
-//            String newPassword = EmailPasswordGenerator.generatePassword();
-//            resetPasswordRepo.updatePassword(email, newPassword);
-//
-//            // Reset failed attempts
-//            mailService.resetFailedAttempts(email);
-//
-//            SimpleMailMessage message = new SimpleMailMessage();
-//            message.setTo(email);
-//            message.setSubject("Password Reset");
-//            message.setText("Your new password is: " + newPassword);
-//            javaMailSender.send(message);
-//
-//            return true;
-//        }
-//        return false;
+//    public void sendPasswordEmail(String toEmail, String subject, String body) {
+//        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+//        simpleMailMessage.setTo(toEmail);
+//        simpleMailMessage.setSubject(subject);
+//        simpleMailMessage.setText(body);
+//        simpleMailMessage.setFrom("kmsrcb@gmail.com");
+//        javaMailSender.send(simpleMailMessage);
 //    }
 //}
-//

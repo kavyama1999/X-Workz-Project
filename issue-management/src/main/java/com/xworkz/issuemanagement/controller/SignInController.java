@@ -3,9 +3,8 @@ package com.xworkz.issuemanagement.controller;
 
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 import com.xworkz.issuemanagement.model.service.MailService;
-import com.xworkz.issuemanagement.model.service.ResetPasswordService;
+import com.xworkz.issuemanagement.model.service.ForgotPasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +20,7 @@ public class SignInController {
     private MailService mailService;
 
     @Autowired
-    private ResetPasswordService resetPasswordService;
+    private ForgotPasswordService forgotPasswordService;
 
     public SignInController() {
         System.out.println("No parameters in SignInController.. ");
@@ -43,7 +42,9 @@ public class SignInController {
 
             mailService.resetFailedAttempts(email);
             model.addAttribute("wlcm", "Sign_In successful.Welcome, " + signUpDTO1.getFirstName());
-            return "WelcomePage";
+            //return "WelcomePage";
+            model.addAttribute("ProfilePageMessage", "Welcome To Issue Management System, " + signUpDTO1.getFirstName());
+            return "Profile";
         }
         else
 
@@ -78,13 +79,13 @@ public class SignInController {
 
     @PostMapping("forgot-password")
     public String resetPassword(@RequestParam String email, Model model) {
-        boolean success = resetPasswordService.resetPassword(email);
+        boolean success = forgotPasswordService.resetPassword(email);
         if (success) {
-            model.addAttribute("resetMessage", "A new password has been sent to your email.");
+            model.addAttribute("forgotPasswordMessage", "A new password has been sent to your email.");
         } else {
-            model.addAttribute("resetError", "Email address not found.");
+            model.addAttribute("forgotPasswordError", "Email address not found.");
         }
-        return "ResetPassword";
+        return "ForgotPassword";
     }
 }
 

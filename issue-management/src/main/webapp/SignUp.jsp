@@ -6,7 +6,18 @@
     <meta charset="ISO-8859-1">
     <title>Student Form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
     <script src="/issue-management/js/signup.js"></script>
+
+
+<style>
+        .oval-btn {
+            border-radius: 50px; /* Adjust the value as needed for an oval shape */
+            padding: 10px 20px;  /* Adjust the padding to control the button size */
+        }
+    </style>
+
 </head>
 <body>
     <nav class="navbar navbar-dark bg-dark">
@@ -92,9 +103,13 @@
 
 
                 <div>
-                    <input type="submit" id="submit" value="Apply"  >
+                <center>    <input type="submit" id="submit" value="Apply" class="btn btn-primary oval-btn" > </center>
                 </div>
 
+
+<div class="mb-3">
+        <center>  <p> Have already have account?     <a href="SignIn.jsp" class="link-primary"><strong>SignIn Here?</strong></a></p></center>
+            </div>
 
             </form>
 

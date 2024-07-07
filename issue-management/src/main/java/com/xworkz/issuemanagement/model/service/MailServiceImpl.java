@@ -23,7 +23,7 @@ public class MailServiceImpl implements MailService {
 
         //to send password to email
 
-
+//it is class of spring frameWork
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject(subject);

@@ -1,10 +1,21 @@
 <%@ page isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Forgot Password</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+        .oval-btn {
+            border-radius: 50px; /* Adjust the value as needed for an oval shape */
+            padding: 10px 20px;  /* Adjust the padding to control the button size */
+        }
+    </style>
+
+
 </head>
 <body>
 
@@ -25,17 +36,27 @@
     </div>
 
     <div class="card-body text-dark">
-        <span style="color:blue">${resetMessage}</span>
-        <span style="color:red">${resetError}</span>
+
+        <span style="color:blue">${forgotPasswordMessage}</span>
+        <span style="color:red">${forgotPasswordError}</span>
 
         <form action="forgot-password" method="post">
             <div class="row mb-3">
                 <label for="email" class="form-label"><b>Email:</b></label>
                 <input type="email" class="form-control" id="email" name="email" required>
             </div>
+
+
+
             <div>
-                <input type="submit" value="Reset Password" class="btn btn-primary">
+                <input type="submit" value="Reset Password" class="btn btn-primary oval-btn"">
             </div>
+
+
+            <div class="mb-3">
+                    <center>     <a href="SignIn.jsp" class="link-primary"><strong>SignIn Here?</strong></a></p></center>
+                        </div>
+
         </form>
     </div>
 </div>
