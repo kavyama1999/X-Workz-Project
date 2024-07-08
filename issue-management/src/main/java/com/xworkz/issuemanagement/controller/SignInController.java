@@ -75,7 +75,7 @@ public class SignInController {
 
 
 
-    //Reset password
+    //forgot password
 
     @PostMapping("forgot-password")
     public String resetPassword(@RequestParam String email, Model model) {

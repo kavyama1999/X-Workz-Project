@@ -8,8 +8,6 @@
 <title>Forgot Password</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="/issue-management/js/passwordReset.js"></script>
-
-
 </head>
 <body>
 
@@ -20,9 +18,7 @@
                 <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
             </a>
             <a class="navbar-brand text-white" href="index.jsp"><b>Home</b></a>
-
-             <a class="navbar-brand text-white" href="Profile.jsp"><b>Profile</b></a>
-
+            <a class="navbar-brand text-white" href="Profile.jsp"><b>Profile</b></a>
         </div>
     </div>
 </nav>
@@ -38,7 +34,8 @@
         <form action="reset-password" method="post">
             <div class="row mb-3">
                 <label for="email" class="form-label"><b>Email:</b></label>
-                <input type="email" class="form-control" id="email" name="email" autocomplete="email" required>
+                <input type="email" class="form-control" id="email" name="email" autocomplete="email" onblur="emailValidation()" >
+                <span id="emailError" style="color:red;"></span>
             </div>
 
             <div class="mb-3">
@@ -60,7 +57,7 @@
             </div>
 
             <div>
-                <input type="submit" value="Reset Password" class="btn btn-primary " id="submit" disabled>
+                <input type="submit" value="Reset Password" class="btn btn-primary" id="submit" disabled>
             </div>
 
             <div class="mb-3">

@@ -1,33 +1,17 @@
-//package com.xworkz.issuemanagement.controller;
-//
-//
-//import com.xworkz.issuemanagement.dto.SignUpDTO;
-//import com.xworkz.issuemanagement.model.service.ViewUserService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
 //import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.SessionAttributes;
 //
-//import javax.servlet.http.HttpSession;
-//
 //@Controller
-//@RequestMapping("/")
 //@SessionAttributes("signUpDTO")
-//
-//public class ViewUserController {
-//
+//public class ProfileController {
 //
 //    @Autowired
-//    private ViewUserService viewUserService;
+//    private UserService userService;
 //
-//
-//    public ViewUserController() {
-//        System.out.println("No parameter constructor in ViewUserController");
-//    }
-//
-//    @GetMapping("/view-profile")
+//    @GetMapping("/profile")
 //    public String showProfile(Model model) {
 //        // Assuming you have a method to get the currently logged-in user's email
 //        String userEmail = userService.getLoggedInUserEmail();
@@ -41,5 +25,15 @@
 //        // Return the view name
 //        return "profile";
 //    }
-//
 //}
+
+
+//EntityManager entityManager = entityManagerFactory.createEntityManager();
+//String query = "SELECT e FROM SignUpDTO e WHERE e.email = :email";
+//Query query1 = entityManager.createQuery(query);
+//        query1.setParameter("email", email);
+//
+//SignUpDTO signUpDTO = (SignUpDTO) query1.getSingleResult();
+//        System.out.println(signUpDTO);
+//
+//        return signUpDTO;
