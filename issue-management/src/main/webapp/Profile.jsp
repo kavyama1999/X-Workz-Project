@@ -45,12 +45,12 @@
 
 <div class="dropdown">
 
- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+ <div class=" dropdown-toggle"  id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 
      <!--<img src="${pageContext.request.contextPath}/images/profileicon.jpg" alt="Profile" width="30" height="30" class="rounded-circle"> <!-- Add your profile icon path -->
      <img src="https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg" alt="Profile" width="40" height="40" class="rounded-circle"> <!-- Add your profile icon path -->
 
-            </button>  </button>
+            </div>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
     <li><a class="dropdown-item" href="SignUp.jsp"><strong>Edit</strong></a></li>
     <li><a class="dropdown-item" href="PasswordReset.jsp"><strong>Password Reset</strong></a></li>

@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
+import javax.persistence.*;
 
 @Repository
 public class PasswordResetRepoImpl implements PasswordResetRepo {
@@ -22,17 +19,26 @@ public class PasswordResetRepoImpl implements PasswordResetRepo {
     public boolean emailExists(String email) {
         //check if email exists in database or not
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+//
+//        String query = "SELECT COUNT(e) FROM SignUpDTO e WHERE e.email=:email";
+//        Query query1 = entityManager.createQuery(query);
+//        query1.setParameter("email", email);
+//        Long count = (Long) query1.getSingleResult();
+//        System.out.println(count);
+        try {
+            String query = "SELECT e FROM SignUpDTO e where e.email=:email";
+            Query query1 = entityManager.createQuery(query);
+            query1.setParameter("email", email);
 
-        String query = "SELECT COUNT(e) FROM SignUpDTO e WHERE e.email=:email";
-        Query query1 = entityManager.createQuery(query);
-        query1.setParameter("email", email);
-        Long count = (Long) query1.getSingleResult();
-        System.out.println(count);
+            SignUpDTO signUpDTO = (SignUpDTO) query1.getSingleResult();
 
-        //return false;
 
-        //return false;
-        return  count > 0;
+            return true;
+        } catch (NoResultException e) {
+            return false;
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
@@ -42,52 +48,66 @@ public class PasswordResetRepoImpl implements PasswordResetRepo {
 
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        String query = "SELECT COUNT(e) FROM SignUpDTO e  WHERE email =:email AND e.password=:password";
+//        String query = "SELECT COUNT(e) FROM SignUpDTO e  WHERE email =:email AND e.password=:password";
+//
+//        Query query1 = entityManager.createQuery(query);
+//        query1.setParameter("email", email);
+//        query1.setParameter("password", oldPassword);
+//        Long count = (Long) query1.getSingleResult();
+//        System.out.println(count);
 
-        Query query1 = entityManager.createQuery(query);
-        query1.setParameter("email", email);
-        query1.setParameter("password", oldPassword);
-        Long count= (Long) query1.getSingleResult();
-        System.out.println(count);
+        try {
+            String query = "SELECT e FROM SignUpDTO e WHERE e.email=:email AND e.password=:password ";
+            Query query1 = entityManager.createQuery(query);
+            query1.setParameter("email", email);
+            query1.setParameter("password", oldPassword);
+            SignUpDTO signUpDTO = (SignUpDTO) query1.getSingleResult();
+            System.out.println(signUpDTO);
+            return true;
+        }
 
-        //return false;
-        return count > 0;
+        catch (NoResultException e)
+        {
+            // If no result is found, return false
+         return false;
+        }
+
+        finally {
+            entityManager.close();
+        }
+
     }
 
     @Override
-   // @Transactional
+    // @Transactional
     public void updatePassword(String email, String newPassword) {
         // to update the reset password to password in database
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-      EntityTransaction entityTransaction= entityManager.getTransaction();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
 
 
-      try {
+        try {
 
-          entityTransaction.begin();
-          //update table name set password=? where email=?;
+            entityTransaction.begin();
+            //update table name set password=? where email=?;
 
-          String query = "UPDATE SignUpDTO e SET e.password=:password WHERE e.email=:email ";
+            String query = "UPDATE SignUpDTO e SET e.password=:password WHERE e.email=:email ";
 
-          Query query1 = entityManager.createQuery(query);
-          query1.setParameter("password", newPassword);
-          query1.setParameter("email", email);
+            Query query1 = entityManager.createQuery(query);
+            query1.setParameter("password", newPassword);
+            query1.setParameter("email", email);
 
-          int executeData = query1.executeUpdate();
-          System.out.println(executeData);
-          entityTransaction.commit();
+            int executeData = query1.executeUpdate();
+            System.out.println(executeData);
+            entityTransaction.commit();
 
-      }
-      catch (Exception e)
-      {
-          e.printStackTrace();
-          entityTransaction.rollback();
-      }
+        } catch (Exception e) {
+            e.printStackTrace();
+            entityTransaction.rollback();
+        } finally {
 
-      finally {
-
-          entityManager.close();
-      }
+            entityManager.close();
+        }
 
     }
 }
