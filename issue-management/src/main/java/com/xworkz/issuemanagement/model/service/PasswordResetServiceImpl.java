@@ -23,6 +23,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
     public boolean resetPassword(String email, String oldPassword, String newPassword, String confirmPassword) {
         if (!passwordResetRepo.emailExists(email))
         {
+
             return false;
         }
 

@@ -20,15 +20,15 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
+    <div class="container mt-5 w-25">
         <h2>User Profile</h2>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Name: ${signUpDTO.firstName} ${signUpDTO.lastName}</h5>
-                <p class="card-text">Email: ${signUpDTO.email}</p>
-                <p class="card-text">Contact Number: ${signUpDTO.contactNumber}</p>
-                <p class="card-text">Alternative Contact Number: ${signUpDTO.alternateContactNumber}</p>
-                <p class="card-text">Address: ${signUpDTO.address}</p>
+                <strong class="card-title">Name: ${signUpDTO.firstName} ${signUpDTO.lastName}</strong><br><br>
+                <p class="card-text"><strong>Email: ${signUpDTO.email}</strong></p>
+                <p class="card-text"><strong>Contact Number: ${signUpDTO.contactNumber}<strong></p>
+                <p class="card-text"><strong>Alternative Contact Number: ${signUpDTO.alternateContactNumber}</strong></p>
+                <p class="card-text"><strong>Address: ${signUpDTO.address}</strong></p>
             </div>
         </div>
     </div>

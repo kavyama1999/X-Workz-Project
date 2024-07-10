@@ -20,6 +20,7 @@ public class ViewUserRepoImpl implements ViewUserRepo {
     public SignUpDTO findByEmail(String email) {
 
 
+        System.out.println(" findByEmail method running  in ViewUserRepoImpl ....");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         String query = "SELECT e FROM SignUpDTO e WHERE e.email=:email";

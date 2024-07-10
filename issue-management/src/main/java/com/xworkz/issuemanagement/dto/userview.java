@@ -1,68 +1,52 @@
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.SessionAttributes;
-//
-//@Controller
-//@SessionAttributes("signUpDTO")
-//public class ProfileController {
+//@Repository
+//public class EditUserProfileRepoImpl implements EditUserProfileRepo {
 //
 //    @Autowired
-//    private UserService userService;
+//    private EntityManagerFactory entityManagerFactory;
 //
-//    @GetMapping("/profile")
-//    public String showProfile(Model model) {
-//        // Assuming you have a method to get the currently logged-in user's email
-//        String userEmail = userService.getLoggedInUserEmail();
-//
-//        // Fetch user data based on the email
-//        SignUpDTO signUpDTO = userService.getUserByEmail(userEmail);
-//
-//        // Add the user data to the model
-//        model.addAttribute("signUpDTO", signUpDTO);
-//
-//        // Return the view name
-//        return "profile";
+//    public EditUserProfileRepoImpl() {
+//        System.out.println("No parameters in EditUserProfileRepoImpl..");
 //    }
-//}
-
-
-//EntityManager entityManager = entityManagerFactory.createEntityManager();
-//String query = "SELECT e FROM SignUpDTO e WHERE e.email = :email";
-//Query query1 = entityManager.createQuery(query);
-//        query1.setParameter("email", email);
 //
-//SignUpDTO signUpDTO = (SignUpDTO) query1.getSingleResult();
-//        System.out.println(signUpDTO);
+//    @Override
+//    public SignUpDTO findByEmail(String email) {
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
 //
-//        return signUpDTO;
-
-
-
-
-
-//import javax.persistence.EntityManager;
-//import javax.persistence.EntityManagerFactory;
-//import javax.persistence.NoResultException;
-//import javax.persistence.Query;
+//        try {
+//            String query = "SELECT e FROM SignUpDTO e WHERE e.email = :email";
+//            Query query1 = entityManager.createQuery(query);
+//            query1.setParameter("email", email);
 //
-//public boolean emailExists(String email) {
-//    EntityManager entityManager = null;
-//    try {
-//        entityManager = entityManagerFactory.createEntityManager();
-//        String query = "SELECT e FROM SignUpDTO e WHERE e.email = :email";
-//        Query query1 = entityManager.createQuery(query);
-//        query1.setParameter("email", email);
+//            // Use getResultList() instead of getSingleResult()
+//            List<SignUpDTO> results = query1.getResultList();
+//            if (!results.isEmpty()) {
+//                return results.get(0); // Return the first result if found
+//            }
+//        } catch (NoResultException e) {
+//            // Handle case where no results are found
+//            e.printStackTrace(); // Log or handle the exception
+//        } finally {
+//            entityManager.close();
+//        }
 //
-//        // If a result is found, return true
-//        SignUpDTO signUpDTO = (SignUpDTO) query1.getSingleResult();
-//        return true;
-//    } catch (NoResultException e) {
-//        // If no result is found, return false
-//        return false;
-//    } finally {
-//        if (entityManager != null) {
+//        return null; // Return null if no results found
+//    }
+//
+//    @Override
+//    public void updateUserDetails(SignUpDTO signUpDTO) {
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//        EntityTransaction entityTransaction = entityManager.getTransaction();
+//
+//        try {
+//            entityTransaction.begin();
+//            entityManager.merge(signUpDTO);
+//            entityTransaction.commit();
+//        } catch (Exception e) {
+//            if (entityTransaction.isActive()) {
+//                entityTransaction.rollback();
+//            }
+//            e.printStackTrace(); // Log or handle the exception
+//        } finally {
 //            entityManager.close();
 //        }
 //    }

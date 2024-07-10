@@ -4,6 +4,7 @@ package com.xworkz.issuemanagement.controller;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 import com.xworkz.issuemanagement.model.service.MailService;
 import com.xworkz.issuemanagement.model.service.SignUpService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 //@Component
 @Controller
 @RequestMapping("/")
+@Slf4j
 public class SignUpController {
 
     @Autowired
@@ -30,6 +32,8 @@ public class SignUpController {
 
     public SignUpController() {
         System.out.println("No param constructor created for SignUpController..");
+   log.info("kavya");
+   //log.info("hgdfhdg{}",name);
     }
 
 

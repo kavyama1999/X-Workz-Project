@@ -7,5 +7,5 @@ public interface ViewUserService {
 
     SignUpDTO getUserByEmail(String email);
 
-    String getLoggedInUserEmail();
+    String getSignedInUserEmail();
 }

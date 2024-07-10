@@ -37,6 +37,8 @@ public class PasswordResetController {
         else
         {
             model.addAttribute("passwordResetError", "Failed to reset password.Please check your password");
+             return "PasswordReset";
+
         }
 
        // return "PasswordReset";

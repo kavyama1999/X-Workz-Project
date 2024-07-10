@@ -8,6 +8,15 @@
 <title>Forgot Password</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="/issue-management/js/passwordReset.js"></script>
+
+
+<style>
+        .oval-btn {
+            border-radius: 50px; /* Adjust the value as needed for an oval shape */
+            padding: 10px 20px;  /* Adjust the padding to control the button size */
+        }
+    </style>
+
 </head>
 <body>
 
@@ -57,7 +66,7 @@
             </div>
 
             <div>
-                <input type="submit" value="Reset Password" class="btn btn-primary" id="submit" disabled>
+                <input type="submit" value="Reset Password" class="btn btn-primary oval-btn" id="submit" disabled>
             </div>
 
             <div class="mb-3">

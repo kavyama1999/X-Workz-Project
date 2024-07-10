@@ -1,11 +1,11 @@
 let fieldsChecks = {
     "firstName": false,
     "lastName": false,
-    "email": false,
+
     "contactNumber": false,
     "alternateContactNumber": false,
-    "address": false,
-    "agree": false
+    "address": false
+
 };
 
 function validateAndEnableSubmit() {
@@ -60,50 +60,9 @@ function lastNameValidation() {
     validateAndEnableSubmit();
 }
 
-// Email
-//function emailValidation() {
-//             let element = document.getElementById("email");
-//            let error = document.getElementById("emailError");
-//
-//     <!----Regular expression pattern for validating email address--!>
-//    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//
-//     <!---Check if the email is valid--!>
-//    if (emailRegex.test(element.value)) {
-//       //Email is valid
-//     error.innerHTML = "";
-//     fieldsChecks["email"] = true;
-//     } else {
-//      //email is Invalid
-//     error.innerHTML = "Invalid email address.";
-//     error.style.color = "red";
-//     fieldsChecks["email"] = false;
-//      }
-//     validateAndEnableSubmit();
-//    }
 
 
-function emailValidation() {
-    let element = document.getElementById("email");
-    let error = document.getElementById("emailError");
 
-    // Regular expression pattern for validating email address
-    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    // Check if the email is valid
-    if (emailRegex.test(element.value)) {
-        // Email is valid
-        error.innerHTML = "";
-        fieldsChecks["email"] = true;
-    } else {
-        // Email is invalid
-        error.innerHTML = "Invalid email address.";
-        error.style.color = "red";
-        fieldsChecks["email"] = false;
-    }
-
-    validateAndEnableSubmit();
-}
 
 
 // Contact Number
@@ -158,18 +117,4 @@ function addressValidation() {
     validateAndEnableSubmit();
 }
 
-// Agree
-function agreeValidation() {
-    let element = document.getElementById("agree");
-    let error = document.getElementById("agreeError");
 
-    if (element.checked) {
-        error.innerHTML = "";
-        fieldsChecks["agree"] = true;
-    } else {
-        error.innerHTML = "Please agree to the terms.";
-        error.style.color = "red";
-        fieldsChecks["agree"] = false;
-    }
-    validateAndEnableSubmit();
-}

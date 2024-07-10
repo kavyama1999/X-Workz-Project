@@ -56,18 +56,18 @@
                 <div class="row mb-3">
                     <span id="firstNameError"></span><br>
                     <label for="firstName" class="form-label"><b>First Name:</b></label>
-                    <input type="text" class="form-control" id="firstName" onblur="firstNameValidation()" name="firstName" value="${signUpDTO.firstName}">
+                    <input type="text" class="form-control" id="firstName" onblur="firstNameValidation()" name="firstName" >
                 </div>
                 <div class="row mb-3">
                     <span id="lastNameError"></span><br>
                     <label for="lastName" class="form-label"><b>Last Name:</b></label>
-                    <input type="text" class="form-control" id="lastName" onblur="lastNameValidation()" name="lastName" value="${signUpDTO.lastName}">
+                    <input type="text" class="form-control" id="lastName" onblur="lastNameValidation()" name="lastName" >
                 </div>
 
                 <div class="row mb-3">
                     <span id="emailError" style="color:red"></span><br>
                     <label for="email" class="form-label"><b>Email:</b></label>
-                    <input type="email" class="form-control" id="email" onblur="emailValidation()" onchange="emailAjaxValidation()"  name="email" value="${signUpDTO.email}">
+                    <input type="email" class="form-control" id="email" onblur="emailValidation()" onchange="emailAjaxValidation()"  name="email" >
                 </div>
 
 
@@ -75,21 +75,21 @@
                 <div class="row mb-3">
                     <span id="contactNumberError"></span><br>
                     <label for="contactNumber" class="form-label"><b>Contact Number:</b></label>
-                    <input type="tel" class="form-control" id="contactNumber" onblur="contactNumberValidation()" onchange="contactNumberAjaxValidation()" name="contactNumber" value="${signUpDTO.contactNumber}">
+                    <input type="tel" class="form-control" id="contactNumber" onblur="contactNumberValidation()" onchange="contactNumberAjaxValidation()" name="contactNumber" >
                 </div>
 
 
                 <div class="row mb-3">
                     <span id="altContactNbrError"></span><br>
                     <label for="alternateContactNumber" class="form-label"><b>Alternative Contact Number:</b></label>
-                    <input type="tel" class="form-control" id="alternateContactNumber" onblur="alternateContactNumberValidation()" name="alternateContactNumber" value="${signUpDTO.alternateContactNumber}">
+                    <input type="tel" class="form-control" id="alternateContactNumber" onblur="alternateContactNumberValidation()" name="alternateContactNumber" >
                 </div>
 
 
                 <div class="mb-3">
                     <span id="addressError"></span><br>
                     <b>Address</b>
-                    <textarea class="form-control" id="address" style="height: 100px" name="address" onblur="addressValidation()">${signUpDTO.address}</textarea>
+                    <textarea class="form-control" id="address" style="height: 100px" name="address" onblur="addressValidation()"></textarea>
                 </div>
 
 

@@ -52,9 +52,15 @@
 
             </div>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" href="SignUp.jsp"><strong>Edit</strong></a></li>
+
+    <li><a class="dropdown-item" href="edit?email=${signUpDTO.email}"><strong>Edit</strong></a></li>
+
+    <!--<li><a class="dropdown-item" href="edit"><strong>Edit</strong></a></li>--!>
+
+    <!--<td> <a href="country-edit?id=${country.id}">Edit</td>--!>
+
     <li><a class="dropdown-item" href="PasswordReset.jsp"><strong>Password Reset</strong></a></li>
-    <li><a class="dropdown-item" href="ViewUserPage.jsp"><strong>View</strong></a></li>
+    <li><a class="dropdown-item" href="view-profile" ><strong>View</strong></a></li>
   </ul>
 </div>
 
