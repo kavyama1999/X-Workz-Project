@@ -56,7 +56,7 @@ public class EditUserProfileController {
 
             return "EditUserProfile";
         }
-////        model.addAttribute("errorMessage", "Error updating profile");
+    model.addAttribute("errorMessageProfile", "Error updating profile");
         return "Profile";
     }
 }

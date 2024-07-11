@@ -3,12 +3,15 @@ package com.xworkz.issuemanagement.model.service;
 
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 import com.xworkz.issuemanagement.model.repository.EditUserProfileRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
 @Service
+@Slf4j
 public class EditUserProfileServiceImpl implements EditUserProfileService {
 
 
@@ -22,7 +25,7 @@ public class EditUserProfileServiceImpl implements EditUserProfileService {
     @Override
     public SignUpDTO getUserDetails(String email) {
 
-      SignUpDTO signUpDTO=  editUserProfileRepo.findByEmail(email);
+        SignUpDTO signUpDTO = editUserProfileRepo.findByEmail(email);
 
         return signUpDTO;
 
@@ -33,8 +36,18 @@ public class EditUserProfileServiceImpl implements EditUserProfileService {
     @Override
     public SignUpDTO updateUserDetails(SignUpDTO signUpDTO) {
 
+        log.info("updateUserDetails method running in EditUserProfileServiceImpl..");
 
-       // httpSession.getAttribute("signedInUserEmail");
+        //Set audit fields
+
+        String updatedBy = signUpDTO.getFirstName();
+        LocalDateTime updatedOn = LocalDateTime.now();
+
+
+        setAudit(signUpDTO,updatedBy,updatedOn);
+
+
+        // httpSession.getAttribute("signedInUserEmail");
         editUserProfileRepo.updateUserDetails(signUpDTO);
 
 
@@ -46,5 +59,14 @@ public class EditUserProfileServiceImpl implements EditUserProfileService {
         httpSession.getAttribute("signedInUserEmail");
 
         return "String";
+    }
+
+    @Override
+    public void setAudit(SignUpDTO signUpDTO, String updatedBy, LocalDateTime updatedOn) {
+
+      log.info("setAudit method running in EditUserProfileServiceImpl.. ");
+      signUpDTO.setUpdatedBy(updatedBy);
+      signUpDTO.setUpdatedOn(updatedOn);
+
     }
 }

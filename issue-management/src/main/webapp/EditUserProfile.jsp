@@ -41,8 +41,10 @@
         <div class="card-body text-dark">
 
 
-            <form action="edit-profile" method="post">
+            <form action="edit-profile" method="post" enctype="multipart/form-data">
 
+<!--<form action="editprofile" method="post" onsubmit="return validateForm()"
+ enctype="multipart/form-data">--!>
 
                 <div class="text-primary"><b>${msg}</b></div>
                 <!--<span style="color:red"><h4>${failedMsg}</h4></span>-->
@@ -100,6 +102,22 @@
                         <b>Agree</b>
                     </label>
                 </div><br>--!>
+
+
+          <div class="mb-3">
+                    <label for="file" class="form-label text-dark">Choose File</label>
+                    <input type="file" class="form-control" name="file" id="file">
+                </div>
+
+                <!--<div class="mb-3">
+                    <input type="submit" class="form-control btn btn-primary" style="width:100px" value="Upload" name="upload" id="upload">
+                </div>--!>
+
+
+<!--<form method="post" enctype="multipart/form-data" action="upload">
+                    <input type="file" name="file"/>
+                    <input type="submit" value="Upload file"/>
+                </form>--!>
 
 
                 <div>
