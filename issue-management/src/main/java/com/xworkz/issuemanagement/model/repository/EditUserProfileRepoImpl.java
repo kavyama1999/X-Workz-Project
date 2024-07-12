@@ -1,16 +1,19 @@
 package com.xworkz.issuemanagement.model.repository;
 
-
+import com.xworkz.issuemanagement.dto.EditProfileImageDTO;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
 public class EditUserProfileRepoImpl implements EditUserProfileRepo {
-
 
     @Autowired
     private EntityManagerFactory entityManagerFactory;
@@ -21,7 +24,6 @@ public class EditUserProfileRepoImpl implements EditUserProfileRepo {
 
     @Override
     public SignUpDTO findByEmail(String email) {
-
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         try {
@@ -39,32 +41,51 @@ public class EditUserProfileRepoImpl implements EditUserProfileRepo {
         } catch (NoResultException e) {
             // Handle case where no results are found
             e.printStackTrace();
-        }
-
-        finally {
+        } finally {
             entityManager.close();
         }
 
-return  null;// Return null if no results found
+        return null;// Return null if no results found
     }
 
     @Override
     public void updateUserDetails(SignUpDTO signUpDTO) {
-
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-
         EntityTransaction entityTransaction = entityManager.getTransaction();
 
         try {
             entityTransaction.begin();
-            entityManager.merge(signUpDTO);
+            entityManager.merge(signUpDTO); // Ensure signUpDTO is managed or retrieved first
+            entityManager.flush(); // Flush changes to the database
             entityTransaction.commit();
         } catch (Exception e) {
-            //if (entityTransaction.isActive()) {
-
             e.printStackTrace();
-            entityTransaction.rollback();
+            if (entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
         } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public void updateUserProfileImage(EditProfileImageDTO editProfileImageDTO) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+
+        try
+        {
+            entityTransaction.begin();
+            entityManager.merge(editProfileImageDTO);
+            entityTransaction.commit();
+        }
+        catch (Exception e)
+        {
+            entityTransaction.rollback();
+        }
+
+        finally {
             entityManager.close();
         }
     }

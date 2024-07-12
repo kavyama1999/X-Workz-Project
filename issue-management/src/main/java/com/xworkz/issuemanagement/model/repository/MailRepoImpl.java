@@ -29,6 +29,7 @@ public class MailRepoImpl implements MailRepo {
             query1.setParameter("email", email);
             query1.setParameter("password", password);
             SignUpDTO signUpDTO = (SignUpDTO) query1.getSingleResult();
+            entityManager.merge(signUpDTO);
             System.out.println(signUpDTO);
             entityTransaction.commit();
             return signUpDTO;

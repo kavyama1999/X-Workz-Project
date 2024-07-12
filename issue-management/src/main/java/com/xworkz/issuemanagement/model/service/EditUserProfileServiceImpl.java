@@ -1,6 +1,6 @@
 package com.xworkz.issuemanagement.model.service;
 
-
+import com.xworkz.issuemanagement.dto.EditProfileImageDTO;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 import com.xworkz.issuemanagement.model.repository.EditUserProfileRepo;
 import lombok.extern.slf4j.Slf4j;
@@ -14,41 +14,35 @@ import java.time.LocalDateTime;
 @Slf4j
 public class EditUserProfileServiceImpl implements EditUserProfileService {
 
-
     @Autowired
     private EditUserProfileRepo editUserProfileRepo;
-
 
     @Autowired
     private HttpSession httpSession;
 
     @Override
     public SignUpDTO getUserDetails(String email) {
-
-        SignUpDTO signUpDTO = editUserProfileRepo.findByEmail(email);
-
-        return signUpDTO;
-
-        //  return editUserDetailsRepo.findByEmail(email);
-
+        return editUserProfileRepo.findByEmail(email);
     }
 
     @Override
-    public SignUpDTO updateUserDetails(SignUpDTO signUpDTO) {
-
+    public SignUpDTO updateUserDetails(SignUpDTO signUpDTO ) {
         log.info("updateUserDetails method running in EditUserProfileServiceImpl..");
 
-        //Set audit fields
 
+        // Set audit fields
         String updatedBy = signUpDTO.getFirstName();
         LocalDateTime updatedOn = LocalDateTime.now();
 
+        setAudit(signUpDTO, updatedBy, updatedOn);
 
-        setAudit(signUpDTO,updatedBy,updatedOn);
-
-
-        // httpSession.getAttribute("signedInUserEmail");
         editUserProfileRepo.updateUserDetails(signUpDTO);
+
+
+        //set ImageUpload ad
+
+
+
 
 
         return signUpDTO;
@@ -56,17 +50,15 @@ public class EditUserProfileServiceImpl implements EditUserProfileService {
 
     @Override
     public String getSignedInUserEmail() {
-        httpSession.getAttribute("signedInUserEmail");
-
-        return "String";
+        return (String) httpSession.getAttribute("signedInUserEmail");
     }
 
     @Override
     public void setAudit(SignUpDTO signUpDTO, String updatedBy, LocalDateTime updatedOn) {
-
-      log.info("setAudit method running in EditUserProfileServiceImpl.. ");
-      signUpDTO.setUpdatedBy(updatedBy);
-      signUpDTO.setUpdatedOn(updatedOn);
-
+        log.info("setAudit method running in EditUserProfileServiceImpl.. ");
+        signUpDTO.setUpdatedBy(updatedBy);
+        signUpDTO.setUpdatedOn(updatedOn);
     }
+
+
 }

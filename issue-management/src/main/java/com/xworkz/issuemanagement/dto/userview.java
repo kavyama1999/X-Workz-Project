@@ -1,211 +1,98 @@
-//////package com.xworkz.imageupload.dto;
-//////
-//////import org.hibernate.validator.constraints.NotEmpty;
-//////import org.springframework.web.multipart.MultipartFile;
-//////
-//////import javax.persistence.*;
-//////import javax.validation.constraints.*;
-//////
-//////
-//////@Entity
-//////@Table(name = "contact_data")
-//////public class ImageDTO {
-//////
-//////
-//////
-//////
-//////
-//////
-//////
-//////        @Id
-//////        @GeneratedValue(strategy = GenerationType.IDENTITY)
-//////        private Integer id;  //to avoid dataType error we can change datatype as Non-primitive
-//////
-////////for string we can use @NotEmpty
-//////
-////////    create table contact_data(id int  primary key auto_increment,contact_name varchar(50),email varchar(50),mobile bigint,comments varchar(500));
-//////
-//////        @NotEmpty(message = "Name cannot be empty")
-//////        @Size(min = 2, max = 30, message = "Name should contain only alphabetic letters")
-//////        @Pattern(regexp = "^[a-zA-Z ]+$", message = "Name should contain only alphabetic letters")
-//////        @Column(name = "contact_name")
-//////        private String name;
-//////
-//////
-//////
-//////
-//////
-//////
-//////        @NotEmpty(message = "Please provide comments")
-//////        @Size(min = 2, max = 300, message = "Comments should contain between 2 and 300 characters")
-//////        @Pattern(regexp = "^[a-zA-Z ]+$", message = "Comments should contain only alphabetic letters and spaces")
-//////        private String comments;
-//////
-//////
-//////  private MultipartFile  imageFile;
-//////
-//////
-//////
-//////        public Integer getId() {
-//////            return id;
-//////        }
-//////
-//////        public void setId(Integer id) {
-//////            this.id = id;
-//////        }
-//////
-//////        public String getName() {
-//////            return name;
-//////        }
-//////
-//////        public void setName(String name) {
-//////            this.name = name;
-//////        }
-//////
-//////
-//////
-//////        public String getComments() {
-//////            return comments;
-//////        }
-//////
-//////        public void setComments(String comments) {
-//////            this.comments = comments;
-//////        }
-//////
-//////
-//////    public MultipartFile getImageFile() {
-//////        return imageFile;
-//////    }
-//////
-//////    public void setImageFile(MultipartFile imageFile) {
-//////        this.imageFile = imageFile;
-//////    }
-//////
-//////
-//////    @Override
-//////    public String toString() {
-//////        return "ImageDTO{" +
-//////                "id=" + id +
-//////                ", name='" + name + '\'' +
-//////                ", comments='" + comments + '\'' +
-//////                ", imageFile=" + imageFile +
-//////                '}';
-//////    }
-//////}
-////
-////
-////package com.xworkz.xworkzProject.dto;
-////
-////import lombok.*;
-////
-////import javax.persistence.*;
-////import java.time.LocalDateTime;
-////@Getter@Setter@AllArgsConstructor@NoArgsConstructor@ToString
-////@Entity
-////@Table(name = "image_upload")
-////public class ImageDownloadDTO {
-////
-////
-////    @Id
-////    @GeneratedValue(strategy = GenerationType.IDENTITY)
-////    private int id;
-////
-////    @Column(name = "image_name")
-////    private String imageName;
-////
-////    @Column(name = "image_size")
-////    private long imageSize;
-////
-////    @Column(name = "image_type")
-////    private String imageType;
-////
-////    @Column(name = "user_id")
-////    private int userId;
-////
-////    @Column(name = "created_by")
-////    private String createdBy;
-////
-////    @Column(name = "created_at")
-////    private LocalDateTime createdAt;
-////
-////    @Column(name = "modified_by")
-////    private String modifiedBy;
-////
-////    @Column(name = "modified_at")
-////    private LocalDateTime modifiedAt;
-////
-////    @Column(name = "status")
-////    private String status;
-////}
+//package com.xworkz.myProject.controller;
 //
-//
-////package com.xworkz.imageupload.controller;
-//
-//import org.apache.commons.io.IOUtils;
-//import org.springframework.stereotype.Component;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
+//import com.xworkz.myProject.Service.EditInfoService;
+//import com.xworkz.myProject.Service.FileUploadService;
+//import com.xworkz.myProject.Service.SignUpService;
+//import com.xworkz.myProject.dto.FileUploadDTO;
+//import com.xworkz.myProject.dto.SignUpDto;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.multipart.MultipartFile;
 //
-//import javax.servlet.ServletOutputStream;
-//import javax.servlet.http.HttpServletResponse;
-//import java.io.*;
-//import java.nio.file.AccessDeniedException;
+//import javax.servlet.http.HttpSession;
+//import java.io.IOException;
 //import java.nio.file.Files;
 //import java.nio.file.Path;
 //import java.nio.file.Paths;
+//import java.time.LocalDateTime;
+//import java.util.Optional;
 //
-////@Component
-////@RequestMapping("/")
-////public class ImageController {
-////
-////    public ImageController()
-////    {
-////        System.out.println("Created ImageController");
-////    }
-////
-////    @PostMapping("upload-file")
-////    public String uploadImage(@RequestParam MultipartFile file) throws IOException {
-////        System.out.println("Image upload");
-////        System.out.println("file getName :" +file.getName());
-////        System.out.println("file getSize :" +file.getSize());
-////        System.out.println("file getContentType : " +file.getContentType());
-////        System.out.println("file getResource :" +file.getResource());
-////        System.out.println("file getBytes: " +file.getBytes());
-////        System.out.println("file getOriginalFilename " +file.getOriginalFilename());
-////
-////
-////
-////        byte[] bytes=file.getBytes();
-////        Path path= Paths.get("C:\\Users\\kavya\\image",file.getOriginalFilename());
-////        Files.write(path,bytes);
-////
-////        System.out.println("fileName:"+file.getOriginalFilename()+"ContentType:"+file.getContentType());
-//        //return "ContactForm";
+//@Controller
+//@RequestMapping("/")
+//public class FileUploadController {
 //
-////    }
-////
-////    @GetMapping("download")
-////    public void download(HttpServletResponse response,@RequestParam String fileName)
-////    {
-////        System.out.println("Running download method...");
-////        response.setContentType("image/jpeg");
-////        File file=new File("C:\\Users\\kavya\\image\\"+fileName);
-////        try {
-////            InputStream buffer=new BufferedInputStream(new FileInputStream(file));
-////            ServletOutputStream outputStream =response.getOutputStream();
-////            IOUtils.copy(buffer,outputStream);
-////            response.flushBuffer();
-////        } catch (AccessDeniedException e) {
-////            System.err.println("Access denied: " + e.getMessage());
-////        }catch (IOException e) {
-////            e.printStackTrace();
-////
-////            //throw new RuntimeException(e);
-////        }
-////
-////    }
-////
-////}
+//    @Autowired
+//    private EditInfoService editInfoService;
+//
+//    @Autowired
+//    private FileUploadService fileUploadService;
+//
+//    @Autowired
+//    private SignUpService signUpService;
+//
+//    private static final String UPLOAD_DIR = "C:\\images";
+//
+//    @PostMapping("/upload")
+//    public String uploadFile(@RequestParam("file") MultipartFile file, SignUpDto signUpDTO, Model model, HttpSession session) {
+//        if (file.isEmpty()) {
+//            model.addAttribute("message", "Please select a file to upload");
+//            return "EditProfile";
+//        }
+//        try {
+//            String originalFilename = file.getOriginalFilename();
+//            String newFilename = signUpDTO.getEmail() + "_" + originalFilename;
+//            System.out.println("File name" + newFilename);
+//            Path path = Paths.get(UPLOAD_DIR, newFilename);
+//            System.out.println("path" + path);
+//            Files.write(path, file.getBytes());
+//            signUpDTO.setProfileImage(newFilename);
+//
+//            Optional<SignUpDto> optionalUser = signUpService.findUserByEmail(signUpDTO.getEmail());
+//            if (!optionalUser.isPresent()) {
+//                model.addAttribute("message", "User not found.");
+//                return "EditProfile";
+//            }
+//
+//            SignUpDto user = optionalUser.get();
+//
+//            // Set all previous images to inactive
+//            fileUploadService.setAllImagesInactiveForUser(user.getId());
+//
+//            FileUploadDTO fileUploadDTO = new FileUploadDTO();
+//            fileUploadDTO.setName(newFilename);
+//            fileUploadDTO.setType(file.getContentType());
+//            fileUploadDTO.setSize(file.getSize());
+//            fileUploadDTO.setUser(user);
+//            fileUploadDTO.setCreatedAt(LocalDateTime.now());
+//            fileUploadDTO.setCreatedBy(signUpDTO.getEmail());
+//            fileUploadDTO.setUpdatedAt(LocalDateTime.now());
+//            fileUploadDTO.setUpdatedBy(signUpDTO.getEmail());
+//            fileUploadDTO.setStatus("Active");
+//            fileUploadService.saveImageDetails(fileUploadDTO);
+//
+//            SignUpDto updatedDTO = editInfoService.updateUserProfile(signUpDTO.getEmail(), signUpDTO);
+//            if (updatedDTO != null) {
+//                model.addAttribute("message", "Profile updated successfully!");
+//                session.setAttribute("profileImage", "/images/" + newFilename);
+//                session.setAttribute("email", updatedDTO.getEmail());
+//                session.setAttribute("firstName", updatedDTO.getFirstName());
+//                session.setAttribute("lastName", updatedDTO.getLastName());
+//                session.setAttribute("phoneNumber", updatedDTO.getPhoneNo());
+//            } else {
+//                model.addAttribute("message", "Profile update failed. User not found.");
+//            }
+//
+//            String imageUrl = "/images/" + newFilename;
+//            session.setAttribute("profileImage", imageUrl);
+//
+//            model.addAttribute("imageURL", imageUrl);
+//            model.addAttribute("dto", signUpDTO);
+//
+//        } catch (IOException e) {
+//            model.addAttribute("message", "File upload failed: " + e.getMessage());
+//        }
+//        return "EditProfile";
+//    }
+//}

@@ -89,6 +89,10 @@ public class SignUpDTO {
     @Column(name = "account_locked")
     private boolean accountLocked=false;
 
+
+    @Column(name="image_name")
+    private String  imageName;
+
     public SignUpDTO()
     {
         System.out.println("created SignUpDTO..");

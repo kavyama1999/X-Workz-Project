@@ -72,7 +72,7 @@ function newPasswordValidation() {
         fieldsChecks["newPassword"] = false;
     }
 
-    confirmPasswordValidation();
+   // confirmPasswordValidation();
     validateAndEnableSubmit();
 }
 

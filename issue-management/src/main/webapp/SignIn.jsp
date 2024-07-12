@@ -40,6 +40,9 @@
             </a>
             <a class="navbar-brand text-white" href="index.jsp"><b>Home</b></a>
         </div>
+
+                            <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">
+
     </div>
 </nav>
 

@@ -31,8 +31,8 @@ public class SignUpController {
     private MailService mailService;
 
     public SignUpController() {
-        System.out.println("No param constructor created for SignUpController..");
-   log.info("kavya");
+        //System.out.println("No param constructor created for SignUpController..");
+   log.info("No param constructor created for SignUpController... ");
    //log.info("hgdfhdg{}",name);
     }
 

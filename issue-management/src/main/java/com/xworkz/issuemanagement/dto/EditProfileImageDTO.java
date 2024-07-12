@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,6 +17,8 @@ import java.time.LocalDateTime;
 @Table(name = "image_upload")
 public class EditProfileImageDTO {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
     private  int imageId;
 
@@ -30,29 +30,36 @@ public class EditProfileImageDTO {
     @Column(name = "image_size")
     private  long imageSize;
 
-    @Column(name = "")
+    @Column(name = "image_type")
     private String imageType;
 
 
-    @Column(name="id")
-    private int id;
+//    @Column(name="image_user_id")
+//    private int imageUserId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_user_id", referencedColumnName = "id")
+    private SignUpDTO user;
 
     @Column(name = "created_by")
     private String createdBy;
 
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "created_on")
+    private LocalDateTime createdOn;
 
 
-    @Column(name = "modified_by")
-    private String modifiedBy;
+    @Column(name = "updated_by")
+    private String updatedBy;
 
 
-    @Column(name = "modified_at")
-    private LocalDateTime modifiedAt;
+    @Column(name = "updated_on")
+    private LocalDateTime updatedOn;
 
 
+
+    @Column(name = "image_path")
+    private String  imagePath;
     //private String status;
 
 
