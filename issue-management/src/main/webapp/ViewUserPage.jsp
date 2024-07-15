@@ -17,13 +17,16 @@
                 <a class="navbar-brand text-white" href="index.jsp"><b>Home</b></a>
                 <a class="navbar-brand text-white" href="SignIn.jsp"><b>SignIn</b></a>
             </div>
-                                <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">
+
+            <!---display image in icon when user sign in--!>
+
+           <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">
 
         </div>
     </nav>
 
     <div class="container mt-5 w-25">
-        <h2>User Profile</h2>
+        <h2><center>User Profile</center></h2>
         <div class="card">
             <div class="card-body">
                 <strong class="card-title">Name: ${signUpDTO.firstName} ${signUpDTO.lastName}</strong><br><br>

@@ -10,5 +10,4 @@ public interface EditUserProfileRepo {
 
     void updateUserDetails(SignUpDTO signUpDTO);
 
-    void updateUserProfileImage(EditProfileImageDTO editProfileImageDTO);
 }

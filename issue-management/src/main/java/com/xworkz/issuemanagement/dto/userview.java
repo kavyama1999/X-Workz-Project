@@ -1,98 +1,248 @@
-//package com.xworkz.myProject.controller;
+//package com.xworkz.xworkzProject.dto;
 //
-//import com.xworkz.myProject.Service.EditInfoService;
-//import com.xworkz.myProject.Service.FileUploadService;
-//import com.xworkz.myProject.Service.SignUpService;
-//import com.xworkz.myProject.dto.FileUploadDTO;
-//import com.xworkz.myProject.dto.SignUpDto;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.*;
-//import org.springframework.web.multipart.MultipartFile;
+//import lombok.*;
 //
-//import javax.servlet.http.HttpSession;
-//import java.io.IOException;
-//import java.nio.file.Files;
-//import java.nio.file.Path;
-//import java.nio.file.Paths;
+//import javax.persistence.*;
 //import java.time.LocalDateTime;
-//import java.util.Optional;
 //
+////@Getter@Setter@AllArgsConstructor@NoArgsConstructor@ToString
+////@Entity
+////@Table(name = "complaint")
+////public class ComplaintsDTO {
+////
+////
+////    @Id
+////    @GeneratedValue(strategy = GenerationType.IDENTITY)
+////    private int id;
+////
+//////    @Column(name = "type")
+//////    private String type;
+////
+////    @Column(name = "area")
+////    private String area;
+////
+////    @Column(name = "address")
+////    private String address;
+////
+////    @Column(name = "country")
+////    private String country;
+////
+////    @Column(name = "state")
+////    private String state;
+////
+////    @Column(name = "city")
+////    private String city;
+////
+////    @Column(name = "description")
+////    private String description;
+////
+////    @Column(name = "user_id")
+////    private int userId;
+////
+////    @Column(name = "created_by")
+////    private String createdBy;
+////
+////    @Column(name = "created_at")
+////    private LocalDateTime createdAt;
+////
+////    @Column(name = "modified_by")
+////    private String modifiedBy;
+////
+////    @Column(name = "modified_at")
+////    private LocalDateTime modifiedAt;
+////
+////    @Column(name = "status")
+////    private String status;
+////
+////
+////    @Column(name="department_id")
+////    private Integer departmentId;
+//
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//]]]]]]]]]]]]]]]]]]]]
+//@Override
+//public void setAllImagesInactiveForUser(int userId) {
+//    EntityManager entityManager = entityManagerFactory.createEntityManager();
+//    try {
+//        entityManager.getTransaction().begin();
+//        Query query = entityManager.createQuery(
+//                "UPDATE FileUploadDTO SET status = 'Inactive' WHERE user.id = :userId");
+//        query.setParameter("userId", userId);
+//        query.executeUpdate();
+//        entityManager.getTransaction().commit();
+//    } finally {
+//        entityManager.close();
+//    }
+//}
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package com.xworkz.issuemanagement.controller;
+
+import com.xworkz.issuemanagement.dto.EditProfileImageDTO;
+import com.xworkz.issuemanagement.dto.SignUpDTO;
+import com.xworkz.issuemanagement.model.service.EditUserProfileService;
+import com.xworkz.issuemanagement.model.service.ImageUploadService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 //@Controller
-//@RequestMapping("/")
-//public class FileUploadController {
+//@RequestMapping("/") // Root mapping
+//@SessionAttributes({"signUpDTO", "editProfileImageDTO"})
+//@Slf4j
+////public class EditUserProfileController {
+////
+//    private static final String UPLOAD_DIR = "C:\\Users\\kavya\\issue-management-images";
 //
 //    @Autowired
-//    private EditInfoService editInfoService;
+//    private EditUserProfileService editUserProfileService;
 //
 //    @Autowired
-//    private FileUploadService fileUploadService;
+//    private ImageUploadService imageUploadService;
 //
 //    @Autowired
-//    private SignUpService signUpService;
+//    private HttpSession httpSession;
 //
-//    private static final String UPLOAD_DIR = "C:\\images";
-//
-//    @PostMapping("/upload")
-//    public String uploadFile(@RequestParam("file") MultipartFile file, SignUpDto signUpDTO, Model model, HttpSession session) {
-//        if (file.isEmpty()) {
-//            model.addAttribute("message", "Please select a file to upload");
-//            return "EditProfile";
+//    @GetMapping("edit")
+//    public String editUserProfile(@RequestParam("email") String email, Model model) {
+//        String signedInUserEmail = (String) httpSession.getAttribute("signedInUserEmail");
+//        if (signedInUserEmail != null && signedInUserEmail.equals(email)) {
+//            SignUpDTO signUpDTO = editUserProfileService.getUserDetails(email);
+//            if (signUpDTO != null) {
+//                model.addAttribute("editSignUpDTO", signUpDTO);
+//                return "EditUserProfile"; // Assuming EditUserProfile.jsp exists
+//            }
 //        }
+//        model.addAttribute("errorMessage", "Error fetching user details");
+//        return "ErrorPage"; // Handle error appropriately
+//    }
+//
+//    @PostMapping("/edit-profile") // In this image also uploading
+//    public String updateUserProfile(SignUpDTO signUpDTO, Model model, @RequestParam("file") MultipartFile file, HttpSession httpSession) {
+//        log.info("updateUserProfile method running EditUserProfileController...");
+//
 //        try {
-//            String originalFilename = file.getOriginalFilename();
-//            String newFilename = signUpDTO.getEmail() + "_" + originalFilename;
-//            System.out.println("File name" + newFilename);
-//            Path path = Paths.get(UPLOAD_DIR, newFilename);
-//            System.out.println("path" + path);
-//            Files.write(path, file.getBytes());
-//            signUpDTO.setProfileImage(newFilename);
+//            String newFileName = null;
+//            if (file != null && !file.isEmpty()) {
+//                String originalFilename = file.getOriginalFilename();
+//                newFileName = signUpDTO.getEmail() + "_" + originalFilename;
+//                Path path = Paths.get(UPLOAD_DIR, newFileName);
+//                log.info("path: {}", path);
+//                Files.write(path, file.getBytes());
+//                signUpDTO.setImageName(newFileName);
 //
-//            Optional<SignUpDto> optionalUser = signUpService.findUserByEmail(signUpDTO.getEmail());
-//            if (!optionalUser.isPresent()) {
-//                model.addAttribute("message", "User not found.");
-//                return "EditProfile";
+//                // Set all previous images inactive
+//                imageUploadService.setAllImagesInactiveForUser(signUpDTO.getId());
+//
+//                // Check if image details already exist for the user
+//                Optional<EditProfileImageDTO> existingImage = imageUploadService.getImageDetailsByUserId(signUpDTO.getId());
+//
+//                if (existingImage.isPresent()) {
+//                    // Update existing image details
+//                    EditProfileImageDTO editProfileImageDTO = existingImage.get();
+//                    editProfileImageDTO.setImagePath(newFileName);
+//                    editProfileImageDTO.setImageName(originalFilename);
+//                    editProfileImageDTO.setImageSize(file.getSize());
+//                    editProfileImageDTO.setImageType(file.getContentType());
+//                    editProfileImageDTO.setUpdatedBy(signUpDTO.getEmail());
+//                    editProfileImageDTO.setUpdatedOn(LocalDateTime.now());
+//                    editProfileImageDTO.setStatus("Active");
+//
+//                    imageUploadService.updateImageDetails(editProfileImageDTO); // Update
+//                } else {
+//                    // Save new image details in database
+//                    EditProfileImageDTO editProfileImageDTO = new EditProfileImageDTO();
+//                    editProfileImageDTO.setUser(signUpDTO); // Set the user
+//                    editProfileImageDTO.setImagePath(newFileName); // Set the image path
+//                    editProfileImageDTO.setImageName(originalFilename);
+//                    editProfileImageDTO.setImageSize(file.getSize());
+//                    editProfileImageDTO.setImageType(file.getContentType());
+//                    editProfileImageDTO.setCreatedBy(signUpDTO.getEmail());
+//                    editProfileImageDTO.setCreatedOn(LocalDateTime.now());
+//                    editProfileImageDTO.setUpdatedBy(signUpDTO.getEmail());
+//                    editProfileImageDTO.setUpdatedOn(LocalDateTime.now());
+//                    editProfileImageDTO.setStatus("Active");
+//
+//                    // Image upload service (editProfileImageDTO)
+//                    imageUploadService.saveImageDetails(editProfileImageDTO); // Save data
+//                }
 //            }
 //
-//            SignUpDto user = optionalUser.get();
+//            // Update profile details
+//            SignUpDTO updatedUserData = editUserProfileService.updateUserDetails(signUpDTO);
+//            if (updatedUserData != null) {
+//                model.addAttribute("signUpDTO", updatedUserData);
+//                model.addAttribute("profileUploadMsg", "Profile updated successfully");
+//                httpSession.setAttribute("email", updatedUserData.getEmail());
+//                httpSession.setAttribute("firstName", updatedUserData.getFirstName());
+//                httpSession.setAttribute("lastName", updatedUserData.getLastName());
+//                httpSession.setAttribute("contactNumber", updatedUserData.getContactNumber());
 //
-//            // Set all previous images to inactive
-//            fileUploadService.setAllImagesInactiveForUser(user.getId());
+//                if (newFileName != null) {
+//                    String imageUrl = "/images/" + newFileName;
+//                    httpSession.setAttribute("profileImage", imageUrl);
+//                    model.addAttribute("imageURL", imageUrl);
+//                }
 //
-//            FileUploadDTO fileUploadDTO = new FileUploadDTO();
-//            fileUploadDTO.setName(newFilename);
-//            fileUploadDTO.setType(file.getContentType());
-//            fileUploadDTO.setSize(file.getSize());
-//            fileUploadDTO.setUser(user);
-//            fileUploadDTO.setCreatedAt(LocalDateTime.now());
-//            fileUploadDTO.setCreatedBy(signUpDTO.getEmail());
-//            fileUploadDTO.setUpdatedAt(LocalDateTime.now());
-//            fileUploadDTO.setUpdatedBy(signUpDTO.getEmail());
-//            fileUploadDTO.setStatus("Active");
-//            fileUploadService.saveImageDetails(fileUploadDTO);
+//                // Display in console
+//                log.info("Image upload");
+//                log.info("file getName: {}", file.getName());
+//                log.info("file getContentType: {}", file.getContentType());
+//                log.info("file getResource: {}", file.getResource());
+//                log.info("file getOriginalFilename: {}", file.getOriginalFilename());
+//                log.info("File uploaded: {}, ContentType: {}", file.getOriginalFilename(), file.getContentType());
 //
-//            SignUpDto updatedDTO = editInfoService.updateUserProfile(signUpDTO.getEmail(), signUpDTO);
-//            if (updatedDTO != null) {
-//                model.addAttribute("message", "Profile updated successfully!");
-//                session.setAttribute("profileImage", "/images/" + newFilename);
-//                session.setAttribute("email", updatedDTO.getEmail());
-//                session.setAttribute("firstName", updatedDTO.getFirstName());
-//                session.setAttribute("lastName", updatedDTO.getLastName());
-//                session.setAttribute("phoneNumber", updatedDTO.getPhoneNo());
+//                return "EditUserProfile"; // Redirect to edit profile page
 //            } else {
-//                model.addAttribute("message", "Profile update failed. User not found.");
+//                model.addAttribute("message", "Profile update failed, User not found.");
 //            }
-//
-//            String imageUrl = "/images/" + newFilename;
-//            session.setAttribute("profileImage", imageUrl);
-//
-//            model.addAttribute("imageURL", imageUrl);
-//            model.addAttribute("dto", signUpDTO);
-//
 //        } catch (IOException e) {
-//            model.addAttribute("message", "File upload failed: " + e.getMessage());
+//            model.addAttribute("errorMessage", "Error uploading file: " + e.getMessage());
+//            log.error("Error uploading file", e);
 //        }
-//        return "EditProfile";
+//
+//        return "Profile"; // Handle error or success case
 //    }
 //}

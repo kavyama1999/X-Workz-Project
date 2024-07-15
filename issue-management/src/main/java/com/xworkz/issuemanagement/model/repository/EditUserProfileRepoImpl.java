@@ -56,7 +56,7 @@ public class EditUserProfileRepoImpl implements EditUserProfileRepo {
         try {
             entityTransaction.begin();
             entityManager.merge(signUpDTO); // Ensure signUpDTO is managed or retrieved first
-            entityManager.flush(); // Flush changes to the database
+            //entityManager.flush(); // Flush changes to the database
             entityTransaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,25 +68,5 @@ public class EditUserProfileRepoImpl implements EditUserProfileRepo {
         }
     }
 
-    @Override
-    public void updateUserProfileImage(EditProfileImageDTO editProfileImageDTO) {
 
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction entityTransaction = entityManager.getTransaction();
-
-        try
-        {
-            entityTransaction.begin();
-            entityManager.merge(editProfileImageDTO);
-            entityTransaction.commit();
-        }
-        catch (Exception e)
-        {
-            entityTransaction.rollback();
-        }
-
-        finally {
-            entityManager.close();
-        }
-    }
 }

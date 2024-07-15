@@ -60,6 +60,9 @@ public class EditProfileImageDTO {
 
     @Column(name = "image_path")
     private String  imagePath;
+
+    @Column(name = "status")
+    private String status;
     //private String status;
 
 

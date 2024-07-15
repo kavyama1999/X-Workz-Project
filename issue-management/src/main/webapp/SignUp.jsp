@@ -44,7 +44,7 @@
             <form action="sign-up" method="post">
 
 
-                <div class="text-primary"><b>${msg}</b></div>
+                <div class="text-success"><strong>${msg}</strong></div>
                 <!--<span style="color:red"><h4>${failedMsg}</h4></span>-->
 
                 <span style="color:red;">

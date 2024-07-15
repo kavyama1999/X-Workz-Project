@@ -62,7 +62,7 @@ public class SignUpController {
 
                 mailService.sendPasswordEmail(email, subject, body);
 
-                model.addAttribute("msg", "Signup successful. Please check your email for your password.");
+                model.addAttribute("msg", "Signup successful. " + signUpDTO.getFirstName() + " Please check your email for your password.");
                 return "SignUp";
 
             }

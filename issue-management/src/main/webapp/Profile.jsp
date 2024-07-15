@@ -18,22 +18,34 @@
                 </a>
                 <a class="navbar-brand text-white" href="index.jsp"><b>Home</b></a>
             </div>
+
+
             <div class="dropdown">
                 <div class="dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 
-                    <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">
+                   <!----image display in icon when user sign in--!>
+                   <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">
 
-                </div>
+            </div>
+
+
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="edit?email=${signUpDTO.email}"><strong>Edit</strong></a></li>
                     <li><a class="dropdown-item" href="PasswordReset.jsp"><strong>Password Reset</strong></a></li>
                     <li><a class="dropdown-item" href="view-profile"><strong>View</strong></a></li>
+
+                    <li><a class="dropdown-item" href="RaiseComplaints.jsp"><strong>RaiseComplaints</strong></a></li>
+
+
                 </ul>
             </div>
+
+
         </div>
     </nav>
 
-    <form action="/edit-profile" method="post" enctype="multipart/form-data">
+
+  <form action="/edit-profile" method="post" enctype="multipart/form-data">
         <div class="container mt-5 mb-5 d-flex justify-content-center">
             <div class="card px-2 mt-5 mb-5 py-2 bg-body shadow mt-5 mb-6 rounded" style="width:40%; padding:30px;">
                 <div class="card-body text-center">
@@ -42,6 +54,7 @@
                     <!-- Profile Page Message -->
                     <strong style="color:blue"><h3>${ProfilePageMessage}</h3></strong>
                 </div>
+
 
 
                 <!-- File upload input -->

@@ -10,9 +10,16 @@ public interface ImageUploadRepo {
     boolean saveImage(EditProfileImageDTO editProfileImageDTO);
 
 
-    //void saveProfileImage(ProfileImageUploadDto profileImageUploadDto);
 
     Optional<EditProfileImageDTO> findByUserId(int id);  //id from signUp id
+
+  //to update image table
+
+  void imageUpdateDetails(EditProfileImageDTO editProfileImageDTO);
+
+     void SetAllImagesInactiveForUser(int id);
+
+//    EditProfileImageDTO findByUserId(String email);
 
 
 }

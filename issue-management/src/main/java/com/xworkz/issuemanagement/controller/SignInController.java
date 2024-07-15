@@ -48,6 +48,7 @@ public class SignInController {
             //edit data
             httpSession.setAttribute("signUpDTO",signUpDTO);
 
+
             // Set the profile image in the session
             String profileImageUrl = "/images/" + signUpDTO.getImageName();
             httpSession.setAttribute("profileImage", profileImageUrl);

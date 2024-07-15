@@ -17,10 +17,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/") // Root mapping
-@SessionAttributes("signUpDTO")
+//@SessionAttributes("signUpDTO")
+@SessionAttributes({"signUpDTO", "editProfileImageDTO"})
 @Slf4j
 public class EditUserProfileController {
 
@@ -51,6 +53,8 @@ public class EditUserProfileController {
 
     @PostMapping("/edit-profile") // In this image also uploading
     public String updateUserProfile(SignUpDTO signUpDTO, Model model, @RequestParam("file") MultipartFile file, HttpSession httpSession) {
+        log.info("updateUserProfile method running EditUserProfileController...");
+
         try {
             String newFileName = null;
             if (file != null && !file.isEmpty()) {
@@ -61,21 +65,56 @@ public class EditUserProfileController {
                 Files.write(path, file.getBytes());
                 signUpDTO.setImageName(newFileName);
 
-                // Save image details in database
-                EditProfileImageDTO editProfileImageDTO = new EditProfileImageDTO();
-                editProfileImageDTO.setUser(signUpDTO); // Set the user
-                editProfileImageDTO.setImagePath(newFileName); // Set the image path
-                editProfileImageDTO.setImageName(originalFilename);
-                editProfileImageDTO.setImageSize(file.getSize());
-                editProfileImageDTO.setImageType(file.getContentType());
-                editProfileImageDTO.setCreatedBy(signUpDTO.getEmail());
-                editProfileImageDTO.setCreatedOn(LocalDateTime.now());
-                editProfileImageDTO.setUpdatedBy(signUpDTO.getEmail());
-                editProfileImageDTO.setUpdatedOn(LocalDateTime.now());
+                // Set all previous images inactive
+                imageUploadService.setAllImagesInactiveForUser(signUpDTO.getId());
 
-                imageUploadService.saveImageDetails(editProfileImageDTO);
+                // Check if image details already exist for the user
+                Optional<EditProfileImageDTO> existingImage = imageUploadService.getImageDetailsByUserId(signUpDTO.getId());
+
+                if (existingImage.isPresent()) {
+                    //update existing image details
+                    EditProfileImageDTO editProfileImageDTO = existingImage.get();
+
+                    //editProfileImageDTO = existingImage.get();
+
+                    editProfileImageDTO.setImagePath(newFileName);
+                    editProfileImageDTO.setImageName(originalFilename);
+                    editProfileImageDTO.setImageSize(file.getSize());
+                    editProfileImageDTO.setImageType(file.getContentType());
+                    editProfileImageDTO.setUpdatedBy(signUpDTO.getEmail());
+                    editProfileImageDTO.setUpdatedOn(LocalDateTime.now());
+                    editProfileImageDTO.setStatus("Active");
+
+
+                    imageUploadService.updateImageDetails(editProfileImageDTO);  //update
+
+                } else {
+
+
+                    // Save image details in database ..1st time its below code then to update with same row
+                    // then above code is to write
+
+                    EditProfileImageDTO editProfileImageDTO = new EditProfileImageDTO();
+                    editProfileImageDTO.setUser(signUpDTO); // Set the user
+                    editProfileImageDTO.setImagePath(newFileName); // Set the image path
+                    editProfileImageDTO.setImageName(originalFilename);
+                    editProfileImageDTO.setImageSize(file.getSize());
+                    editProfileImageDTO.setImageType(file.getContentType());
+                    editProfileImageDTO.setCreatedBy(signUpDTO.getEmail());
+                    editProfileImageDTO.setCreatedOn(LocalDateTime.now());
+                    editProfileImageDTO.setUpdatedBy(signUpDTO.getEmail());
+                    editProfileImageDTO.setUpdatedOn(LocalDateTime.now());
+                    editProfileImageDTO.setStatus("Active");
+
+
+                    //image upload service (editProfileImageDTO)
+                    imageUploadService.saveImageDetails(editProfileImageDTO); //save data
+
+
+                }
+
             }
-
+            //editProfile details updating
             SignUpDTO updatedUserData = editUserProfileService.updateUserDetails(signUpDTO);
             if (updatedUserData != null) {
                 model.addAttribute("signUpDTO", updatedUserData);
@@ -110,4 +149,5 @@ public class EditUserProfileController {
 
         return "Profile"; // Handle error or success case
     }
+
 }
