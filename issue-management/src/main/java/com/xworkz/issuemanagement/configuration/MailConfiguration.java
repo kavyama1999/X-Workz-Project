@@ -16,8 +16,6 @@ import java.util.Properties;
 public class MailConfiguration {
 
 
-
-
     public MailConfiguration()
     {
         System.out.println("Created MailConfiguration.. ");

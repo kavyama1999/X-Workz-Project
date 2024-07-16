@@ -7,16 +7,16 @@
 <meta charset="ISO-8859-1">
 <title>Forgot Password</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
 <script src="/issue-management/js/passwordReset.js"></script>
 
-
 <style>
-        .oval-btn {
-            border-radius: 50px; /* Adjust the value as needed for an oval shape */
-            padding: 10px 20px;  /* Adjust the padding to control the button size */
-        }
-    </style>
-
+    .oval-btn {
+        border-radius: 50px; /* Adjust the value as needed for an oval shape */
+        padding: 10px 20px;  /* Adjust the padding to control the button size */
+    }
+</style>
 </head>
 <body>
 
@@ -27,15 +27,11 @@
                 <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
             </a>
             <a class="navbar-brand text-white" href="index.jsp"><b>Home</b></a>
-
-             <a class="navbar-brand text-white" href="SignIn.jsp"><b>SignIn</b></a>
-
-         <!--   <a class="navbar-brand text-white" href="Profile.jsp"><b>Profile</b></a>--!>
+            <a class="navbar-brand text-white" href="SignIn.jsp"><b>SignIn</b></a>
         </div>
 
-        <!-- it will display image when user sign in ---!>
-     <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">
-
+        <!-- Display profile image when user is signed in -->
+        <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">
     </div>
 </nav>
 
@@ -50,14 +46,14 @@
         <form action="reset-password" method="post">
             <div class="row mb-3">
                 <label for="email" class="form-label"><b>Email:</b></label>
-                <input type="email" class="form-control" id="email" name="email" autocomplete="email" onblur="emailValidation()" >
+                <input type="email" class="form-control" id="email" name="email" autocomplete="email" onblur="emailValidation()">
                 <span id="emailError" style="color:red;"></span>
             </div>
 
             <div class="mb-3">
                 <span id="oldPasswordError" style="color:red;"></span><br>
                 <label for="oldPassword" class="form-label"><b>Old Password:</b></label>
-                <input type="password" class="form-control" id="oldPassword" name="oldPassword" autocomplete="old-password" onblur="oldPasswordValidation()">
+                <input type="password" class="form-control" id="oldPassword" name="oldPassword" autocomplete="old-password" onblur="oldPasswordValidation()"/>
             </div>
 
             <div class="mb-3">

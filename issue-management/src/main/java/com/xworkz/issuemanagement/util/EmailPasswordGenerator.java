@@ -7,6 +7,7 @@ public class EmailPasswordGenerator {
 
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final String SPECIAL_CHARACTERS = "!@#$%^&*()_+[]{}|;:,.<>?";
+    private static final String DIGITS = "0123456789";
     private static final int PASSWORD_LENGTH = 10; // Adjust the length as needed
     private static final SecureRandom RANDOM = new SecureRandom();
 
@@ -18,11 +19,14 @@ public class EmailPasswordGenerator {
         // Ensure at least one special character
         String specialCharacter = RandomStringUtils.random(1, SPECIAL_CHARACTERS);
 
-        // Generate remaining characters from CHARACTERS
-        String remainingCharacters = RandomStringUtils.random(PASSWORD_LENGTH - 1, CHARACTERS);
+        // Ensure at least one digit
+        String digit = RandomStringUtils.random(1, DIGITS);
 
-        // Combine both and shuffle to ensure the special character is not always at the beginning
-        String combined = specialCharacter + remainingCharacters;
+        // Generate remaining characters from CHARACTERS excluding one slot for the special character and one for the digit
+        String remainingCharacters = RandomStringUtils.random(PASSWORD_LENGTH - 2, CHARACTERS);
+
+        // Combine special character, digit, and remaining characters, then shuffle
+        String combined = specialCharacter + digit + remainingCharacters;
         return shuffleString(combined);
     }
 

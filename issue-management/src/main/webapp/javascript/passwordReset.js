@@ -17,7 +17,7 @@ function validateAndEnableSubmit() {
 }
 
 function emailValidation() {
-    console.log("emailValidation")
+    console.log("emailValidation");
     let email = document.getElementById("email");
     let error = document.getElementById("emailError");
     let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,13 +35,10 @@ function emailValidation() {
 }
 
 function oldPasswordValidation() {
-    console.log("oldPasswordValidation")
+    console.log("oldPasswordValidation");
     let oldPassword = document.getElementById("oldPassword");
     let error = document.getElementById("oldPasswordError");
-    //let oldPasswordRegex =!@#$%^&*()_+[]{}|;:,.<>?
-    //let oldPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&<>])[A-Za-z\d@$!%*?&<>]{10,}$/;
     let oldPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\[\]{}|;:,.<>?])[A-Za-z\d!@#$%^&*()_+\[\]{}|;:,.<>?]{10,}$/;
-
 
     if (oldPasswordRegex.test(oldPassword.value)) {
         error.innerHTML = "";
@@ -55,12 +52,12 @@ function oldPasswordValidation() {
     validateAndEnableSubmit();
 }
 
+
+
 function newPasswordValidation() {
-    console.log("newPasswordValidation")
+    console.log("newPasswordValidation");
     let newPassword = document.getElementById("newPassword");
     let error = document.getElementById("newPasswordError");
-//    let newPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&<>])[A-Za-z\d@$!%*?&<>]{10,}$/;
-
     let newPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\[\]{}|;:,.<>?])[A-Za-z\d!@#$%^&*()_+\[\]{}|;:,.<>?]{10,}$/;
 
     if (newPasswordRegex.test(newPassword.value)) {
@@ -72,11 +69,12 @@ function newPasswordValidation() {
         fieldsChecks["newPassword"] = false;
     }
 
-   // confirmPasswordValidation();
+    confirmPasswordValidation(); // Call confirmPasswordValidation to ensure both passwords match
     validateAndEnableSubmit();
 }
 
 function confirmPasswordValidation() {
+    console.log("confirmPasswordValidation");
     let newPassword = document.getElementById("newPassword");
     let confirmPassword = document.getElementById("confirmPassword");
     let error = document.getElementById("confirmPasswordError");
@@ -92,3 +90,6 @@ function confirmPasswordValidation() {
 
     validateAndEnableSubmit();
 }
+
+
+//    let newPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&<>])[A-Za-z\d@$!%*?&<>]{10,}$/;

@@ -48,7 +48,9 @@ public class EditUserProfileController {
             }
         }
         model.addAttribute("errorMessage", "Error fetching user details");
-        return "ErrorPage"; // Handle error appropriately
+       // return "ErrorPage"; // Handle error appropriately
+    return "EditUserProfile";
+
     }
 
     @PostMapping("/edit-profile") // In this image also uploading

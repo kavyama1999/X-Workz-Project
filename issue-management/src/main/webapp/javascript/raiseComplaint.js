@@ -23,7 +23,7 @@ async function loadCountries() {
 
     countries.forEach(country => {
         let option = document.createElement('option');
-        option.value = country.iso2;
+        option.value = country.name;
         option.textContent = country.name;
         countrySelect.appendChild(option);
     });
@@ -40,7 +40,7 @@ async function loadStates(countryCode) {
 
     states.forEach(state => {
         let option = document.createElement('option');
-        option.value = state.iso2;
+        option.value = state.name;
         option.textContent = state.name;
         stateSelect.appendChild(option);
     });
@@ -57,7 +57,7 @@ async function loadCities(stateCode, countryCode) {
 
     cities.forEach(city => {
         let option = document.createElement('option');
-        option.value = city.id;
+        option.value = city.name;
         option.textContent = city.name;
         citySelect.appendChild(option);
     });

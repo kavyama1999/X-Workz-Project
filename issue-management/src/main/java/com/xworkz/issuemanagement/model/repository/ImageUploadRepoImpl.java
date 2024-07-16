@@ -47,7 +47,7 @@ public class ImageUploadRepoImpl implements ImageUploadRepo {
         EntityTransaction entityTransaction = entityManager.getTransaction();
 
         try {
-            String query = "SELECT p FROM EditProfileImageDTO p WHERE p.imageUserId = :id";
+            String query = "SELECT p FROM EditProfileImageDTO p WHERE p.user = :id"; //imageUserId
             Query query1 = entityManager.createQuery(query);
             query1.setParameter("id", id);
             return query1.getResultList().stream().findFirst();

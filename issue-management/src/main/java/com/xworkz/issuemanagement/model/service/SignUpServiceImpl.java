@@ -38,6 +38,10 @@ public class SignUpServiceImpl implements SignUpService {
 
         setAudit(signUpDTO, createdBy, createdOn, updatedBy, updatedOn, isActive);
 
+        //image set in profile
+
+        signUpDTO.setImageName("profileicon.jpg");
+
 
         //generating password to stored in database
         String generatedPassword = EmailPasswordGenerator.generatePassword();

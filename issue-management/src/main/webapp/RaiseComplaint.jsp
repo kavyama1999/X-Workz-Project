@@ -39,7 +39,13 @@
             <h3><b><center>Raise Complaints</center></b></h3>
         </div>
         <div class="card-body text-dark">
-            <form action="sign-up" method="post">
+
+        <span style="color:green"><h2>${raiseComplaintMsg}</h2></span>
+
+
+            <form action="raise-complaint" method="post">
+
+<!--For server side validation this is used--!>
                 <div class="text-success"><strong>${msg}</strong></div>
                 <span style="color:red;">
                     <c:forEach items="${errors}" var="objectError">
