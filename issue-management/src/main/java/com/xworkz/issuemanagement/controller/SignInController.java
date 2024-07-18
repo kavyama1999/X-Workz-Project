@@ -46,13 +46,14 @@ public class SignInController {
             httpSession.setAttribute("signedInUserEmail", email);
 
             //edit data
-            httpSession.setAttribute("signUpDTO",signUpDTO);
+            httpSession.setAttribute("signUpDTO", signUpDTO);
 
 
             // Set the profile image in the session
             String profileImageUrl = "/images/" + signUpDTO.getImageName();
             httpSession.setAttribute("profileImage", profileImageUrl);
 
+            signUpDTO.setImageName("profileicon.jpg");
 
             model.addAttribute("ProfilePageMessage", "Welcome To Issue Management System, " + signUpDTO.getFirstName());
             return "Profile";

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,8 +33,8 @@ public class SignUpController {
 
     public SignUpController() {
         //System.out.println("No param constructor created for SignUpController..");
-   log.info("No param constructor created for SignUpController... ");
-   //log.info("hgdfhdg{}",name);
+        log.info("No param constructor created for SignUpController... ");
+        //log.info("hgdfhdg{}",name);
     }
 
 
@@ -46,14 +47,13 @@ public class SignUpController {
             bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError.getDefaultMessage()));
             model.addAttribute("errors", bindingResult.getAllErrors());
             model.addAttribute("signUpDTO", signUpDTO); //this retaining values form form page
-           return "SignUp";
+            return "SignUp";
 
 
         } else {
             boolean dataValid = this.signUpService.saveAndValidate(signUpDTO);
-            if(dataValid)
-            {
-                System.out.println("SignUpService registration successful in SignUpController:"+signUpDTO);
+            if (dataValid) {
+                System.out.println("SignUpService registration successful in SignUpController:" + signUpDTO);
 
                 // Send email with generated password
                 String subject = "welcome to our Issue management";
@@ -63,19 +63,28 @@ public class SignUpController {
                 mailService.sendPasswordEmail(email, subject, body);
 
                 model.addAttribute("msg", "Signup successful. " + signUpDTO.getFirstName() + " Please check your email for your password.");
-                return "SignUp";
+                //return "SignUp";
+                //return "redirect:/SignUp";
+                return "redirect:/sign-up-success"; // Redirect to avoid form resubmission
 
-            }
 
-            else
-            {
-                System.out.println("SignUpService registration not successful in SignUpController:"+signUpDTO);
+            } else {
+                System.out.println("SignUpService registration not successful in SignUpController:" + signUpDTO);
             }
             model.addAttribute("msg", "Registration successful :" + signUpDTO.getFirstName());
+            return "SignUp";
 
         }
 
-        return "SignUp";
     }
 
+
+    @GetMapping("/sign-up-success")
+    public String signUpSuccess(SignUpDTO signUpDTO, Model model) {
+        model.addAttribute("msg", "Signup successful. " + signUpDTO.getFirstName() + " Please check your email for your password.");
+
+        // Return the success view
+        return "SignUp";
+    }
 }
+

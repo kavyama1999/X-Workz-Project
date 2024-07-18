@@ -47,9 +47,11 @@ public class ImageUploadRepoImpl implements ImageUploadRepo {
         EntityTransaction entityTransaction = entityManager.getTransaction();
 
         try {
+            entityTransaction.begin();
             String query = "SELECT p FROM EditProfileImageDTO p WHERE p.user = :id"; //imageUserId
             Query query1 = entityManager.createQuery(query);
             query1.setParameter("id", id);
+            entityTransaction.commit();
             return query1.getResultList().stream().findFirst();
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,26 +94,26 @@ public class ImageUploadRepoImpl implements ImageUploadRepo {
             EntityTransaction entityTransaction = entityManager.getTransaction();
 
             try {
-                    entityTransaction.begin();
+                entityTransaction.begin();
 //                    String query = "UPDATE EditProfileImageDTO e SET e.status = 'Inactive' WHERE e.user.id = :userId";
 
                 String query = "UPDATE EditProfileImageDTO  SET status = 'Inactive' WHERE user.id = :userId";
 
                 Query updateQuery = entityManager.createQuery(query);
-                    updateQuery.setParameter("userId", id);
-                    int updatedCount = updateQuery.executeUpdate();
+                updateQuery.setParameter("userId", id);
+                int updatedCount = updateQuery.executeUpdate();
 
-                    log.info("Number of images set inactive: {}", updatedCount);
-                    entityTransaction.commit();
-                } catch (Exception e) {
-                    log.error("Error setting images inactive for user with ID {}: {}", id, e.getMessage());
-                    if (entityTransaction != null && entityTransaction.isActive()) {
-                        entityTransaction.rollback();
-                    }
-                } finally {
-                    entityManager.close();
-                    log.info("Connection closed for SetAllImagesInactiveForUser..");
+                log.info("Number of images set inactive: {}", updatedCount);
+                entityTransaction.commit();
+            } catch (Exception e) {
+                log.error("Error setting images inactive for user with ID {}: {}", id, e.getMessage());
+                if (entityTransaction != null && entityTransaction.isActive()) {
+                    entityTransaction.rollback();
                 }
+            } finally {
+                entityManager.close();
+                log.info("Connection closed for SetAllImagesInactiveForUser..");
             }
         }
     }
+}

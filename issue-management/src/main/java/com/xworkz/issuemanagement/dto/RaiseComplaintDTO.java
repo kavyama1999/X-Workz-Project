@@ -58,8 +58,8 @@ public class RaiseComplaintDTO {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cmplt_id", referencedColumnName = "id")
     //@JoinColumn(name = "user_id", nullable = false)
-
     //private SignUpDTO user;
+
     private SignUpDTO signUpDTO;
 
 

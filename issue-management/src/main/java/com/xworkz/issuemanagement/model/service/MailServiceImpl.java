@@ -6,6 +6,7 @@ import com.xworkz.issuemanagement.model.repository.MailRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +14,9 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private MailRepo mailRepo;
@@ -38,7 +42,11 @@ public class MailServiceImpl implements MailService {
     @Override
     public SignUpDTO findByEmailAndPassword(String email, String password) {
         SignUpDTO user = mailRepo.findByEmailAndPassword(email, password);
+        //SignUpDTO signUpDTO =  mailRepo.findByEmail(email);
+
         if (user != null && !user.isAccountLocked() && user.getPassword().equals(password)) {
+            // if (signUpDTO != null && !signUpDTO.isAccountLocked() && passwordEncoder.matches(password,signUpDTO.getPassword())) {
+
             return user;
         }
         return null;
@@ -62,20 +70,17 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public int getFailedAttempts(String email)
-    {
+    public int getFailedAttempts(String email) {
         SignUpDTO user = mailRepo.findByEmail(email);
         return (user != null) ? user.getFailedAttempt() : 0;
     }
 
 
     @Override
-    public void resetFailedAttempts(String email)
-    {
+    public void resetFailedAttempts(String email) {
 
         SignUpDTO user = mailRepo.findByEmail(email);
-        if (user != null)
-        {
+        if (user != null) {
             user.setFailedAttempt(0); //false
             mailRepo.update(user);
 

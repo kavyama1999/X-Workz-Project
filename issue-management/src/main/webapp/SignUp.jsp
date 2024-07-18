@@ -8,15 +8,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
     <script src="/issue-management/js/signup.js"></script>
 
 
-<style>
+
+
+ <style>
         .oval-btn {
-            border-radius: 50px; /* Adjust the value as needed for an oval shape */
-            padding: 10px 20px;  /* Adjust the padding to control the button size */
+            border-radius: 50px;
+            padding: 10px 20px;
         }
+
+
+       body {
+                    background-color: #e6f7ff; /* Change this to the desired background color */
+                }
     </style>
+
 
 </head>
 <body>
@@ -54,52 +64,83 @@
                 </span>
 
                 <div class="row mb-3">
-                    <span id="firstNameError"></span><br>
-                    <label for="firstName" class="form-label"><b>First Name:</b></label>
-                    <input type="text" class="form-control" id="firstName" onblur="firstNameValidation()" name="firstName" >
-                </div>
+                    <label for="firstName" class="form-label "><b>First Name:</b></label>
+                    <div class="input-group">
+                     <span id="firstNameError"></span><br>
+
+                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                        <input type="text" class="form-control" id="firstName" onblur="firstNameValidation()" name="firstName" placeholder="Enter firstname">
+                    </div>
+                </div><br>
+
+
+
                 <div class="row mb-3">
-                    <span id="lastNameError"></span><br>
                     <label for="lastName" class="form-label"><b>Last Name:</b></label>
-                    <input type="text" class="form-control" id="lastName" onblur="lastNameValidation()" name="lastName" >
+                     <div class="input-group">
+                    <span id="lastNameError"></span><br>
+
+             <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+
+                <input type="text" class="form-control" id="lastName" onblur="lastNameValidation()" name="lastName" placeholder="Enter lastname" >
                 </div>
+              </div>
+
+
+
+
+
+ <div class="row mb-3">
+                <span id="emailError" style="color:red;"></span><br>
+                <label for="email" class="form-label"><b>Email:</b></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input type="email" class="form-control" id="email" onblur="emailValidation()" onchange="emailAjaxValidation()"  name="email" placeholder="Enter email" >
+                </div>
+            </div>
+
 
                 <div class="row mb-3">
-                    <span id="emailError" style="color:red"></span><br>
-                    <label for="email" class="form-label"><b>Email:</b></label>
-                    <input type="email" class="form-control" id="email" onblur="emailValidation()" onchange="emailAjaxValidation()"  name="email" >
-                </div>
+              <span id="contactNumberError"></span><br>
 
-
-
-                <div class="row mb-3">
-                    <span id="contactNumberError"></span><br>
                     <label for="contactNumber" class="form-label"><b>Contact Number:</b></label>
-                    <input type="tel" class="form-control" id="contactNumber" onblur="contactNumberValidation()" onchange="contactNumberAjaxValidation()" name="contactNumber" >
+                  <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+
+        <input type="tel" class="form-control" id="contactNumber" onblur="contactNumberValidation()" onchange="contactNumberAjaxValidation()" name="contactNumber" placeholder="Enter contactnumber" >
+                </div>
                 </div>
 
 
-                <div class="row mb-3">
-                    <span id="altContactNbrError"></span><br>
-                    <label for="alternateContactNumber" class="form-label"><b>Alternative Contact Number:</b></label>
-                    <input type="tel" class="form-control" id="alternateContactNumber" onblur="alternateContactNumberValidation()" name="alternateContactNumber" >
-                </div>
+
+               <div class="row mb-3">
+                   <span id="altContactNbrError"></span><br>
+                   <label for="alternateContactNumber" class="form-label"><b>Alternative Contact Number:</b></label>
+                   <div class="input-group">
+                       <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
+                       <input type="tel" class="form-control" id="alternateContactNumber" onblur="alternateContactNumberValidation()" name="alternateContactNumber" placeholder="Enter alternativecontactnumber">
+                   </div>
+               </div>
 
 
                 <div class="mb-3">
                     <span id="addressError"></span><br>
-                    <b>Address</b>
-                    <textarea class="form-control" id="address" style="height: 100px" name="address" onblur="addressValidation()"></textarea>
+                    <label for="address" class="form-label"><b>Address</b></label>
+                   <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                        <textarea class="form-control" id="address" style="height: 100px" name="address" onblur="addressValidation()"  placeholder="Enter address"></textarea>
+                    </div>
                 </div>
 
 
-                <div>
-                    <span id="agreeError"></span>
-                    <label for="agree" class="list-group-item">
-                        <input name="agree" id="agree" onchange="agreeValidation()" class="form-check-input me-1" type="checkbox" value="agree" ${signUpDTO.agree eq 'agree' ? 'checked' : ''}>
-                        <b>Agree</b>
-                    </label>
-                </div><br>
+
+                              <div>
+                                <span id="agreeError"></span>
+                                <label for="agree" class="list-group-item">
+                                    <input name="agree" id="agree" onchange="agreeValidation()" class="form-check-input me-1" type="checkbox" value="agree" ${signUpDTO.agree eq 'agree' ? 'checked' : ''}>
+                                    <b>Agree</b>
+                                </label>
+                            </div><br>
 
 
                 <div>

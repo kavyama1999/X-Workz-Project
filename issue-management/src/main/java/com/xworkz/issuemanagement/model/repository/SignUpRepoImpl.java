@@ -31,8 +31,8 @@ public class SignUpRepoImpl  implements  SignUpRepo{
 
             try {
                 entityTransaction.begin();
-                entityManager.persist(signUpDTO);
-                //entityManager.merge(signUpDTO);
+               // entityManager.persist(signUpDTO);
+                entityManager.merge(signUpDTO);
 
                 entityTransaction.commit();
             } catch (Exception e) {

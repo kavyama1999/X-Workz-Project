@@ -8,6 +8,8 @@
 <title>Forgot Password</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 
 <script src="/issue-management/js/passwordReset.js"></script>
 
@@ -44,29 +46,59 @@
         <span style="color:red"><strong>${passwordResetError}</strong></span>
 
         <form action="reset-password" method="post">
-            <div class="row mb-3">
-                <label for="email" class="form-label"><b>Email:</b></label>
-                <input type="email" class="form-control" id="email" name="email" autocomplete="email" onblur="emailValidation()">
+
+
+          <div class="row mb-3">
                 <span id="emailError" style="color:red;"></span>
-            </div>
 
-            <div class="mb-3">
-                <span id="oldPasswordError" style="color:red;"></span><br>
-                <label for="oldPassword" class="form-label"><b>Old Password:</b></label>
-                <input type="password" class="form-control" id="oldPassword" name="oldPassword" autocomplete="old-password" onblur="oldPasswordValidation()"/>
-            </div>
+         <label for="email" class="form-label"><b>Email:</b></label>
+                        <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="form-control" id="email" name="email" autocomplete="email" onblur="emailValidation()" placeholder="Enter email">
+                        </div>
+                    </div>
 
-            <div class="mb-3">
+
+             <div class="mb-3">
+                            <span id="oldPasswordError" style="color:red;"></span><br>
+                            <label for="oldPassword" class="form-label"><b>Old Password:</b></label>
+                            <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+
+                                <input type="password" class="form-control" id="oldPassword" name="oldPassword" autocomplete="old-password" onblur="oldPasswordValidation()"  placeholder="Enter old password"/>
+                            </div>
+                        </div>
+
+
+
+          <!---  <div class="mb-3">
                 <span id="newPasswordError" style="color:red;"></span><br>
                 <label for="newPassword" class="form-label"><b>New Password:</b></label>
-                <input type="password" class="form-control" id="newPassword" name="newPassword" autocomplete="new-password" onblur="newPasswordValidation()">
-            </div>
+                <input type="password" class="form-control" id="newPassword" name="newPassword" autocomplete="new-password" onblur="newPasswordValidation()" placeholder="Enter new password">
+            </div>--!>
+
 
             <div class="mb-3">
-                <span id="confirmPasswordError" style="color:red;"></span><br>
-                <label for="confirmPassword" class="form-label"><b>Confirm Password:</b></label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" autocomplete="new-password" onblur="confirmPasswordValidation()">
-            </div>
+                            <span id="newPasswordError" style="color:red;"></span><br>
+                            <label for="newPassword" class="form-label"><b>New Password:</b></label>
+                            <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-key w-2"></i></span>
+
+                                <input type="password" class="form-control" id="newPassword" name="newPassword" autocomplete="new-password" onblur="newPasswordValidation()"  placeholder="Enter new password">
+                            </div>
+                        </div>
+
+
+
+            <div class="mb-3">
+                            <span id="confirmPasswordError" style="color:red;"></span><br>
+                            <label for="confirmPassword" class="form-label"><b>Confirm Password:</b></label>
+                            <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-check"></i></span>
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" autocomplete="new-password" onblur="confirmPasswordValidation()" placeholder="Enter confirm password">
+                            </div>
+                        </div>
+
 
             <div>
                 <input type="submit" value="Reset Password" class="btn btn-primary oval-btn" id="submit" disabled>

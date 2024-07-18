@@ -41,7 +41,7 @@
 
     <div class="card border-dark container w-25 mt-5 mb-5 justify-content-center">
         <div class="card-header">
-            <h3><b><center>Sign Up </center></b></h3>
+            <h3><b><center>Edit Profile </center></b></h3>
         </div>
         <div class="card-body text-dark">
 
@@ -51,7 +51,7 @@
         <span style="color:red">${errorMessageProfile}</span>
         <span style="color:green">${message}</span>
         <span style="color:red">${errorMessage}</span>
-<span style="color:green"><strong>${profileUploadMsg}</strong></span>
+ <span style="color:green"><strong>${profileUploadMsg}</strong></span>
 
 
 

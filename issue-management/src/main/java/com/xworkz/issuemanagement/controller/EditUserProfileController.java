@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -21,7 +22,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/") // Root mapping
-//@SessionAttributes("signUpDTO")
 @SessionAttributes({"signUpDTO", "editProfileImageDTO"})
 @Slf4j
 public class EditUserProfileController {
@@ -48,13 +48,11 @@ public class EditUserProfileController {
             }
         }
         model.addAttribute("errorMessage", "Error fetching user details");
-       // return "ErrorPage"; // Handle error appropriately
-    return "EditUserProfile";
-
+        return "EditUserProfile";
     }
 
     @PostMapping("/edit-profile") // In this image also uploading
-    public String updateUserProfile(SignUpDTO signUpDTO, Model model, @RequestParam("file") MultipartFile file, HttpSession httpSession) {
+    public String updateUserProfile(SignUpDTO signUpDTO, Model model, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         log.info("updateUserProfile method running EditUserProfileController...");
 
         try {
@@ -76,9 +74,6 @@ public class EditUserProfileController {
                 if (existingImage.isPresent()) {
                     //update existing image details
                     EditProfileImageDTO editProfileImageDTO = existingImage.get();
-
-                    //editProfileImageDTO = existingImage.get();
-
                     editProfileImageDTO.setImagePath(newFileName);
                     editProfileImageDTO.setImageName(originalFilename);
                     editProfileImageDTO.setImageSize(file.getSize());
@@ -86,16 +81,9 @@ public class EditUserProfileController {
                     editProfileImageDTO.setUpdatedBy(signUpDTO.getEmail());
                     editProfileImageDTO.setUpdatedOn(LocalDateTime.now());
                     editProfileImageDTO.setStatus("Active");
-
-
                     imageUploadService.updateImageDetails(editProfileImageDTO);  //update
-
                 } else {
-
-
-                    // Save image details in database ..1st time its below code then to update with same row
-                    // then above code is to write
-
+                    // Save image details in database for the first time
                     EditProfileImageDTO editProfileImageDTO = new EditProfileImageDTO();
                     editProfileImageDTO.setUser(signUpDTO); // Set the user
                     editProfileImageDTO.setImagePath(newFileName); // Set the image path
@@ -107,20 +95,13 @@ public class EditUserProfileController {
                     editProfileImageDTO.setUpdatedBy(signUpDTO.getEmail());
                     editProfileImageDTO.setUpdatedOn(LocalDateTime.now());
                     editProfileImageDTO.setStatus("Active");
-
-
-                    //image upload service (editProfileImageDTO)
                     imageUploadService.saveImageDetails(editProfileImageDTO); //save data
-
-
                 }
-
             }
             //editProfile details updating
             SignUpDTO updatedUserData = editUserProfileService.updateUserDetails(signUpDTO);
             if (updatedUserData != null) {
-                model.addAttribute("signUpDTO", updatedUserData);
-                model.addAttribute("profileUploadMsg", "Profile updated successfully");
+                redirectAttributes.addFlashAttribute("profileUploadMsg", "Profile updated successfully");
                 httpSession.setAttribute("email", updatedUserData.getEmail());
                 httpSession.setAttribute("firstName", updatedUserData.getFirstName());
                 httpSession.setAttribute("lastName", updatedUserData.getLastName());
@@ -129,27 +110,22 @@ public class EditUserProfileController {
                 if (newFileName != null) {
                     String imageUrl = "/images/" + newFileName;
                     httpSession.setAttribute("profileImage", imageUrl);
-                    model.addAttribute("imageURL", imageUrl);
+                    redirectAttributes.addFlashAttribute("imageURL", imageUrl);
                 }
-
-                // Display in console
                 log.info("Image upload");
                 log.info("file getName: {}", file.getName());
                 log.info("file getContentType: {}", file.getContentType());
                 log.info("file getResource: {}", file.getResource());
                 log.info("file getOriginalFilename: {}", file.getOriginalFilename());
                 log.info("File uploaded: {}, ContentType: {}", file.getOriginalFilename(), file.getContentType());
-
-                return "EditUserProfile"; // Redirect to edit profile page
+                return "redirect:/edit?email=" + signUpDTO.getEmail(); // Redirect to avoid form resubmission
             } else {
-                model.addAttribute("message", "Profile update failed, User not found.");
+                redirectAttributes.addFlashAttribute("message", "Profile update failed, User not found.");
             }
         } catch (IOException e) {
-            model.addAttribute("errorMessage", "Error uploading file: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "Error uploading file: " + e.getMessage());
             log.error("Error uploading file", e);
         }
-
-        return "Profile"; // Handle error or success case
+        return "redirect:/edit?email=" + signUpDTO.getEmail(); // Handle error appropriately
     }
-
 }

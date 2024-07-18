@@ -44,17 +44,17 @@
             <div class="row mb-3">
                 <label for="email" class="form-label"><b>Email:</b></label>
                 <input type="email" class="form-control" id="email" name="email" required>
-            </div>
+            </div><br>
 
 
 
             <div>
-                <input type="submit" value="Reset Password" class="btn btn-primary oval-btn"">
-            </div>
+              <center>  <input type="submit" value="Reset Password" class="btn btn-primary oval-btn""> </center>
+            </div><br>
 
 
             <div class="mb-3">
-                    <center>     <a href="SignIn.jsp" class="link-primary"><strong>SignIn Here?</strong></a></p></center>
+                    <center>     <a href="SignIn.jsp" class="link-primary"><strong>SignIn Here?</strong></a></p> </center>
                         </div>
 
         </form>

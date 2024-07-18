@@ -15,8 +15,18 @@
 <style>
     .oval-btn {
         border-radius: 50px; /* Adjust the value as needed for an oval shape */
-        padding: 10px 20px;  /* Adjust the padding to control the button size */
+        padding: 20px 40px;  /* Adjust the padding to control the button size */
     }
+
+
+        .bold-text {
+            font-weight: bold; /* Makes the text bold */
+            font-size: 1.5em;  /* Adjust the size as needed */
+        }
+
+       body {
+                    background-color: #e6f7ff; /* Change this to the desired background color */
+                }
 </style>
 
 <script>
@@ -80,7 +90,7 @@
             </div>
 
             <div class="d-flex justify-content-center mt-3">
-                <input type="submit" value="SignIn" class="btn btn-primary oval-btn" id="signInButton">
+                <input type="submit" value="SignIn" class="btn btn-primary oval-btn bold-text" id="signInButton">
             </div>
         </form>
     </div>
