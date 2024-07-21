@@ -46,7 +46,7 @@ public class SignInController {
             httpSession.setAttribute("signedInUserEmail", email);
 
             //edit data
-            httpSession.setAttribute("signUpDTO", signUpDTO);
+            httpSession.setAttribute("signUpDTO", signUpDTO); //also used for saving signUp user id in complaint table
 
 
             // Set the profile image in the session
@@ -78,11 +78,15 @@ public class SignInController {
 
     // Forgot password
     @PostMapping("forgot-password")
-    public String resetPassword(@RequestParam String email, Model model) {
+    public String resetPassword(@RequestParam String email, Model model)
+    {
         boolean success = forgotPasswordService.resetPassword(email);
-        if (success) {
+        if (success)
+        {
             model.addAttribute("forgotPasswordMessage", "A new password has been sent to your email.");
-        } else {
+        }
+        else
+            {
             model.addAttribute("forgotPasswordError", "Email address not found.");
         }
         return "ForgotPassword";

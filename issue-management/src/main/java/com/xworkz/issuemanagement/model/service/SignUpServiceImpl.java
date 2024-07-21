@@ -1,6 +1,8 @@
 package com.xworkz.issuemanagement.model.service;
 
 import com.xworkz.issuemanagement.dto.SignUpDTO;
+import com.xworkz.issuemanagement.emailsending.MailSend;
+import com.xworkz.issuemanagement.model.repository.MailRepo;
 import com.xworkz.issuemanagement.model.repository.SignUpRepo;
 import com.xworkz.issuemanagement.util.EmailPasswordGenerator;
 import org.slf4j.Logger;
@@ -23,6 +25,16 @@ public class SignUpServiceImpl implements SignUpService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+//    @Autowired
+//    private MailRepo mailRepo;
+
+    @Autowired
+    private MailSend mailSend;
+
+
+
+
+
     public SignUpServiceImpl() {
         System.out.println("No param Constructor created for SignUpServiceImpl.. ");
     }
@@ -32,6 +44,7 @@ public class SignUpServiceImpl implements SignUpService {
     public boolean saveAndValidate(SignUpDTO signUpDTO) {
 
         System.out.println("saveAndValidate method running in SignUpServiceImpl");
+
 
 
         // Set audit fields
@@ -53,8 +66,9 @@ public class SignUpServiceImpl implements SignUpService {
 
         //generating password to stored in database
         String generatedPassword = EmailPasswordGenerator.generatePassword();
-        signUpDTO.setPassword(generatedPassword);
-        //signUpDTO.setPassword(passwordEncoder.encode(generatedPassword));
+
+        //decode
+        signUpDTO.setPassword(passwordEncoder.encode(generatedPassword));
 
 
 
@@ -62,7 +76,13 @@ public class SignUpServiceImpl implements SignUpService {
 
         if (data) {
             System.out.println("SignUpRepo successful in SignUpServiceImpl:" + signUpDTO);
+            signUpDTO.setPassword(generatedPassword);
+
+            //mail send class
+            mailSend.sendPassword(signUpDTO);
             log.info("your decoded password is :"+generatedPassword);
+
+
             return data;
         } else {
             System.out.println("SignUpRepo not successful in SignUpServiceImpl:" + signUpDTO);

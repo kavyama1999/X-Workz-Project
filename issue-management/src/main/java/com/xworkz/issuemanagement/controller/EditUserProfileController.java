@@ -107,6 +107,8 @@ public class EditUserProfileController {
                 httpSession.setAttribute("lastName", updatedUserData.getLastName());
                 httpSession.setAttribute("contactNumber", updatedUserData.getContactNumber());
 
+
+                //set imageUrl in session
                 if (newFileName != null) {
                     String imageUrl = "/images/" + newFileName;
                     httpSession.setAttribute("profileImage", imageUrl);

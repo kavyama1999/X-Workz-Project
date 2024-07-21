@@ -4,12 +4,11 @@ package com.xworkz.issuemanagement.model.repository;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
 @Repository
-public class PasswordResetRepoImpl implements PasswordResetRepo {
+public class ChangePasswordRepoImpl implements ChangePasswordRepo {
 
 
     @Autowired
@@ -80,7 +79,7 @@ public class PasswordResetRepoImpl implements PasswordResetRepo {
 
     @Override
     // @Transactional
-    public void updatePassword(String email, String newPassword) {
+    public boolean updatePassword(String email, String newPassword) {
         // to update the reset password to password in database
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -101,14 +100,19 @@ public class PasswordResetRepoImpl implements PasswordResetRepo {
             System.out.println(executeData);
             entityTransaction.commit();
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
             entityTransaction.rollback();
-        } finally {
+            return false;
+        }
+        finally
+        {
 
             entityManager.close();
         }
-
+return  true;
     }
 }
+
 

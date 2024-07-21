@@ -37,20 +37,37 @@ public class MailServiceImpl implements MailService {
         javaMailSender.send(message);
 
     }
-
-    //for sign in
     @Override
     public SignUpDTO findByEmailAndPassword(String email, String password) {
-        SignUpDTO user = mailRepo.findByEmailAndPassword(email, password);
-        //SignUpDTO signUpDTO =  mailRepo.findByEmail(email);
+        SignUpDTO user = mailRepo.findByEmail(email);
 
-        if (user != null && !user.isAccountLocked() && user.getPassword().equals(password)) {
-            // if (signUpDTO != null && !signUpDTO.isAccountLocked() && passwordEncoder.matches(password,signUpDTO.getPassword())) {
-
+        if (user != null && !user.isAccountLocked() && passwordEncoder.matches(password, user.getPassword())) {
+            System.out.println("Data is present: " + user);
             return user;
         }
+
+        System.out.println("Data is not present: " + email);
         return null;
     }
+
+
+    //for sign in
+//    @Override
+//    public SignUpDTO findByEmailAndPassword(String email, String password) {
+//        SignUpDTO user = mailRepo.findByEmailAndPassword(email, password);
+//        SignUpDTO signUpDTO =  mailRepo.findByEmail(email);
+//
+//
+//        if (user != null && !user.isAccountLocked() && passwordEncoder.matches(password,user.getPassword())) {
+//            System.out.println("Data is present"+signUpDTO);
+//            //passwordEncoder.matches(password, signUpDTO.getPassword());
+//            // if (signUpDTO != null && !signUpDTO.isAccountLocked() && passwordEncoder.matches(password,signUpDTO.getPassword())) {
+//
+//            return user;
+//        }
+//        System.out.println("Data is not present "+signUpDTO);
+//        return null;
+//    }
 
 
     //pruthvi

@@ -51,18 +51,20 @@ public class SignUpController {
 
 
         } else {
+
+
             boolean dataValid = this.signUpService.saveAndValidate(signUpDTO);
             if (dataValid) {
                 System.out.println("SignUpService registration successful in SignUpController:" + signUpDTO);
 
-                // Send email with generated password
-                String subject = "welcome to our Issue management";
-
-                String body = "Hi" + signUpDTO.getFirstName() + ",\n\n Your registration is successful.  Your password is  " + signUpDTO.getPassword();
-
-                mailService.sendPasswordEmail(email, subject, body);
-
-                model.addAttribute("msg", "Signup successful. " + signUpDTO.getFirstName() + " Please check your email for your password.");
+//                // Send email with generated password
+//                String subject = "welcome to our Issue management";
+//
+//                String body = "Hi" + signUpDTO.getFirstName() + ",\n\n Your registration is successful.  Your password is  " + signUpDTO.getPassword();
+//
+//                mailService.sendPasswordEmail(email, subject, body);
+//
+               model.addAttribute("msg", "Signup successful. " + signUpDTO.getFirstName() + " Please check your email for your password.");
                 //return "SignUp";
                 //return "redirect:/SignUp";
                 return "redirect:/sign-up-success"; // Redirect to avoid form resubmission

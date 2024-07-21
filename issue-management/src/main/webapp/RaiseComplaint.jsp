@@ -29,9 +29,16 @@
                     <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
                 </a>
                 <a class="navbar-brand text-white" href="index.jsp"><b>Home</b></a>
-                <a class="navbar-brand text-white" href="SignIn.jsp"><b>SignIn</b></a>
+            <a class="navbar-brand text-white" href="Profile.jsp"><b>Profile</b></a>
             </div>
+
+
+            <!-- Display profile image when user is signed in -->
+                    <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">
+
+
         </div>
+
     </nav>
 
     <div class="card border-dark container w-25 mt-5 mb-5 justify-content-center">

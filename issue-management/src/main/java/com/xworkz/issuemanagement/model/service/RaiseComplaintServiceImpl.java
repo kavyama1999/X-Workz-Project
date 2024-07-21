@@ -2,10 +2,17 @@ package com.xworkz.issuemanagement.model.service;
 
 
 import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
+import com.xworkz.issuemanagement.dto.SignUpDTO;
 import com.xworkz.issuemanagement.model.repository.RaiseComplaintRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -14,6 +21,9 @@ public class RaiseComplaintServiceImpl implements RaiseComplaintService {
 
     @Autowired
     private RaiseComplaintRepo raiseComplaintRepo;
+
+    @Autowired
+    private HttpSession httpSession;
 
     @Override
     public boolean saveRaiseComplaintData(RaiseComplaintDTO raiseComplaintDTO) {
@@ -31,9 +41,64 @@ public class RaiseComplaintServiceImpl implements RaiseComplaintService {
 
         return true;
     }
+
+
+    @Override
+    public Optional<RaiseComplaintDTO> findByUserId(int id) {
+        return raiseComplaintRepo.findByUserId(id);
+    }
+
+
+    @Override
+    public Optional<RaiseComplaintDTO> findBySignedInUser(HttpServletRequest request) {
+        HttpSession httpSession = request.getSession();
+        SignUpDTO signedInUser = (SignUpDTO) httpSession.getAttribute("signUpDTO");
+        if (signedInUser != null) {
+            return raiseComplaintRepo.findByUserId(signedInUser.getId());
+        }
+        return Optional.empty();
+
+    }
+
+    @Override
+    public List<RaiseComplaintDTO> getComplaintsByUserId(int userId) {
+        return raiseComplaintRepo.findByRaiseComplaint(userId);
+    }
+
+
+    //edit
+
+    @Override
+    public RaiseComplaintDTO getComplaintById(int complaintId) {
+        return raiseComplaintRepo.findByComplaintId(complaintId).orElse(null);
+    }
+
+
+    //update
+
+    @Override
+    public boolean updateRaiseComplaintUserDetails(RaiseComplaintDTO raiseComplaintDTO) {
+
+    RaiseComplaintDTO raiseComplaintDTO1=   raiseComplaintRepo.updateRaiseComplaintUserDetails(raiseComplaintDTO);
+
+    if(raiseComplaintDTO1!=null)
+    {
+        System.out.println("update data successful");
+        return  true;
+    }
+    else
+    {
+        System.out.println("update not successful");
+        return  false;
+    }
+
+    }
+
+
+
+
 }
-//    @Override
-//    public RaiseComplaintDTO findByUserId(int id) {
-//        log.info("findByUserId method running in RaiseComplaintServiceImpl");
-//        return raiseComplaintRepo.findByUserId(id);    }
-//}
+
+
+
+

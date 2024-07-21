@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 
-<script src="/issue-management/js/passwordReset.js"></script>
+<script src="/issue-management/js/changePassword.js"></script>
 
 <style>
     .oval-btn {
@@ -29,7 +29,7 @@
                 <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
             </a>
             <a class="navbar-brand text-white" href="index.jsp"><b>Home</b></a>
-            <a class="navbar-brand text-white" href="SignIn.jsp"><b>SignIn</b></a>
+            <a class="navbar-brand text-white" href="Profile.jsp"><b>Profile</b></a>
         </div>
 
         <!-- Display profile image when user is signed in -->
@@ -42,8 +42,8 @@
         <h3><b><center>Change Password</center></b></h3>
     </div>
     <div class="card-body text-dark">
-        <span style="color:blue"><strong>${passwordResetMessage}</strong></span>
-        <span style="color:red"><strong>${passwordResetError}</strong></span>
+        <span style="color:blue"><strong>${changePasswordMessage}</strong></span>
+        <span style="color:red"><strong>${changePasswordError}</strong></span>
 
         <form action="reset-password" method="post">
 

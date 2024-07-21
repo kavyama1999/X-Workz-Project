@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -17,6 +18,8 @@ public class RaiseComplaintRepoImpl implements RaiseComplaintRepo {
     @Autowired
     private EntityManagerFactory entityManagerFactory;
 
+
+    //save
     @Override
     public boolean saveRaiseComplaintData(RaiseComplaintDTO raiseComplaintDTO) {
 
@@ -36,34 +39,96 @@ public class RaiseComplaintRepoImpl implements RaiseComplaintRepo {
         }
         return true;
     }
-}
+
+    //to set foreign key
+    @Override
+    public Optional<RaiseComplaintDTO> findByUserId(int id) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            TypedQuery<RaiseComplaintDTO> query = entityManager.createQuery(
+                    "SELECT i FROM RaiseComplaintDto i WHERE i.cmplt_id = :id", RaiseComplaintDTO.class);
+            query.setParameter("id", id);
+            return query.getResultList().stream().findFirst();
+        } finally {
+            entityManager.close();
+        }
+
+    }
+
 //    @Override
-//    public RaiseComplaintDTO findByUserId(int id) {
-//
+//    public List<RaiseComplaintDTO> findByRaiseComplaint(int id) {
 //        EntityManager entityManager = entityManagerFactory.createEntityManager();
-//        EntityTransaction entityTransaction = entityManager.getTransaction();
-//        RaiseComplaintDTO result = null;
-//
 //        try {
-//            entityTransaction.begin();
-//
-//            String query = "SELECT c FROM RaiseComplaintDTO c WHERE c.signUpDTO.id = :id";
-//            Query query1 = entityManager.createQuery(query);
-//            query1.setParameter("id", id);
-//
-//            result = (RaiseComplaintDTO) query1.getResultList().stream().findFirst().orElse(null);
-//
-//            entityTransaction.commit();
-//        } catch (Exception e) {
-//            if (entityTransaction.isActive()) {
-//                entityTransaction.rollback();
-//            }
-//            log.error("Error finding complaint by user ID", e);
+//            TypedQuery<RaiseComplaintDTO> query = entityManager.createQuery(
+//                    "SELECT r FROM RaiseComplaintDTO r WHERE r.signUpDTO.id = :userId", RaiseComplaintDTO.class);
+//            query.setParameter("userId", id);
+//            return query.getResultList();
 //        } finally {
 //            entityManager.close();
-//            log.info("Connection closed");
 //        }
-//
-//        return result;
 //    }
-//}
+
+
+    //to view RaiseComplaint data
+    @Override
+    public List<RaiseComplaintDTO> findByRaiseComplaint(int id) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            TypedQuery<RaiseComplaintDTO> query = entityManager.createQuery(
+                    "SELECT r FROM RaiseComplaintDTO r WHERE r.signUpDTO.id = :userId", RaiseComplaintDTO.class);
+            query.setParameter("userId", id);
+            List<RaiseComplaintDTO> results = query.getResultList();
+            log.info("Found {} complaints for user ID {}", results.size(), id);
+            return results;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+
+    //edit
+
+    @Override
+    public Optional<RaiseComplaintDTO> findByComplaintId(int complaintId) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            TypedQuery<RaiseComplaintDTO> query = entityManager.createQuery(
+                    "SELECT r FROM RaiseComplaintDTO r WHERE r.complaintId = :complaintId", RaiseComplaintDTO.class);
+            query.setParameter("complaintId", complaintId);
+            return query.getResultList().stream().findFirst();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public RaiseComplaintDTO updateRaiseComplaintUserDetails(RaiseComplaintDTO raiseComplaintDTO) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+
+        try
+        {
+            entityTransaction.begin();
+            entityManager.merge(raiseComplaintDTO);
+            entityTransaction.commit();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            entityTransaction.rollback();
+        }
+        finally {
+            entityManager.close();
+            log.info("updateRaiseComplaintUserDetails connection closed");
+        }
+
+        return raiseComplaintDTO;
+    }
+
+
+}
+
+
+
+
