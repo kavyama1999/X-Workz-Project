@@ -36,9 +36,9 @@
                 <a class="navbar-brand" href="#">
                     <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
                 </a>
-                <a class="navbar-brand text-white" href="index.jsp"><b>Home</b></a>
+                <a class="navbar-brand text-white" href="HomePage"><b>Home</b></a>
 
-                    <a class="navbar-brand text-white" href="SignIn.jsp"><b>SignIn</b></a>
+                    <a class="navbar-brand text-white" href="SignInPage"><b>SignIn</b></a>
 
             </div>
         </div>
@@ -149,7 +149,7 @@
 
 
 <div class="mb-3">
-        <center>  <p> Have already have account?     <a href="SignIn.jsp" class="link-primary"><strong>SignIn Here?</strong></a></p></center>
+        <center>  <p> Have already have account?     <a href="SigninPage" class="link-primary"><strong>SignIn Here?</strong></a></p></center>
             </div>
 
             </form>

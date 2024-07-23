@@ -49,7 +49,7 @@ public class MailSend {
         message.setTo(signUpDTO.getEmail());
         message.setSubject("Change password");
         message.setText("Dear " + signUpDTO.getFirstName() + " " + signUpDTO.getLastName() + ", A Change Password has been sent to your email. ,\n\n" +
-                "Please Sign in through Change password: " + signUpDTO.getPassword()+ "\n\n" +
+                "Please Sign in through Change password: " + newPassword+ "\n\n" +
                 "Thanks and Regards,\n" + " " +
                 "X-workz Project Team");
         javaMailSender.send(message);

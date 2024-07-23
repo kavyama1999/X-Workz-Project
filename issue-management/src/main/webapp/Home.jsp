@@ -26,11 +26,11 @@
             <!-- End of logo -->
 
 
-        <a class="navbar-brand  text-white" href="SignUp.jsp"><b>SignUp</b></a>
+        <a class="navbar-brand  text-white" href="SignUpPage"><b>SignUp</b></a>
 
-        <a class="navbar-brand  text-white" href="SignIn.jsp"><b>SignIn</b></a>
+        <a class="navbar-brand  text-white" href="SignInPage"><b>SignIn</b></a>
 
-         <a class="navbar-brand  text-white" href="ForgotPassword.jsp"><b></b></a>
+         <a class="navbar-brand  text-white" href="ForgotPasswordPage"><b></b></a>
 
 
 

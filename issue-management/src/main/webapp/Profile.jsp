@@ -5,9 +5,9 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Student Form</title>
-  <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>--!>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
 
 
@@ -44,7 +44,7 @@
                 <a class="navbar-brand" href="#">
                     <img src="https://www.x-workz.in/Logo.png" alt="xworkz" width="140" height="70" />
                 </a>
-                <a class="navbar-brand text-white" href="index.jsp"><b>Home</b></a>
+                <a class="navbar-brand text-white" href="HomePage"><b>Home</b></a>
             </div>
 
 
@@ -59,16 +59,17 @@
 
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="edit?email=${signUpDTO.email}"><strong>Edit</strong></a></li>
-                    <li><a class="dropdown-item" href="ChangePassword.jsp"><strong>Password Reset</strong></a></li>
-                    <li><a class="dropdown-item" href="view-profile"><strong>View</strong></a></li>
 
+                    <li><a class="dropdown-item" href="ChangePasswordPage"><strong>Password Reset</strong></a></li>
+
+                    <li><a class="dropdown-item" href="view-profile"><strong>View</strong></a></li>
 
                    <!--<li><a class="dropdown-item" href="raise-complaint-view"><strong>ViewRaiseComplaint</strong></a></li>--!>
 
                   <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewModal" ><strong> Modal</strong></a></li>
 
-
                     <li><a class="dropdown-item" href="RaiseComplaint.jsp"><strong>RaiseComplaint</strong></a></li>
+                    <li><a class="dropdown-item" href="HomePage"><strong>Logout</strong></a></li>
 
 
   <li> <a class="dropdown-item" href="view-raise-complaint"><strong>ViewRaiseComplaint</strong></a></li>
@@ -81,6 +82,14 @@
 
         </div>
     </nav>
+
+
+
+
+
+
+
+
 
     <!-- ******************************************************************************** --!>
 

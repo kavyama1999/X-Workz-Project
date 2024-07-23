@@ -6,14 +6,13 @@ import com.xworkz.issuemanagement.model.service.ForgotPasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/")
+@SessionAttributes("signUpDTO")
 public class SignInController {
 
     @Autowired
@@ -90,5 +89,10 @@ public class SignInController {
             model.addAttribute("forgotPasswordError", "Email address not found.");
         }
         return "ForgotPassword";
+    }
+
+    @GetMapping("/logout")
+    public  String logout(){
+        return "index";
     }
 }

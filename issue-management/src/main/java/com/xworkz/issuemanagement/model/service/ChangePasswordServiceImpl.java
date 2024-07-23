@@ -51,27 +51,25 @@ public class ChangePasswordServiceImpl implements ChangePasswordService {
             System.out.println("Old password verification failed for email: " + email);
             return false; // Old password doesn't match
         }
-
-        // Step 4: Send the plain text new password in the email before encoding it
-        try {
-            mailSend.sendChangePassword(signUpDTO, newPassword); // Send plain text new password in email
-        } catch (MailException e) {
-            // Handle exception if email sending fails (log it or take appropriate action)
-            e.printStackTrace();
-            return false; // Indicate failure if email sending failed
-        }
-
+                 ////123456
+        // Step 4: Save the updated password in the repository (database)
         // Step 5: Encode and update the new password in SignUpDTO
-        signUpDTO.setPassword(passwordEncoder.encode(newPassword));
-
-        // Step 6: Save the updated password in the repository (database)
+        signUpDTO.setPassword(passwordEncoder.encode(newPassword)); ///qwdasflkjaartsdhf
         boolean saveEmail = changePasswordRepo.updatePassword(email, signUpDTO.getPassword());
-
         if (saveEmail) {
             System.out.println("Password updated successfully for email: " + email);
+            // Step 4: Send the plain text new password in the email before encoding it
+            try {
+                // Step 5: Encode and update the new password in SignUpDTO  //123456
+               // signUpDTO.setPassword(newPassword);  //123456
+                mailSend.sendChangePassword(signUpDTO, newPassword); // Send plain text new password in email
+            } catch (MailException e) {
+                // Handle exception if email sending fails (log it or take appropriate action)
+                e.printStackTrace();
+                return false; // Indicate failure if email sending failed
+            }
             return true; // Password successfully updated
         }
-
         return false; // Password update failed
     }
 }

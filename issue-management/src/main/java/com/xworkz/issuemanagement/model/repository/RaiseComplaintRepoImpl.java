@@ -49,6 +49,7 @@ public class RaiseComplaintRepoImpl implements RaiseComplaintRepo {
             TypedQuery<RaiseComplaintDTO> query = entityManager.createQuery(
                     "SELECT i FROM RaiseComplaintDto i WHERE i.cmplt_id = :id", RaiseComplaintDTO.class);
             query.setParameter("id", id);
+
             return query.getResultList().stream().findFirst();
         } finally {
             entityManager.close();

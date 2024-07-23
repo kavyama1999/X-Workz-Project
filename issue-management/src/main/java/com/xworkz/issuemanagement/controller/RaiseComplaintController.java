@@ -5,6 +5,8 @@ import com.xworkz.issuemanagement.dto.SignUpDTO;
 import com.xworkz.issuemanagement.model.service.RaiseComplaintService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -104,18 +106,35 @@ public class RaiseComplaintController {
         return "EditRaiseComplaint";
     }
 
+  /*  @GetMapping("/edit-complaint/{complaintId}")
+    @ResponseBody
+    public ResponseEntity<RaiseComplaintDTO> getComplaintDetails(@PathVariable("complaintId") int complaintId) {
+        System.out.println("complaintId from repo: " + complaintId);
+        RaiseComplaintDTO data = raiseComplaintService.getComplaintById(complaintId);
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }*/
+
+
+  /*  @PostMapping("/update-complaint")
+    public ResponseEntity<String> updateComplaint(@ModelAttribute RaiseComplaintDTO raiseComplaintDTO) {
+        raiseComplaintService.updateComplaint(raiseComplaintDTO);
+        return new ResponseEntity<>("Complaint updated successfully!", HttpStatus.OK);
+    }*/
 
     //update
 
-    @PostMapping("/update")
+    @PostMapping("update-complaint-detailes")
     public String updateComplaint(@ModelAttribute("raiseComplaintDTO") RaiseComplaintDTO raiseComplaintDTO, Model model) {
-        boolean isUpdated = raiseComplaintService.updateRaiseComplaintUserDetails(raiseComplaintDTO);
-        if (isUpdated) {
+        System.out.println("RaiseComplaintDTO"+raiseComplaintDTO);
+        List<RaiseComplaintDTO> isUpdated = raiseComplaintService.updateRaiseComplaintUserDetails(raiseComplaintDTO);
+        if (isUpdated!=null) {
             model.addAttribute("updateMsg", "Complaint updated successfully!");
+            model.addAttribute("viewRaiseComplaints", isUpdated); //for table data view raise complaint
+            return "ViewRaiseComplaint";
         } else {
-            model.addAttribute("updateMsg", "Failed to update complaint. Please try again.");
+            model.addAttribute("updateErrorMsg", "Failed to update complaint. Please try again.");
         }
-        return "redirect:/profile";
+        return "EditRaiseComplaint";
     }
 
 }

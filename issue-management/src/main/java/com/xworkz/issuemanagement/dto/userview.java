@@ -267,7 +267,7 @@
 ////            <a class="navbar-brand" href="#">
 ////               <img src="/crisisManagement/logo/xworklogo.png" alt="xworkz" width="140" height="70">
 ////            </a>
-////            <a class="navbar-brand" href="index.jsp" style="color: aliceblue;"><b>Dashboard</b></a>
+////            <a class="navbar-brand" href="Home.jsp" style="color: aliceblue;"><b>Dashboard</b></a>
 ////        </div>
 ////    </nav>
 ////    <div class="container mt-3" style="max-width: 600px;">

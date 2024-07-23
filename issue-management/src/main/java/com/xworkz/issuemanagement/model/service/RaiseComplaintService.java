@@ -30,7 +30,7 @@ public interface RaiseComplaintService {
 
     //update
 
-    boolean updateRaiseComplaintUserDetails(RaiseComplaintDTO raiseComplaintDTO);
+  List <RaiseComplaintDTO> updateRaiseComplaintUserDetails(RaiseComplaintDTO raiseComplaintDTO);
 
 
 }

@@ -63,7 +63,7 @@
                 <div class="row mb-3">
                     <span id="complaintTypeError"></span>
                     <label for="complaintType" class="form-label"><b>Complaint Type:</b></label>
-                    <select class="form-select custom-select-width" id="complaintType" name="complaintType">
+                    <select class="form-select custom-select-width" id="complaintType" name="complaintType" required>
                         <option value="0" ${countryDTO.complaintType == null ? 'selected' : ''}>Select</option>
                         <option value="Electric issue" ${countryDTO.complaintType == 'Electric issue' ? 'selected' : ''}>Electric issue</option>
                         <option value="Water Supply" ${countryDTO.complaintType == 'Water Supply' ? 'selected' : ''}>Water Supply</option>
@@ -79,7 +79,7 @@
                 <div class="row mb-3">
                     <span id="countryNameError"></span>
                     <label for="countryName" class="form-label"><b>Country:</b></label>
-                    <select class="form-select custom-select-width" id="countryName" name="country"  placeholder="Enter country">
+                    <select class="form-select custom-select-width" id="countryName" name="country"  placeholder="Enter country" required>
                         <!-- Countries will be loaded here by JavaScript -->
                     </select><br>
                 </div>
@@ -89,7 +89,7 @@
                 <div class="row mb-3">
                     <span id="stateNameError"></span>
                     <label for="state" class="form-label"><b>State:</b></label>
-                    <select class="form-select custom-select-width" id="state" name="state"  >
+                    <select class="form-select custom-select-width" id="state" name="state"  required >
                         <!-- States will be loaded here by JavaScript -->
                     </select><br>
                 </div>
@@ -99,7 +99,7 @@
                 <div class="row mb-3">
                     <span id="cityNameError"></span>
                     <label for="city" class="form-label"><b>City:</b></label>
-                    <select class="form-select custom-select-width" id="city" name="city" placeholder="Enter city">
+                    <select class="form-select custom-select-width" id="city" name="city" placeholder="Enter city" required>
                         <!-- Cities will be loaded here by JavaScript -->
                     </select><br>
                 </div>
@@ -108,7 +108,7 @@
 <div class="row mb-3">
                     <span id="areaError"></span><br>
                     <label for="area" class="form-label"><b>Area:</b></label>
-                    <input type="text" class="form-control" id="area" name="area" placeholder="Enter area">
+                    <input type="text" class="form-control" id="area" name="area" placeholder="Enter area" required>
                 </div>
 
 
@@ -117,7 +117,7 @@
                     <span id="errorAddress"></span><br>
                     <b>Address</b>
                     <label for="address" class="form-floating"></label>
-                    <textarea class="form-control" placeholder="Enter address" id="address" style="height: 80px" name="address">${jobFormDTO.address}</textarea>
+                    <textarea class="form-control" placeholder="Enter address" id="address" style="height: 80px" name="address" required>${jobFormDTO.address}</textarea>
                 </div>
 
 
@@ -126,7 +126,7 @@
                 <span id="descriptionError" class="text-danger"></span>
              <b>Description:</b>
                 <div class="form-floating">
-                    <textarea class="form-control" placeholder="Leave a comment here" name="description" id="description"  style="height:80px"  oninput="updateDescriptionCount()" maxlength="300" onblur="validateDescription()">${complaint.description}</textarea>
+                    <textarea class="form-control" placeholder="Leave a comment here" name="description" id="description"  style="height:80px"  oninput="updateDescriptionCount()" maxlength="300" onblur="validateDescription()"  required>${complaint.description}</textarea>
                     <label for="description">Description</label>
                 </div>
             </div>
@@ -135,7 +135,7 @@
                 <div>
                     <span id="agreeError"></span>
                     <label for="agree" class="list-group-item">
-                        <input name="agree" id="agree" onchange="agreeValidation()" class="form-check-input me-1" type="checkbox" value="agree" ${signUpDTO.agree eq 'agree' ? 'checked' : ''}>
+                        <input name="agree" id="agree" onchange="agreeValidation()" class="form-check-input me-1" type="checkbox" value="agree" ${signUpDTO.agree eq 'agree' ? 'checked' : ''} required>
                         <b>Agree</b>
                     </label>
                 </div><br>
@@ -144,13 +144,16 @@
                     <center><input type="submit" id="submit" value="Apply" class="btn btn-primary oval-btn"></center>
                 </div>
 
-                <div class="mb-3">
-                    <center><p>Already have an account? <a href="SignIn.jsp" class="link-primary"><strong>SignIn Here</strong></a></p></center>
-                </div>
+                <!--<div class="mb-3">
+                    <center><a href="ViewRaiseComplaint.jsp" class="link-primary"><strong>ViewRaiseComplaint</strong></a></center>
+                </div>--!>
             </form>
         </div>
     </div>
 
-    <!-- Including the JavaScript file after the DOM is loaded -->
+    <!-- Including the JavaScript file after the DOM is loaded
+
+           <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBl5f7lxG7bI1Qags2ndFL0BbvhXTEX8EN2giD6S3lfjF5/T" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-I9QiN/BaMIn1+XJj1/rXilAdBfWzBfT+X8Q+j5FZk5TGAa+lUxl5jXU4rL9Tbt8/" crossorigin="anonymous"></script>--!>
 </body>
 </html>

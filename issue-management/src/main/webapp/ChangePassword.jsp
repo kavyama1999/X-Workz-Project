@@ -1,3 +1,4 @@
+
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -7,11 +8,9 @@
 <meta charset="ISO-8859-1">
 <title>Forgot Password</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 
-<script src="/issue-management/js/changePassword.js"></script>
 
 <style>
     .oval-btn {
@@ -46,69 +45,128 @@
         <span style="color:red"><strong>${changePasswordError}</strong></span>
 
         <form action="reset-password" method="post">
-
-
-          <div class="row mb-3">
+            <div class="row mb-3">
                 <span id="emailError" style="color:red;"></span>
+                <label for="email" class="form-label"><b>Email:</b></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input type="email" class="form-control" id="email" name="email" value="${sessionScope.signedInUserEmail}" readonly autocomplete="email" placeholder="Enter email">
+                </div>
+            </div>
 
-         <label for="email" class="form-label"><b>Email:</b></label>
-                        <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            <input type="email" class="form-control" id="email" name="email" autocomplete="email" onblur="emailValidation()" placeholder="Enter email">
-                        </div>
-                    </div>
+            <div class="mb-3">
+                <span id="oldPasswordError" style="color:red;"></span><br>
+                <label for="oldPassword" class="form-label"><b>Old Password:</b></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="form-control" id="oldPassword" name="oldPassword" autocomplete="old-password" onblur="oldPasswordValidation()" placeholder="Enter old password"/>
+                </div>
+            </div>
 
-
-             <div class="mb-3">
-                            <span id="oldPasswordError" style="color:red;"></span><br>
-                            <label for="oldPassword" class="form-label"><b>Old Password:</b></label>
-                            <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
-
-                                <input type="password" class="form-control" id="oldPassword" name="oldPassword" autocomplete="old-password" onblur="oldPasswordValidation()"  placeholder="Enter old password"/>
-                            </div>
-                        </div>
-
-
-
-          <!---  <div class="mb-3">
+            <div class="mb-3">
                 <span id="newPasswordError" style="color:red;"></span><br>
                 <label for="newPassword" class="form-label"><b>New Password:</b></label>
-                <input type="password" class="form-control" id="newPassword" name="newPassword" autocomplete="new-password" onblur="newPasswordValidation()" placeholder="Enter new password">
-            </div>--!>
-
-
-            <div class="mb-3">
-                            <span id="newPasswordError" style="color:red;"></span><br>
-                            <label for="newPassword" class="form-label"><b>New Password:</b></label>
-                            <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-key w-2"></i></span>
-
-                                <input type="password" class="form-control" id="newPassword" name="newPassword" autocomplete="new-password" onblur="newPasswordValidation()"  placeholder="Enter new password">
-                            </div>
-                        </div>
-
-
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-key w-2"></i></span>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" autocomplete="new-password" onblur="newPasswordValidation()" placeholder="Enter new password">
+                </div>
+            </div>
 
             <div class="mb-3">
-                            <span id="confirmPasswordError" style="color:red;"></span><br>
-                            <label for="confirmPassword" class="form-label"><b>Confirm Password:</b></label>
-                            <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-check"></i></span>
-                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" autocomplete="new-password" onblur="confirmPasswordValidation()" placeholder="Enter confirm password">
-                            </div>
-                        </div>
-
+                <span id="confirmPasswordError" style="color:red;"></span><br>
+                <label for="confirmPassword" class="form-label"><b>Confirm Password:</b></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-check"></i></span>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" autocomplete="new-password" onblur="confirmPasswordValidation()" placeholder="Enter confirm password">
+                </div>
+            </div>
 
             <div>
                 <input type="submit" value="Reset Password" class="btn btn-primary oval-btn" id="submit" disabled>
             </div>
 
             <div class="mb-3">
-                <center><a href="SignIn.jsp" class="link-primary"><strong>SignIn Here?</strong></a></center>
+                <center><a href="SignInPage" class="link-primary"><strong>SignIn Here?</strong></a></center>
             </div>
         </form>
     </div>
 </div>
+
+
+
+<script>
+    let fieldsChecks = {
+        "oldPassword": false,
+        "newPassword": false,
+        "confirmPassword": false
+    };
+
+    function validateAndEnableSubmit() {
+        let allFieldsValid = Object.values(fieldsChecks).every(value => value);
+        let submitButton = document.getElementById("submit");
+
+        if (allFieldsValid) {
+            submitButton.removeAttribute("disabled");
+        } else {
+            submitButton.setAttribute("disabled", "true");
+        }
+    }
+
+    function oldPasswordValidation() {
+        console.log("oldPasswordValidation");
+        let oldPassword = document.getElementById("oldPassword");
+        let error = document.getElementById("oldPasswordError");
+        let oldPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\[\]{}|;:,.<>?])[A-Za-z\d!@#$%^&*()_+\[\]{}|;:,.<>?]{10,}$/;
+
+        if (oldPasswordRegex.test(oldPassword.value)) {
+            error.innerHTML = "";
+            fieldsChecks["oldPassword"] = true;
+        } else {
+            error.innerHTML = "Password must be at least 10 characters long, with at least one uppercase letter, one lowercase letter, one number, and one special character.";
+            error.style.color = "red";
+            fieldsChecks["oldPassword"] = false;
+        }
+
+        validateAndEnableSubmit();
+    }
+
+    function newPasswordValidation() {
+        console.log("newPasswordValidation");
+        let newPassword = document.getElementById("newPassword");
+        let error = document.getElementById("newPasswordError");
+        let newPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\[\]{}|;:,.<>?])[A-Za-z\d!@#$%^&*()_+\[\]{}|;:,.<>?]{10,}$/;
+
+        if (newPasswordRegex.test(newPassword.value)) {
+            error.innerHTML = "";
+            fieldsChecks["newPassword"] = true;
+        } else {
+            error.innerHTML = "Password must be at least 10 characters long, with at least one uppercase letter, one lowercase letter, one number, and one special character.";
+            error.style.color = "red";
+            fieldsChecks["newPassword"] = false;
+        }
+
+        confirmPasswordValidation(); // Call confirmPasswordValidation to ensure both passwords match
+        validateAndEnableSubmit();
+    }
+
+    function confirmPasswordValidation() {
+        console.log("confirmPasswordValidation");
+        let newPassword = document.getElementById("newPassword");
+        let confirmPassword = document.getElementById("confirmPassword");
+        let error = document.getElementById("confirmPasswordError");
+
+        if (confirmPassword.value === newPassword.value && fieldsChecks["newPassword"]) {
+            error.innerHTML = "";
+            fieldsChecks["confirmPassword"] = true;
+        } else {
+            error.innerHTML = "Passwords do not match.";
+            error.style.color = "red";
+            fieldsChecks["confirmPassword"] = false;
+        }
+
+        validateAndEnableSubmit();
+    }
+</script>
+
 </body>
 </html>

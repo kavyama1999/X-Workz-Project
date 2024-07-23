@@ -1,5 +1,4 @@
 let fieldsChecks = {
-    "email": false,
     "oldPassword": false,
     "newPassword": false,
     "confirmPassword": false
@@ -14,24 +13,6 @@ function validateAndEnableSubmit() {
     } else {
         submitButton.setAttribute("disabled", "true");
     }
-}
-
-function emailValidation() {
-    console.log("emailValidation");
-    let email = document.getElementById("email");
-    let error = document.getElementById("emailError");
-    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (emailRegex.test(email.value)) {
-        error.innerHTML = "";
-        fieldsChecks["email"] = true;
-    } else {
-        error.innerHTML = "Please enter a valid email address.";
-        error.style.color = "red";
-        fieldsChecks["email"] = false;
-    }
-
-    validateAndEnableSubmit();
 }
 
 function oldPasswordValidation() {
@@ -51,8 +32,6 @@ function oldPasswordValidation() {
 
     validateAndEnableSubmit();
 }
-
-
 
 function newPasswordValidation() {
     console.log("newPasswordValidation");
@@ -90,6 +69,3 @@ function confirmPasswordValidation() {
 
     validateAndEnableSubmit();
 }
-
-
-//    let newPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&<>])[A-Za-z\d@$!%*?&<>]{10,}$/;

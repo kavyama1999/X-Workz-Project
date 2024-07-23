@@ -6,6 +6,10 @@
     <meta charset="ISO-8859-1">
     <title>Student Form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBl5f7lxG7bI1Qags2ndFL0BbvhXTEX8EN2giD6S3lfjF5/T" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-I9QiN/BaMIn1+XJj1/rXilAdBfWzBfT+X8Q+j5FZk5TGAa+lUxl5jXU4rL9Tbt8/" crossorigin="anonymous"></script>
+
     <script src="/issue-management/js/edit-profile.js"></script>
     <style>
         .oval-btn {
@@ -21,42 +25,62 @@
                 <a class="navbar-brand" href="#">
                     <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
                 </a>
-                <a class="navbar-brand text-white" href="index.jsp"><b>Home</b></a>
-               <!-- <a class="navbar-brand text-white" href="SignIn.jsp"><b>SignIn</b></a>--!>
+                <a class="navbar-brand text-white" href="HomePage"><b>Home</b></a>
+                <!--<a class="navbar-brand text-white" href="SignInPage"><b>SignIn</b></a>-->
                 <a class="navbar-brand text-white" href="view-profile"><b>View</b></a>
+            </div>
 
 
+<div class="dropdown">
+                <div class="dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+
+                   <!----image display in icon when user sign in--!>
+                  <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">
 
             </div>
 
-            <li class="nav-item">
 
-            <!--image display in right side icon--- for when i new user signIn based user signIn it will display image of user--!>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="edit?email=${signUpDTO.email}"><strong>Edit</strong></a></li>
 
-            <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" width="80" height="80" class="rounded-circle profile-image" alt="Profile Image" id="profileImage">
-            </li>
+                    <li><a class="dropdown-item" href="ChangePasswordPage"><strong>Password Reset</strong></a></li>
+
+                    <li><a class="dropdown-item" href="view-profile"><strong>View</strong></a></li>
+
+                   <!--<li><a class="dropdown-item" href="raise-complaint-view"><strong>ViewRaiseComplaint</strong></a></li>--!>
+
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewModal" ><strong> Modal</strong></a></li>
+
+                    <li><a class="dropdown-item" href="RaiseComplaint.jsp"><strong>RaiseComplaint</strong></a></li>
+                    <li><a class="dropdown-item" href="HomePage"><strong>Logout</strong></a></li>
+
+
+  <li> <a class="dropdown-item" href="view-raise-complaint"><strong>ViewRaiseComplaint</strong></a></li>
+
+   <!-- <a class="dropdown-item" href="raise-complaint-view?complaintId=${complaint.complaintId}">---!>
+
+                </ul>
+            </div>
+
+
+
 
         </div>
     </nav>
 
     <div class="card border-dark container w-25 mt-5 mb-5 justify-content-center">
         <div class="card-header">
-            <h3><b><center>Edit Profile </center></b></h3>
+            <h3><b><center>Edit Profile</center></b></h3>
         </div>
         <div class="card-body text-dark">
-
             <form action="edit-profile" method="post" enctype="multipart/form-data">
-
-
-        <span style="color:red">${errorMessageProfile}</span>
-        <span style="color:green">${message}</span>
-        <span style="color:red">${errorMessage}</span>
- <span style="color:green"><strong>${profileUploadMsg}</strong></span>
-
-
+                <span style="color:red">${errorMessageProfile}</span>
+                <span style="color:green">${message}</span>
+                <span style="color:red">${errorMessage}</span>
+                <span style="color:green"><strong>${profileUploadMsg}</strong></span>
 
                 <span style="color:red;">
-                 <c:forEach items="${errors}" var="objectError">
+                    <c:forEach items="${errors}" var="objectError">
                         ${objectError.defaultMessage}<br>
                     </c:forEach>
                 </span>
@@ -95,9 +119,13 @@
                     <label for="file" class="form-label text-dark">Choose File</label>
                     <input type="file" class="form-control" name="file" id="file">
                 </div>
+
+                
                 <div>
                     <center><input type="submit" id="submit" value="Apply" class="btn btn-primary oval-btn"></center>
                 </div>
+
+
                 <div class="mb-3">
                     <center><p>Have an account? <a href="SignIn.jsp" class="link-primary"><strong>SignIn Here?</strong></a></p></center>
                 </div>
@@ -105,9 +133,7 @@
         </div>
     </div>
 
-   <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-ND83p6+2LC9sNGvzFgiptEh0Wt3veCHpdwwvWY3Aj23FR5f4ob0C5sHbPkzJf6Hm" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-5mrLOimZlMFbbXUpiH8eAFKmKXbLqaW8GDoAWF+Q6h4Ec8Q2pSyyKhcvwwa3fznK" crossorigin="anonymous"></script>--!>
-
+    <!-- Bootstrap Bundle with Popper -->
 
 </body>
 </html>
