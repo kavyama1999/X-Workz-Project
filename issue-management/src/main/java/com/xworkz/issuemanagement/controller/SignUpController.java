@@ -74,7 +74,9 @@ public class SignUpController {
                 System.out.println("SignUpService registration not successful in SignUpController:" + signUpDTO);
             }
             model.addAttribute("msg", "Registration successful :" + signUpDTO.getFirstName());
-            return "SignUp";
+           // return "SignUp";
+            return "redirect:/sign-up-success"; // Redirect to avoid form resubmission
+
 
         }
 

@@ -2,6 +2,7 @@ package com.xworkz.issuemanagement.model.repository;
 
 
 import com.xworkz.issuemanagement.dto.AdminDTO;
+import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,20 +62,42 @@ public class AdminRepoImpl implements AdminRepo {
             String query = "SELECT d FROM  SignUpDTO d";
             Query query1 = entityManager.createQuery(query);
             List<SignUpDTO> data = query1.getResultList();
-            System.out.println("Data:"+data);
+            System.out.println("Data:" + data);
+
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+            System.out.println("Connection closed");
+        }
+
+        return Collections.emptyList();
+    }
+
+
+    //admin can view raise complaint details
+    @Override
+    public List<RaiseComplaintDTO> findById(RaiseComplaintDTO raiseComplaintDTO) {
+
+        System.out.println("findById method in AdminRepoImpl");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        try {
+            String query = "SELECT c FROM RaiseComplaintDTO c";
+            Query query1 = entityManager.createQuery(query);
+          List<RaiseComplaintDTO> data=  query1.getResultList();
+            System.out.println("RaiseComplaintData:"+data);
 
             return data;
         }
-
         catch (Exception e)
         {
             e.printStackTrace();
         }
-
-        finally
-        {
+        finally {
             entityManager.close();
-            System.out.println("Connection closed");
+            System.out.println("connection closed");
         }
 
         return Collections.emptyList();

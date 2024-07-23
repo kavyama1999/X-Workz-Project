@@ -44,12 +44,6 @@ public class HomeController {
     }
 
 
-    //admin can view user details
-    @GetMapping("userView")
-    public String adminUserView()
-    {
-        return "AdminViewUserDetails";
-    }
 
 
 }

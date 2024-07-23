@@ -149,7 +149,7 @@
 
 
 <div class="mb-3">
-        <center>  <p> Have already have account?     <a href="SigninPage" class="link-primary"><strong>SignIn Here?</strong></a></p></center>
+        <center>  <p> Have already have account?     <a href="SignInPage" class="link-primary"><strong>SignIn Here?</strong></a></p></center>
             </div>
 
             </form>

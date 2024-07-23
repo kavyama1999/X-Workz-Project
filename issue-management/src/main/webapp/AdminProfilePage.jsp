@@ -41,6 +41,8 @@
                     <img src="https://www.x-workz.in/Logo.png" alt="xworkz" width="140" height="70" />
                 </a>
                 <a class="navbar-brand text-white" href="HomePage"><b>Home</b></a>
+             <a class="navbar-brand text-white" href="Admin"><b>Admin</b></a>
+
             </div>
 
 
@@ -56,7 +58,8 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="view-user-details"><strong>ViewUserDetails</strong></a></li>
 
-                    <li><a class="dropdown-item" href="ChangePasswordPage"><strong>View</strong></a></li>
+                    <li><a class="dropdown-item" href="View-raise-complaint"><strong>ViewRaiseComplaintDetails</strong></a></li>
+
 
 
 

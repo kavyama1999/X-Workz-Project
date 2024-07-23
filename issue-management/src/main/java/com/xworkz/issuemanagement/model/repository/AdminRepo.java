@@ -1,6 +1,7 @@
 package com.xworkz.issuemanagement.model.repository;
 
 import com.xworkz.issuemanagement.dto.AdminDTO;
+import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 
 import java.util.List;
@@ -14,4 +15,8 @@ public interface AdminRepo {
 
     //Admin can view all user data
     List<SignUpDTO> findById(SignUpDTO signUpDTO);
+
+    //Admin can view Raise Complaint details
+
+    List<RaiseComplaintDTO> findById(RaiseComplaintDTO raiseComplaintDTO);
 }
