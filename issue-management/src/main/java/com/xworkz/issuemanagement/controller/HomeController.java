@@ -37,5 +37,12 @@ public class HomeController {
 
 
 
+    @GetMapping("Admin")
+    public String Admin()
+    {
+        return "AdminPage";
+    }
+
+
 
 }

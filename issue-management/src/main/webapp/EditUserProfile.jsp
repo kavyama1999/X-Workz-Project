@@ -5,10 +5,11 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Student Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBl5f7lxG7bI1Qags2ndFL0BbvhXTEX8EN2giD6S3lfjF5/T" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-I9QiN/BaMIn1+XJj1/rXilAdBfWzBfT+X8Q+j5FZk5TGAa+lUxl5jXU4rL9Tbt8/" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
 
     <script src="/issue-management/js/edit-profile.js"></script>
     <style>
@@ -41,7 +42,6 @@
 
 
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="edit?email=${signUpDTO.email}"><strong>Edit</strong></a></li>
 
                     <li><a class="dropdown-item" href="ChangePasswordPage"><strong>Password Reset</strong></a></li>
 
@@ -120,7 +120,7 @@
                     <input type="file" class="form-control" name="file" id="file">
                 </div>
 
-                
+
                 <div>
                     <center><input type="submit" id="submit" value="Apply" class="btn btn-primary oval-btn"></center>
                 </div>

@@ -30,6 +30,9 @@
 
         <a class="navbar-brand  text-white" href="SignInPage"><b>SignIn</b></a>
 
+                <a class="navbar-brand  text-white" href="Admin"><b>Admin</b></a>
+
+
          <a class="navbar-brand  text-white" href="ForgotPasswordPage"><b></b></a>
 
 

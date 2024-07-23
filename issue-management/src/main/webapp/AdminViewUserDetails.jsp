@@ -80,14 +80,12 @@
                     <tr>
                         <th>Serial Number</th>
                         <th>ID</th>
-                        <th>Complaint Type</th>
-                        <th>Country</th>
-                        <th>State</th>
-                        <th>City</th>
-                        <th>Area</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact Number</th>
+                        <th>Alternative Contact Number</th>
                         <th>Address</th>
-                        <th>Description</th>
-                        <th>Edit</th>
+
 
                     </tr>
                 </thead>
