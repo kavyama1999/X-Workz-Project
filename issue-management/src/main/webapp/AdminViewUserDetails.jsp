@@ -90,18 +90,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="viewRaiseComplaint" items="${viewRaiseComplaints}" varStatus="status">
+                    <c:forEach var="viewUsers" items="${ViewUserDetails}" varStatus="status">
                         <tr>
                             <td>${status.index + 1}</td>
-                            <td>${viewRaiseComplaint.complaintId}</td>
-                            <td>${viewRaiseComplaint.complaintType}</td>
-                            <td>${viewRaiseComplaint.country}</td>
-                            <td>${viewRaiseComplaint.state}</td>
-                            <td>${viewRaiseComplaint.city}</td>
-                            <td>${viewRaiseComplaint.area}</td>
-                            <td>${viewRaiseComplaint.address}</td>
-                            <td>${viewRaiseComplaint.description}</td>
-                           <td><a href="${pageContext.request.contextPath}/edit-complaint/${viewRaiseComplaint.complaintId}">Edit</a></td>
+                            <td>${viewUsers.id}</td>
+                    <td>${viewUsers.firstName} ${viewUsers.lastName}</td>
+                            <td>${viewUsers.email}</td>
+                            <td>${viewUsers.contactNumber}</td>
+                            <td>${viewUsers.alternateContactNumber}</td>
+                            <td>${viewUsers.address}</td>
+
+                          <!-- <td><a href="${pageContext.request.contextPath}/edit-complaint/${viewRaiseComplaint.complaintId}">Edit</a></td>--!>
                           <td>
                         </tr>
                     </c:forEach>

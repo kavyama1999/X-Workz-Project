@@ -54,7 +54,7 @@
 
 
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href=""><strong>ViewUserDetails</strong></a></li>
+                    <li><a class="dropdown-item" href="view-user-details"><strong>ViewUserDetails</strong></a></li>
 
                     <li><a class="dropdown-item" href="ChangePasswordPage"><strong>View</strong></a></li>
 

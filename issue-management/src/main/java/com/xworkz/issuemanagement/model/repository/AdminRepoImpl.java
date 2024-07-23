@@ -2,11 +2,14 @@ package com.xworkz.issuemanagement.model.repository;
 
 
 import com.xworkz.issuemanagement.dto.AdminDTO;
+import com.xworkz.issuemanagement.dto.SignUpDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.List;
 
 @Repository
 @Slf4j
@@ -28,30 +31,53 @@ public class AdminRepoImpl implements AdminRepo {
         try {
             entityTransaction.begin();
             String query = "SELECT a FROM AdminDTO a where a.email=:emailId AND a.password=:adminPassword";
-            Query query1= entityManager.createQuery(query);
-            query1.setParameter("emailId",email);
-            query1.setParameter("adminPassword",password);
+            Query query1 = entityManager.createQuery(query);
+            query1.setParameter("emailId", email);
+            query1.setParameter("adminPassword", password);
 
-         AdminDTO data= (AdminDTO) query1.getSingleResult();
-            System.out.println("Data: "+data);
+            AdminDTO data = (AdminDTO) query1.getSingleResult();
+            System.out.println("Data: " + data);
             entityTransaction.commit();
             return data;
-        }
-        catch (NoResultException e)
-        {
+        } catch (NoResultException e) {
             System.out.println("No result found");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        finally {
+        } finally {
             entityManager.close();
             log.info("Admin connection closed");
         }
 
         return null;
+    }
+
+    @Override
+    public List<SignUpDTO> findById(SignUpDTO signUpDTO) {
+
+        System.out.println("findById method in AdminRepoImpl...");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        try {
+            String query = "SELECT d FROM  SignUpDTO d";
+            Query query1 = entityManager.createQuery(query);
+            List<SignUpDTO> data = query1.getResultList();
+            System.out.println("Data:"+data);
+
+            return data;
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        finally
+        {
+            entityManager.close();
+            System.out.println("Connection closed");
+        }
+
+        return Collections.emptyList();
     }
 }
 
