@@ -43,19 +43,22 @@
 
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
 
-                    <li><a class="dropdown-item" href="ChangePasswordPage"><strong>Password Reset</strong></a></li>
+                    <li><a class="dropdown-item" href="ChangePasswordPage"><strong>Change Password</strong></a></li>
 
-                    <li><a class="dropdown-item" href="view-profile"><strong>View</strong></a></li>
 
                    <!--<li><a class="dropdown-item" href="raise-complaint-view"><strong>ViewRaiseComplaint</strong></a></li>--!>
 
-                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewModal" ><strong> Modal</strong></a></li>
+             <li><a class="dropdown-item" href="view-profile"><strong>UserView</strong></a></li>
+
+                 <!-- <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewModal" ><strong> Modal</strong></a></li>--!>
 
                     <li><a class="dropdown-item" href="RaiseComplaint.jsp"><strong>RaiseComplaint</strong></a></li>
-                    <li><a class="dropdown-item" href="HomePage"><strong>Logout</strong></a></li>
 
 
   <li> <a class="dropdown-item" href="view-raise-complaint"><strong>ViewRaiseComplaint</strong></a></li>
+
+     <li><a class="dropdown-item" href="HomePage"><strong>Logout</strong></a></li>
+
 
    <!-- <a class="dropdown-item" href="raise-complaint-view?complaintId=${complaint.complaintId}">---!>
 

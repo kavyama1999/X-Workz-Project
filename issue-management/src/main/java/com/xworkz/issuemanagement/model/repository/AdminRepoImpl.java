@@ -86,20 +86,46 @@ public class AdminRepoImpl implements AdminRepo {
         try {
             String query = "SELECT c FROM RaiseComplaintDTO c";
             Query query1 = entityManager.createQuery(query);
-          List<RaiseComplaintDTO> data=  query1.getResultList();
-            System.out.println("RaiseComplaintData:"+data);
+            List<RaiseComplaintDTO> data = query1.getResultList();
+            System.out.println("RaiseComplaintData:" + data);
 
             return data;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             entityManager.close();
             System.out.println("connection closed");
         }
 
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<RaiseComplaintDTO> searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO) {
+        System.out.println("searchByComplaintType method running in AdminRepoImpl..");
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        try {
+            String query = "SELECT c FROM RaiseComplaintDTO c WHERE c.complaintType=:ComplaintType";
+            Query query1 = entityManager.createQuery(query);
+            query1.setParameter("ComplaintType", raiseComplaintDTO.getComplaintType());
+            List<RaiseComplaintDTO> raiseData = query1.getResultList();
+            System.out.println("ComplaintType:" + raiseData);
+            entityTransaction.commit();
+
+            return raiseData;
+        } catch (PersistenceException persistenceException)
+        {
+            persistenceException.printStackTrace();
+            entityTransaction.rollback();
+        } finally
+        {
+            System.out.println("Connection closed");
+            entityManager.close();
+        }
         return Collections.emptyList();
     }
 }

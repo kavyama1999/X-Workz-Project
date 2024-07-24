@@ -46,7 +46,11 @@
                 Admin
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="View-raise-complaint"><strong>ViewRaiseComplaintDetails</strong></a></li>
+
+             <li><a class="dropdown-item" href="View-raise-complaint"><strong>ViewRaiseComplaintDetails</strong></a></li>
+
+              <li><a class="dropdown-item" href="SearchRaiseComplaint.jsp"><strong>Search</strong></a></li>
+
             </ul>
         </div>
 

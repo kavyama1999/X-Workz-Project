@@ -18,4 +18,9 @@ public interface AdminService {
 //admin can view all user raise Complaint details(RaiseComplaintDTO)
 
     List<RaiseComplaintDTO> findById(RaiseComplaintDTO raiseComplaintDTO);
-}
+
+    //admin search by based on complaint type
+
+    List<RaiseComplaintDTO> searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO) ;
+
+    }

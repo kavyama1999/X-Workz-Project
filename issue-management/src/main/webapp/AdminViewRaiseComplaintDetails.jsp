@@ -47,11 +47,17 @@
 
                     <li><a class="dropdown-item" href="view-user-details"><strong>ViewUserDetails</strong></a></li>
 
+                   <li><a class="dropdown-item" href="SearchRaiseComplaint.jsp"><strong>Search</strong></a></li>
+
                     </ul>
                 </div>
 
     </div>
 </nav>
+
+
+
+
 
 <div class="container mt-5 mb-5">
     <div class="card">

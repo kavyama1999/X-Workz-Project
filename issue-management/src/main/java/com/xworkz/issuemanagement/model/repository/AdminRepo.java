@@ -19,4 +19,10 @@ public interface AdminRepo {
     //Admin can view Raise Complaint details
 
     List<RaiseComplaintDTO> findById(RaiseComplaintDTO raiseComplaintDTO);
+
+
+    //search by complaint type
+
+    List<RaiseComplaintDTO> searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO);
+
 }

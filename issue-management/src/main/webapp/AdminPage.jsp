@@ -25,7 +25,7 @@
         }
 
        body {
-                    background-color: #e6f7ff; /* Change this to the desired background color */
+                    background-color: white; /* Change this to the desired background color */
                 }
 </style>
 
@@ -56,7 +56,7 @@
 
 <div class="card border-dark container  w-25 mt-5 mb-5 justify-content-center">
     <div class="card-header">
-        <h3><b><center>Sign In</center></b></h3>
+        <h3><b><center>Log In</center></b></h3>
     </div>
 
     <div class="card-body text-dark">
@@ -92,7 +92,7 @@
             </div>--!>
 
             <div class="d-flex justify-content-center mt-3">
-                <input type="submit" value="SignIn" class="btn btn-primary oval-btn bold-text" id="signInButton">
+                <input type="submit" value="LogIn" class="btn btn-primary oval-btn bold-text" id="signInButton">
             </div>
         </form>
     </div>

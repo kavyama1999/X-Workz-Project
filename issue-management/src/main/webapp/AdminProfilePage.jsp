@@ -24,12 +24,25 @@
 
 
 
-       body {
-                    background-color: #e6f7ff; /* Change this to the desired background color */
-                }
+     /*  body {
+                    background-color: ; /* Change this to the desired background color  #e6f7ff*/
+                }*/
     </style>
 
 
+
+<style>
+        .dropdown-toggle-custom {
+            color: #fff;
+            background-color: transparent;
+            border: 1px solid #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .dropdown-toggle-custom:hover {
+            background-color: #495057; /* Darker grey for hover */
+        }
+    </style>
 
 
 </head>
@@ -46,29 +59,23 @@
             </div>
 
 
-            <div class="dropdown">
-                <div class="dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+ <div class="dropdown">
+                    <button class="dropdown-toggle dropdown-toggle-custom" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Admin
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
 
-                   <!----image display in icon when user sign in--!>
-              <!---    <img src="profileicon.jpg" alt="Profile" width="80" height="80" class="rounded-circle">--!>
-
-            </div>
-
-
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="view-user-details"><strong>ViewUserDetails</strong></a></li>
 
-                    <li><a class="dropdown-item" href="View-raise-complaint"><strong>ViewRaiseComplaintDetails</strong></a></li>
+                   <li><a class="dropdown-item" href="View-raise-complaint"><strong>ViewRaiseComplaintDetails</strong></a></li>
+
+                   <li><a class="dropdown-item" href="SearchRaiseComplaint.jsp"><strong>Search</strong></a></li>
 
 
 
+                    </ul>
+                </div>
 
-
-
-   <!-- <a class="dropdown-item" href="raise-complaint-view?complaintId=${complaint.complaintId}">---!>
-
-                </ul>
-            </div>
 
 
         </div>

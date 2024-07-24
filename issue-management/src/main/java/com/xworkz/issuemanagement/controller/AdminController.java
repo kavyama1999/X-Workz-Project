@@ -1,5 +1,6 @@
 package com.xworkz.issuemanagement.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xworkz.issuemanagement.dto.AdminDTO;
 import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
@@ -51,6 +52,7 @@ public class AdminController {
     }
 
 
+
     //view user details(SignUp details)
     @GetMapping("view-user-details")
     public String viewUserDetails(SignUpDTO signUpDTO, Model model) {
@@ -72,22 +74,38 @@ public class AdminController {
 
     //view Raise complaint details
     @GetMapping("View-raise-complaint")
-    public String viewRaiseComplaintDetails(RaiseComplaintDTO raiseComplaintDTO, Model model)
-    {
+    public String viewRaiseComplaintDetails(RaiseComplaintDTO raiseComplaintDTO, Model model) {
         System.out.println("viewUserDetails method running in AdminController");
 
         List<RaiseComplaintDTO> viewData = adminService.findById(raiseComplaintDTO);
-        model.addAttribute("viewRaiseComplaint",viewData);
-        if(viewData!=null)
-        {
+        model.addAttribute("viewRaiseComplaint", viewData);
+        if (viewData != null) {
             System.out.println("View raise complaint data successful in AdminController");
             return "AdminViewRaiseComplaintDetails";
-        }
-
-        else
-        {
+        } else {
             System.out.println("View raise complaint data not successful in AdminController.");
         }
         return "AdminViewRaiseComplaintDetails";
+    }
+
+
+    //search by complaint  type
+
+    @PostMapping("CountrySearched")
+    public String searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO, Model model) {
+
+        System.out.println("searchByComplaintType method running  in   AdminController..");
+        List<RaiseComplaintDTO> data = adminService.searchByComplaintType(raiseComplaintDTO);
+        model.addAttribute("complaintType", data);
+
+        if (data != null) {
+            System.out.println("searchByComplaintType successful in AdminController..");
+            return "SearchRaiseComplaint";
+
+        } else {
+            System.out.println("searchByComplaintType not successful in AdminController.. ");
+        }
+
+        return "SearchRaiseComplaint";
     }
 }

@@ -24,8 +24,8 @@
             font-size: 1.5em;  /* Adjust the size as needed */
         }
 
-       body {
-                    background-color: #e6f7ff; /* Change this to the desired background color */
+    body {
+                    background-color: white; /* Change this to the desired background color */
                 }
 </style>
 
