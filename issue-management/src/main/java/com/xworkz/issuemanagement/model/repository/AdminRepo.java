@@ -25,4 +25,9 @@ public interface AdminRepo {
 
     List<RaiseComplaintDTO> searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO);
 
+
+    //search by complaint city
+
+    List<RaiseComplaintDTO> searchComplaintByCity(RaiseComplaintDTO raiseComplaintDTO);
+
 }

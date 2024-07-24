@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AdminService {
 
-    public boolean findByEmailAndPassword(String email,String password);
+    public boolean findByEmailAndPassword(String email, String password);
 
 
     //admin can view all user details(signUp details)
@@ -21,6 +21,10 @@ public interface AdminService {
 
     //admin search by based on complaint type
 
-    List<RaiseComplaintDTO> searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO) ;
+    List<RaiseComplaintDTO> searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO);
 
-    }
+    //admin search by based on city
+
+    List<RaiseComplaintDTO> searchComplaintByCity(RaiseComplaintDTO raiseComplaintDTO);
+
+}

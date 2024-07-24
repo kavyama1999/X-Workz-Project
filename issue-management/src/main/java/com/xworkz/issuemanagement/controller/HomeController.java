@@ -8,42 +8,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
 
-
     @RequestMapping("/")
-    public String homePage(){
+    public String homePage() {
         return "Home";
     }
 
     @GetMapping("HomePage")
-    public String HomePage(){
+    public String HomePage() {
         return "Home";
     }
 
+
     @GetMapping("SignInPage")
-    public String SignInPage(){
+    public String SignInPage() {
         return "SignIn";
     }
 
     @GetMapping("SignUpPage")
-    public String SignUp(){
+    public String SignUp() {
         return "SignUp";
     }
 
     @GetMapping("ForgotPasswordPage")
-    public String ForgotPasswordPage(){
+    public String ForgotPasswordPage() {
         return "ForgotPassword";
     }
 
 
-
-
     @GetMapping("Admin")
-    public String Admin()
-    {
+    public String Admin() {
         return "AdminPage";
     }
-
-
 
 
 }

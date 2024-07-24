@@ -117,15 +117,45 @@ public class AdminRepoImpl implements AdminRepo {
             entityTransaction.commit();
 
             return raiseData;
+        } catch (PersistenceException persistenceException) {
+            persistenceException.printStackTrace();
+            entityTransaction.rollback();
+        } finally {
+            System.out.println("Connection closed");
+            entityManager.close();
+        }
+        return Collections.emptyList();
+    }
+
+
+    //City
+    @Override
+    public List<RaiseComplaintDTO> searchComplaintByCity(RaiseComplaintDTO raiseComplaintDTO)
+    {
+
+        System.out.println("searchByComplaintType method running in AdminRepoImpl");
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+        try {
+            String query = "SELECT ct FROM RaiseComplaintDTO ct WHERE ct.city=:City";
+            Query query1 = entityManager.createQuery(query);
+            query1.setParameter("City", raiseComplaintDTO.getCity());
+            List<RaiseComplaintDTO> cityType = query1.getResultList();
+            System.out.println("CityType:" + cityType);
+            entityTransaction.commit();
+
+            return cityType;
+
         } catch (PersistenceException persistenceException)
         {
             persistenceException.printStackTrace();
             entityTransaction.rollback();
-        } finally
-        {
-            System.out.println("Connection closed");
+        } finally {
             entityManager.close();
         }
+
         return Collections.emptyList();
     }
 }

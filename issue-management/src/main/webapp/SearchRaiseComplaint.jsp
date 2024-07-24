@@ -49,7 +49,8 @@
 <div class="container mt-5 w-100 mb-5 d-flex justify-content-center">
     <div class="card p-4">
         <div class="card-body">
-            <form action="CountrySearched" method="post">
+
+            <form action="ComplaintTypeSearch" method="post">
                 <h3><b>Raise Complaint</b></h3>
                 <div class="row mb-3">
                     <span id="complaintTypeError"></span>
@@ -63,6 +64,16 @@
                         <option value="Water Problem" ${countryDTO.complaintType == 'Water Problem' ? 'selected' : ''}>Water Problem</option>
                     </select><br>
                 </div>
+
+                  <div>
+                       <input type="submit" id="submit" value="Submit">
+                  </div>
+
+                <div class="mb-3">
+                                   <label for="city" class="form-label">City</label>
+                                   <input type="text" class="form-control" id="city" name="city" >
+                               </div>
+
                 <div>
                     <input type="submit" id="submit" value="Submit">
                 </div>

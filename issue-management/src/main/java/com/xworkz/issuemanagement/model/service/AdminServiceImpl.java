@@ -69,16 +69,30 @@ public class AdminServiceImpl implements AdminService {
         System.out.println("searchByComplaintType method running in AdminServiceImpl..");
         List<RaiseComplaintDTO> data = adminRepo.searchByComplaintType(raiseComplaintDTO);
 
-        if(data!=null)
-        {
+        if (data != null) {
             System.out.println("searchByComplaintType successful in  AdminServiceImpl..");
-            return  data;
+            return data;
+        } else {
+            System.out.println("searchByComplaintType not successful in AdminServiceImpl..");
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<RaiseComplaintDTO> searchComplaintByCity(RaiseComplaintDTO raiseComplaintDTO) {
+        System.out.println("searchComplaintByCity method running in AdminServiceImpl..");
+
+        List<RaiseComplaintDTO> cityData = adminRepo.searchComplaintByCity(raiseComplaintDTO);
+
+        if(cityData!=null)
+        {
+            System.out.println("searchComplaintByCity successful in AdminServiceImpl");
+            return cityData;
         }
 
         else
-
         {
-            System.out.println("searchByComplaintType not successful in AdminServiceImpl..");
+            System.out.println("searchComplaintByCity not successful in AdminServiceImpl");
         }
         return Collections.emptyList();
     }

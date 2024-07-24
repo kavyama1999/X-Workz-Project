@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -52,7 +53,6 @@ public class AdminController {
     }
 
 
-
     //view user details(SignUp details)
     @GetMapping("view-user-details")
     public String viewUserDetails(SignUpDTO signUpDTO, Model model) {
@@ -89,23 +89,87 @@ public class AdminController {
     }
 
 
-    //search by complaint  type
+//    //search by complaint  type
+//
+//    @PostMapping("ComplaintTypeSearch")
+//    public String searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO, Model model) {
+//
+//        System.out.println("searchByComplaintType method running  in   AdminController..");
+//        List<RaiseComplaintDTO> data = adminService.searchByComplaintType(raiseComplaintDTO);
+//        List<RaiseComplaintDTO> cityType= adminService.searchComplaintByCity(raiseComplaintDTO);
+//        model.addAttribute("complaintType", data);
+//
+//        if (data != null) {
+//            System.out.println("searchByComplaintType successful in AdminController..");
+//            return "SearchRaiseComplaint";
+//
+//        } else {
+//            System.out.println("searchByComplaintType not successful in AdminController.. ");
+//        }
+//
+//        if(cityType!=null)
+//        {
+//            System.out.println("searchComplaintByCity successful in AdminController");
+//            model.addAttribute("complaintType", cityType);
+//
+//            return "SearchRaiseComplaint";
+//        }
+//
+//        else
+//        {
+//            System.out.println("searchComplaintByCity not successful in AdminController");
+//        }
+//
+//        return "SearchRaiseComplaint";
+//    }
 
-    @PostMapping("CountrySearched")
+
+    @PostMapping("ComplaintTypeSearch")
     public String searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO, Model model) {
+        System.out.println("searchByComplaintType method running in AdminController..");
 
-        System.out.println("searchByComplaintType method running  in   AdminController..");
         List<RaiseComplaintDTO> data = adminService.searchByComplaintType(raiseComplaintDTO);
-        model.addAttribute("complaintType", data);
+        List<RaiseComplaintDTO> cityType = adminService.searchComplaintByCity(raiseComplaintDTO);
 
+        // Combine both lists to ensure all relevant data is included
+        List<RaiseComplaintDTO> combinedData = new ArrayList<>();
         if (data != null) {
-            System.out.println("searchByComplaintType successful in AdminController..");
-            return "SearchRaiseComplaint";
+            combinedData.addAll(data);
+        }
+        if (cityType != null) {
+            combinedData.addAll(cityType);
+        }
 
+        // Add combined data to the model
+        model.addAttribute("complaintType", combinedData);
+
+        if (combinedData.isEmpty()) {
+            System.out.println("No data found for the given criteria in AdminController.");
         } else {
-            System.out.println("searchByComplaintType not successful in AdminController.. ");
+            System.out.println("Data found for the given criteria in AdminController.");
         }
 
         return "SearchRaiseComplaint";
     }
+
 }
+
+//    //search by complaint city
+//    @PostMapping("ComplaintTypeSearch")
+//    public String searchByComplaintCity(RaiseComplaintDTO raiseComplaintDTO, Model Model) {
+//
+//        System.out.println("searchByComplaintCity method running in AdminController..");
+//        List<RaiseComplaintDTO> cityData = adminService.searchComplaintByCity(raiseComplaintDTO);
+//        if (cityData != null) {
+//            System.out.println("searchComplaintByCity successful in AdminController");
+//            return "SearchRaiseComplaint";
+//        }
+//        else
+//        {
+//            System.out.println("searchComplaintByCity not successful in AdminController");
+//        }
+//
+//        return "SearchRaiseComplaint";
+//    }
+
+
