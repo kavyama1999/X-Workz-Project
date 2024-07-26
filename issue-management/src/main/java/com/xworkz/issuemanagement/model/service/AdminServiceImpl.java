@@ -2,11 +2,13 @@ package com.xworkz.issuemanagement.model.service;
 
 
 import com.xworkz.issuemanagement.dto.AdminDTO;
+import com.xworkz.issuemanagement.dto.ComplaintDepartmentDTO;
 import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 import com.xworkz.issuemanagement.model.repository.AdminRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
@@ -63,37 +65,59 @@ public class AdminServiceImpl implements AdminService {
         return Collections.emptyList();
     }
 
+
+    //type AND city
+
     @Override
-    public List<RaiseComplaintDTO> searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO) {
+    public List<RaiseComplaintDTO> searchByComplaintTypeAndCity(String complaintType, String city) {
+        System.out.println("searchByComplaintTypeORCity method running in AdminServiceImpl..");
+        List<RaiseComplaintDTO> data = adminRepo.searchByComplaintTypeAndCity(complaintType, city);
 
-        System.out.println("searchByComplaintType method running in AdminServiceImpl..");
-        List<RaiseComplaintDTO> data = adminRepo.searchByComplaintType(raiseComplaintDTO);
-
-        if (data != null) {
-            System.out.println("searchByComplaintType successful in  AdminServiceImpl..");
+        if (!data.isEmpty()) {
+            System.out.println("searchByComplaintTypeORCity successful in AdminServiceImpl..");
             return data;
         } else {
-            System.out.println("searchByComplaintType not successful in AdminServiceImpl..");
+            System.out.println("searchByComplaintTypeORCity not successful in AdminServiceImpl..");
         }
         return Collections.emptyList();
     }
 
+
+    //search by complaint type OR city
     @Override
-    public List<RaiseComplaintDTO> searchComplaintByCity(RaiseComplaintDTO raiseComplaintDTO) {
-        System.out.println("searchComplaintByCity method running in AdminServiceImpl..");
+    public List<RaiseComplaintDTO> searchByComplaintTypeOrCity(String complaintType, String city) {
+        System.out.println("searchByComplaintTypeAndCity method running in AdminServiceImpl..");
 
-        List<RaiseComplaintDTO> cityData = adminRepo.searchComplaintByCity(raiseComplaintDTO);
+        List<RaiseComplaintDTO> listOfData = adminRepo.searchByComplaintTypeOrCity(complaintType, city);
+        if (!listOfData.isEmpty()) {
+            System.out.println("searchComplaintTypeAndCity successful in AdminServiceImpl");
+            return listOfData;
+        } else {
+            System.out.println("searchByComplaintTypeAndCity not successful in AdminServiceImpl..");
+        }
 
-        if(cityData!=null)
-        {
-            System.out.println("searchComplaintByCity successful in AdminServiceImpl");
-            return cityData;
+        return Collections.emptyList();
+    }
+
+    @Override
+    public ComplaintDepartmentDTO saveDepartment(ComplaintDepartmentDTO complaintDepartmentDTO) {
+        System.out.println("saveDepartment method running in AdminServiceImpl..");
+
+        ComplaintDepartmentDTO data = adminRepo.saveDepartment(complaintDepartmentDTO);
+
+        System.out.println("data:" + data);
+
+        if (data != null) {
+            System.out.println("saveDepartment  successful in AdminServiceImpl..");
+
+            return  data;
         }
 
         else
         {
-            System.out.println("searchComplaintByCity not successful in AdminServiceImpl");
+            System.out.println("saveDepartment not successful in AdminServiceImpl..");
         }
-        return Collections.emptyList();
+
+        return null;
     }
 }

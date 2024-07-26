@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 
 
-@Table(name="department_table")
+@Table(name = "department_table")
 public class ComplaintDepartmentDTO {
 
     @Id
@@ -22,20 +22,20 @@ public class ComplaintDepartmentDTO {
     private int id;
 
 
+    @Column(name = "department_address")
+    private  String  address;
 
     @Column(name = "department_type")
-    private String  departmentType;
+    private String departmentType;
 
 
-    private String  address;
+
+    @Column(name = "department_area")
+    private String departmentArea;
 
 
     @Column(name = "no_of_employees")
     private int noOfEmployees;
-
-
-
-
 
 
 }

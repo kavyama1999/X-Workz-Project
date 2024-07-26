@@ -2,6 +2,7 @@ package com.xworkz.issuemanagement.controller;
 
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xworkz.issuemanagement.dto.AdminDTO;
+import com.xworkz.issuemanagement.dto.ComplaintDepartmentDTO;
 import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 import com.xworkz.issuemanagement.model.service.AdminService;
@@ -89,87 +90,75 @@ public class AdminController {
     }
 
 
-//    //search by complaint  type
-//
-//    @PostMapping("ComplaintTypeSearch")
-//    public String searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO, Model model) {
-//
-//        System.out.println("searchByComplaintType method running  in   AdminController..");
-//        List<RaiseComplaintDTO> data = adminService.searchByComplaintType(raiseComplaintDTO);
-//        List<RaiseComplaintDTO> cityType= adminService.searchComplaintByCity(raiseComplaintDTO);
-//        model.addAttribute("complaintType", data);
-//
-//        if (data != null) {
-//            System.out.println("searchByComplaintType successful in AdminController..");
-//            return "SearchRaiseComplaint";
-//
-//        } else {
-//            System.out.println("searchByComplaintType not successful in AdminController.. ");
-//        }
-//
-//        if(cityType!=null)
-//        {
-//            System.out.println("searchComplaintByCity successful in AdminController");
-//            model.addAttribute("complaintType", cityType);
-//
-//            return "SearchRaiseComplaint";
-//        }
-//
-//        else
-//        {
-//            System.out.println("searchComplaintByCity not successful in AdminController");
-//        }
-//
-//        return "SearchRaiseComplaint";
-//    }
+////**************************************************************////////
 
 
-    @PostMapping("ComplaintTypeSearch")
+    // Combined search endpoint for both OR and AND conditions
+    @PostMapping("/ComplaintTypeSearch")
     public String searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO, Model model) {
-        System.out.println("searchByComplaintType method running in AdminController..");
 
-        List<RaiseComplaintDTO> data = adminService.searchByComplaintType(raiseComplaintDTO);
-        List<RaiseComplaintDTO> cityType = adminService.searchComplaintByCity(raiseComplaintDTO);
+        System.out.println("searchByComplaintType method running in AdminController..!!");
 
-        // Combine both lists to ensure all relevant data is included
-        List<RaiseComplaintDTO> combinedData = new ArrayList<>();
-        if (data != null) {
-            combinedData.addAll(data);
-        }
-        if (cityType != null) {
-            combinedData.addAll(cityType);
-        }
 
-        // Add combined data to the model
-        model.addAttribute("complaintType", combinedData);
 
-        if (combinedData.isEmpty()) {
-            System.out.println("No data found for the given criteria in AdminController.");
+        List<RaiseComplaintDTO> listOfTypeAndCity = adminService.searchByComplaintTypeAndCity(raiseComplaintDTO.getComplaintType(), raiseComplaintDTO.getCity());
+
+      //  System.out.println("TypeAndCity : " + listOfTypeAndCity);
+
+        if (!listOfTypeAndCity.isEmpty()) {
+            // System.out.println("searchByComplaintTypeAndCity successful in AdminController");
+            model.addAttribute("com", listOfTypeAndCity);
+            return "SearchRaiseComplaint";
         } else {
-            System.out.println("Data found for the given criteria in AdminController.");
+            List<RaiseComplaintDTO> listOfTypeOrCity = adminService.searchByComplaintTypeOrCity(raiseComplaintDTO.getComplaintType(), raiseComplaintDTO.getCity());
+
+            //System.out.println("TypeOrCity : " + listOfTypeOrCity);
+            if (!listOfTypeOrCity.isEmpty()) {
+                //   System.out.println("searchByComplaintTypeOrCity ");
+                model.addAttribute("com", listOfTypeOrCity);
+                return "SearchRaiseComplaint";
+
+            }
         }
 
         return "SearchRaiseComplaint";
     }
 
+
+
+    //save  department
+
+    @PostMapping("add-department")
+    public String saveDepartment(ComplaintDepartmentDTO complaintDepartmentDTO, Model model)
+    {
+        System.out.println("saveDepartment method running in AdminController..");
+
+      ComplaintDepartmentDTO data=  adminService.saveDepartment(complaintDepartmentDTO);
+      if(data!=null)
+      {
+          System.out.println("saveDepartment successful in AdminController..");
+          model.addAttribute("msg","Successfully added department ");
+//          return  "AdminAddComplaints";
+          return "redirect:/add-departments";
+
+      }
+
+      else
+      {
+          System.out.println("saveDepartment not successful in AdminController..");
+          model.addAttribute("error","not Successfully added department");
+      }
+
+      //return "AdminAddComplaints";
+        return "redirect:/add-departments";
+    }
+
+
+    @GetMapping("add-departments")
+    public String  save(ComplaintDepartmentDTO complaintDepartmentDTO,Model model)
+    {
+        model.addAttribute("msg","Successfully added department ");
+
+        return "AdminAddComplaints";
+    }
 }
-
-//    //search by complaint city
-//    @PostMapping("ComplaintTypeSearch")
-//    public String searchByComplaintCity(RaiseComplaintDTO raiseComplaintDTO, Model Model) {
-//
-//        System.out.println("searchByComplaintCity method running in AdminController..");
-//        List<RaiseComplaintDTO> cityData = adminService.searchComplaintByCity(raiseComplaintDTO);
-//        if (cityData != null) {
-//            System.out.println("searchComplaintByCity successful in AdminController");
-//            return "SearchRaiseComplaint";
-//        }
-//        else
-//        {
-//            System.out.println("searchComplaintByCity not successful in AdminController");
-//        }
-//
-//        return "SearchRaiseComplaint";
-//    }
-
-

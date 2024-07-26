@@ -25,6 +25,23 @@
         }
     </style>
 
+
+    <style>
+
+    .search-container {
+        text-align: right;
+        margin-bottom: 20px; /* Adjust as needed for spacing */
+    }
+
+    .search-button {
+        padding: 10px 20px; /* Adjust as needed for button size */
+        font-size: 16px; /* Adjust as needed for font size */
+    }
+
+
+    </style>
+
+
 </head>
 <body>
 <nav class="navbar navbar-dark bg-dark">
@@ -47,7 +64,6 @@
 
                     <li><a class="dropdown-item" href="view-user-details"><strong>ViewUserDetails</strong></a></li>
 
-                   <li><a class="dropdown-item" href="SearchRaiseComplaint.jsp"><strong>Search</strong></a></li>
 
                     </ul>
                 </div>
@@ -61,9 +77,22 @@
 
 <div class="container mt-5 mb-5">
     <div class="card">
+
         <div class="card-header">
             <h3><b>View User Details </b></h3>
+
+
+   <div class="container">
+        <div class="search-container">
+            <a class="btn btn-dark search-button" href="search-by-complaint"><strong>Search</strong></a>
         </div>
+
+
+
+
+
+
+
         <div class="card-body">
             <table class="table table-bordered">
                 <thead>
@@ -77,6 +106,7 @@
                     <th>Area</th>
                     <th>Address</th>
                     <th>Description</th>
+                    <th>User Id</th>
 
 
                 </tr>
@@ -93,6 +123,10 @@
                         <td>${viewRaiseComplaintUsers.area}</td>
                         <td>${viewRaiseComplaintUsers.address}</td>
                         <td>${viewRaiseComplaintUsers.description}</td>
+                        <td>${viewRaiseComplaintUsers.signUpDTO.id}</td>
+
+
+
 
                     </tr>
                 </c:forEach>

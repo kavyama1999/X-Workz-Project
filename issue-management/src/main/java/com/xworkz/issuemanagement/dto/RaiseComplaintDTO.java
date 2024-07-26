@@ -40,7 +40,7 @@ public class RaiseComplaintDTO {
     private String state;
 
 
-    ///@Column(name = "city")
+    @Column(name = "city")
     private String city;
 
 

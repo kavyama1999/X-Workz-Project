@@ -41,4 +41,21 @@ public class HomeController {
     }
 
 
+
+    //search
+    @GetMapping("search-by-complaint")
+    public String searchComplaint()
+    {
+        return "SearchRaiseComplaint";
+    }
+
+
+    //add department
+
+
+    @GetMapping("add-complaints")
+    public String addDepartmentByAdmin()
+    {
+        return "AdminAddComplaints";
+    }
 }

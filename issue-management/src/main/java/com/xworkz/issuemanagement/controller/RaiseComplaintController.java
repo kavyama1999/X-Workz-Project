@@ -106,20 +106,7 @@ public class RaiseComplaintController {
         return "EditRaiseComplaint";
     }
 
-  /*  @GetMapping("/edit-complaint/{complaintId}")
-    @ResponseBody
-    public ResponseEntity<RaiseComplaintDTO> getComplaintDetails(@PathVariable("complaintId") int complaintId) {
-        System.out.println("complaintId from repo: " + complaintId);
-        RaiseComplaintDTO data = raiseComplaintService.getComplaintById(complaintId);
-        return new ResponseEntity<>(data, HttpStatus.OK);
-    }*/
 
-
-  /*  @PostMapping("/update-complaint")
-    public ResponseEntity<String> updateComplaint(@ModelAttribute RaiseComplaintDTO raiseComplaintDTO) {
-        raiseComplaintService.updateComplaint(raiseComplaintDTO);
-        return new ResponseEntity<>("Complaint updated successfully!", HttpStatus.OK);
-    }*/
 
     //update
 
@@ -136,6 +123,7 @@ public class RaiseComplaintController {
         }
         return "EditRaiseComplaint";
     }
+
 
 }
 

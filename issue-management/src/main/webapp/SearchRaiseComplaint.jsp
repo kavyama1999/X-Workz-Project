@@ -31,6 +31,14 @@
     .complaints-table td:nth-child(8) { width: 15%; }
     .complaints-table td:nth-child(9) { width: 15%; }
 </style>
+
+
+<!--<style>
+        .dark-border {
+            border-color: #000 !important;
+            border-width: 2px !important;
+        }
+    </style>--!>
 </head>
 <body>
 <nav class="navbar navbar-dark bg-dark">
@@ -41,13 +49,14 @@
                 <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
             </a>
             <!-- End of logo -->
-            <a class="navbar-brand text-white" href="HomePage"><b>Home</b></a>
+            <a class="navbar-brand text-white" href="Admin"><b>Admin</b></a>
+
         </div>
     </div>
 </nav>
 
 <div class="container mt-5 w-100 mb-5 d-flex justify-content-center">
-    <div class="card p-4">
+    <div class="card p-4 ">
         <div class="card-body">
 
             <form action="ComplaintTypeSearch" method="post">
@@ -56,7 +65,7 @@
                     <span id="complaintTypeError"></span>
                     <label for="complaintType" class="form-label"><b>Complaint Type:</b></label>
                     <select class="form-select custom-select-width" id="complaintType" name="complaintType" required>
-                        <option value="0" ${countryDTO.complaintType == null ? 'selected' : ''}>Select</option>
+                        <option value="0" ${complaint.complaintType == null ? 'selected' : ''}>Select</option>
                         <option value="Electric issue" ${countryDTO.complaintType == 'Electric issue' ? 'selected' : ''}>Electric issue</option>
                         <option value="Water Supply" ${countryDTO.complaintType == 'Water Supply' ? 'selected' : ''}>Water Supply</option>
                         <option value="Network Problem" ${countryDTO.complaintType == 'Network Problem' ? 'selected' : ''}>Network Problem</option>
@@ -65,17 +74,17 @@
                     </select><br>
                 </div>
 
-                  <div>
+               <!--   <div>
                        <input type="submit" id="submit" value="Submit">
-                  </div>
+                  </div>--!>
 
                 <div class="mb-3">
-                                   <label for="city" class="form-label">City</label>
-                                   <input type="text" class="form-control" id="city" name="city" >
+                                   <label for="city" class="form-label"><strong>City:</strong></label>
+                                   <input type="text" class="form-control" id="city" name="city"  placeholder="Enter city" >
                                </div>
 
                 <div>
-                    <input type="submit" id="submit" value="Submit">
+                    <input  class="btn  btn-dark"  type="submit" id="submit" value="Submit">
                 </div>
             </form>
         </div>
@@ -85,7 +94,7 @@
 <!-- for table to display -->
 
 <div class="container mt-5 mb-5 d-flex justify-content-center">
-    <div class="card p-4">
+    <div class="card p-4 ">
         <div class="card-body">
             <div class="text-primary">${CountryName}</div>
             <table class="table complaints-table">
@@ -103,17 +112,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${complaintType}" var="complaint" varStatus="status">
+                    <c:forEach items="${com}" var="complaint1" varStatus="status">
                         <tr>
                             <td>${status.index + 1}</td>
-                            <td>${complaint.complaintId}</td>
-                            <td>${complaint.complaintType}</td>
-                            <td>${complaint.country}</td>
-                            <td>${complaint.state}</td>
-                            <td>${complaint.city}</td>
-                            <td>${complaint.area}</td>
-                            <td>${complaint.address}</td>
-                            <td>${complaint.description}</td>
+                            <td>${complaint1.complaintId}</td>
+                            <td>${complaint1.complaintType}</td>
+                            <td>${complaint1.country}</td>
+                            <td>${complaint1.state}</td>
+                            <td>${complaint1.city}</td>
+                            <td>${complaint1.area}</td>
+                            <td>${complaint1.address}</td>
+                            <td>${complaint1.description}</td>
                         </tr>
                     </c:forEach>
                 </tbody>

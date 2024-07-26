@@ -14,8 +14,8 @@
 
 <style>
     .oval-btn {
-        border-radius: 50px; /* Adjust the value as needed for an oval shape */
-        padding: 20px 40px;  /* Adjust the padding to control the button size */
+        border-radius: 40px; /* Adjust the value as needed for an oval shape */
+        padding: 20px 20px;  /* Adjust the padding to control the button size */
     }
 
 
@@ -90,7 +90,7 @@
             </div>
 
             <div class="d-flex justify-content-center mt-3">
-                <input type="submit" value="SignIn" class="btn btn-primary oval-btn bold-text" id="signInButton">
+                <input type="submit" value="SignIn" class="btn btn-dark oval-btn bold-text" id="signInButton">
             </div>
         </form>
     </div>

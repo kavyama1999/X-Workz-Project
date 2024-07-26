@@ -24,7 +24,7 @@
             font-size: 1.5em;  /* Adjust the size as needed */
         }
 
-       body {
+    body {
                     background-color: white; /* Change this to the desired background color */
                 }
 </style>
@@ -46,6 +46,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">
+                <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
             </a>
             <a class="navbar-brand text-white" href="HomePage"><b>Home</b></a>
         </div>
@@ -56,43 +57,38 @@
 
 <div class="card border-dark container  w-25 mt-5 mb-5 justify-content-center">
     <div class="card-header">
-        <h3><b><center>Log In</center></b></h3>
+        <h3><b><center>Add Complaint Form</center></b></h3>
     </div>
 
     <div class="card-body text-dark">
 
-      <!---  <span style="color:green"><strong>${adminMessage}</strong></span>
-        <span style="color:red">${errorAdminMessage}</span>---!>
+        <span style="color:green"><h2>${msg}</h2></span>
+        <span style="color:red">${error}</span>
 
-        <form action="admin" method="post">
-
-        <span style="color:green"><strong>${adminMessage}</strong></span>
-                <span style="color:red"><strong>${errorAdminMessage}</strong></span>
+        <form action="add-department" method="post">
             <div class="row mb-3">
                 <span id="emailError" style="color:red;"></span><br>
-                <label for="email" class="form-label"><b>Email:</b></label>
+                <label for="departmentType" class="form-label"><b>Department Name:</b></label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" value="" onblur="emailValidation()">
+                    <span class="input-group-text"></i></span>
+                    <input type="text" class="form-control" id="departmentType" name="departmentType" placeholder="Enter department name" value="" required>
                 </div>
             </div>
 
 
             <div class="mb-3">
                 <span id="passwordError" style="color:red;"></span><br>
-                <label for="password" class="form-label"><b>Password:</b></label>
+                <label for="address" class="form-label"><b>Address:</b></label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" value="" onblur="passwordValidation">
+                    <span class="input-group-text"></i></span>
+                    <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" value=""  required>
                 </div>
             </div>
 
-          <!--  <div class="mb-3">
-                <a href="ForgotPasswordPage" class="link-primary">Forgot Password?</a>
-            </div>--!>
+
 
             <div class="d-flex justify-content-center mt-3">
-                <input type="submit" value="LogIn" class="btn btn-dark oval-btn bold-text" id="signInButton">
+                <input type="submit" value="SignIn" class="btn btn-dark oval-btn bold-text" id="signInButton">
             </div>
         </form>
     </div>

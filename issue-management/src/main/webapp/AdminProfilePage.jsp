@@ -69,7 +69,8 @@
 
                    <li><a class="dropdown-item" href="View-raise-complaint"><strong>ViewRaiseComplaintDetails</strong></a></li>
 
-                   <li><a class="dropdown-item" href="SearchRaiseComplaint.jsp"><strong>Search</strong></a></li>
+                   <li><a class="dropdown-item" href="add-complaints"><strong>AddComplaints</strong></a></li>
+
 
 
 
