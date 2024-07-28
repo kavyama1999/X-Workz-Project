@@ -1,127 +1,156 @@
-//package com.xworkz.issuemanagement.model.repository;
+//<%@ page isELIgnored="false"%>
+//<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 //
-//import org.springframework.stereotype.Repository;
-//import javax.persistence.EntityManager;
-//import javax.persistence.PersistenceContext;
-//import javax.transaction.Transactional;
+//<!DOCTYPE html>
+//<html>
+//<head>
+//    <meta charset="ISO-8859-1">
+//    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+//    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+//    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 //
-//@Repository
-//public class PasswordResetRepoImpl implements PasswordResetRepo {
-//
-//    @PersistenceContext
-//    private EntityManager entityManager;
-//
-//    @Override
-//    public boolean emailExists(String email) {
-//        // Implementation to check if the email exists in the database
-//        // Example:
-//        Long count = (Long) entityManager.createQuery("SELECT COUNT(u) FROM User u WHERE u.email = :email")
-//                .setParameter("email", email)
-//                .getSingleResult();
-//        return count > 0;
-//    }
-//
-//    @Override
-//    public boolean verifyOldPassword(String email, String oldPassword) {
-//        // Implementation to verify the old password
-//        // Example:
-//        Long count = (Long) entityManager.createQuery("SELECT COUNT(u) FROM User u WHERE u.email = :email AND u.password = :password")
-//                .setParameter("email", email)
-//                .setParameter("password", oldPassword)
-//                .getSingleResult();
-//        return count > 0;
-//    }
-//
-//    @Override
-//    @Transactional
-//    public void updatePassword(String email, String newPassword) {
-//        // Implementation to update the password
-//        // Example:
-//        entityManager.createQuery("UPDATE User u SET u.password = :password WHERE u.email = :email")
-//                .setParameter("password", newPassword)
-//                .setParameter("email", email)
-//                .executeUpdate();
-//    }
+//    <style>
+//        .dropdown-toggle-custom {
+//    color: #fff;
+//    background-color: transparent;
+//    border: 1px solid #fff;
+//    padding: 5px 10px;
+//    border-radius: 5px;
 //}
-//////////////////
-
-//package com.xworkz.issuemanagement.controller;
-
-//import com.xworkz.issuemanagement.model.service.PasswordResetService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//
-//@Controller
-//@RequestMapping("/")
-//public class PasswordResetController {
-//
-//    @Autowired
-//    private PasswordResetService passwordResetService;
-//
-//    public PasswordResetController() {
-//        System.out.println("No param constructor created for PasswordResetController...");
-//    }
-//
-//    @PostMapping("reset-password")
-//    public String passwordReset(Model model, String email, String oldPassword, String newPassword, String confirmPassword) {
-//        boolean resetSuccessful = passwordResetService.resetPassword(email, oldPassword, newPassword, confirmPassword);
-//        if (resetSuccessful) {
-//            model.addAttribute("passwordResetMessage", "Password reset successful");
-//        } else {
-//            model.addAttribute("passwordResetError", "Failed to reset password. Please check your details and try again.");
-//        }
-//        return "PasswordReset";
-//    }
+//        .dropdown-toggle-custom:hover {
+//    background-color: #495057; /* Darker grey for hover */
 //}
-
-
-
-//////////////////passwordReset impl
-
-
-//package com.xworkz.issuemanagement.model.service;
-//
-//import com.xworkz.issuemanagement.model.repository.PasswordResetRepo;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.mail.SimpleMailMessage;
-//import org.springframework.mail.javamail.JavaMailSender;
-//import org.springframework.stereotype.Service;
-//
-//@Service
-//public class PasswordResetServiceImpl implements PasswordResetService {
-//
-//    @Autowired
-//    private PasswordResetRepo passwordResetRepo;
-
-//    @Autowired
-//    private JavaMailSender javaMailSender;
-//
-//    @Override
-//    public boolean resetPassword(String email, String oldPassword, String newPassword, String confirmPassword) {
-//        if (!passwordResetRepo.emailExists(email)) {
-//            return false;
-//        }
-//        if (!passwordResetRepo.verifyOldPassword(email, oldPassword)) {
-//            return false;
-//        }
-//        if (!newPassword.equals(confirmPassword)) {
-//            return false;
-//        }
-//        passwordResetRepo.updatePassword(email, newPassword);
-//        sendPasswordEmail(email, "Password Reset Successful", "Your password has been successfully reset.");
-//        return true;
-//    }
-//
-//    @Override
-//    public void sendPasswordEmail(String toEmail, String subject, String body) {
-//        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-//        simpleMailMessage.setTo(toEmail);
-//        simpleMailMessage.setSubject(subject);
-//        simpleMailMessage.setText(body);
-//        simpleMailMessage.setFrom("kmsrcb@gmail.com");
-//        javaMailSender.send(simpleMailMessage);
-//    }
+//        .search-container {
+//    text-align: right;
+//    margin-bottom: 20px; /* Adjust as needed for spacing */
 //}
+//        .search-button {
+//    padding: 10px 20px; /* Adjust as needed for button size */
+//    font-size: 16px; /* Adjust as needed for font size */
+//}
+//        .status-select {
+//    width: 180px; /* Adjust as needed for desired width */
+//}
+//        .card-size {
+//    width: 1400px; /* Adjust as needed for desired width */
+//}
+//    </style>
+//</head>
+//<body>
+//<nav class="navbar navbar-dark bg-dark">
+//    <div class="container-fluid">
+//        <div class="navbar-header">
+//            <a class="navbar-brand" href="#">
+//                <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
+//            </a>
+//            <a class="navbar-brand text-white" href="HomePage"><b>Home</b></a>
+//            <a class="navbar-brand text-white" href="Admin"><b>Admin</b></a>
+//        </div>
+//        <div class="dropdown">
+//            <button class="dropdown-toggle dropdown-toggle-custom" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+//Admin
+//        </button>
+//            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+//                <li><a class="dropdown-item" href="view-user-details"><strong>ViewUserDetails</strong></a></li>
+//            </ul>
+//        </div>
+//    </div>
+//</nav>
+//
+//<div class="container mt-5 mb-5">
+//    <div class="card card-size">
+//        <div class="card-body">
+//            <form action="ComplaintTypeSearch" method="post">
+//                <h3><b>Raise Complaint</b></h3>
+//                <div class="row mb-3">
+//                    <label for="complaintType" class="form-label"><b>Complaint Type:</b></label>
+//                    <select class="form-select custom-select-width" id="complaintType" name="complaintType" required>
+//                        <option value="0" ${complaint.complaintType == null ? 'selected' : ''}>Select</option>
+//                        <option value="Electric issue" ${complaint.complaintType == 'Electric issue' ? 'selected' : ''}>Electric issue</option>
+//                        <option value="Water Supply" ${complaint.complaintType == 'Water Supply' ? 'selected' : ''}>Water Supply</option>
+//                        <option value="Network Problem" ${complaint.complaintType == 'Network Problem' ? 'selected' : ''}>Network Problem</option>
+//                        <option value="System Problem" ${complaint.complaintType == 'System Problem' ? 'selected' : ''}>System Problem</option>
+//                        <option value="Water Problem" ${complaint.complaintType == 'Water Problem' ? 'selected' : ''}>Water Problem</option>
+//                    </select><br>
+//                </div>
+//                <div class="mb-3">
+//                    <label for="city" class="form-label"><strong>City:</strong></label>
+//                    <input type="text" class="form-control" id="city" name="city" placeholder="Enter city">
+//                </div>
+//                <div>
+//                    <input class="btn btn-dark" type="submit" id="submit" value="Submit">
+//                </div>
+//            </form>
+//        </div>
+//    </div>
+//</div>
+//
+//<div class="container mt-5 mb-5">
+//    <div class="card card-size">
+//        <div class="card-header">
+//            <h3><b>View Raise Complaint Details</b></h3>
+//        </div>
+//        <div class="card-body">
+//            <table class="table table-bordered">
+//                <thead>
+//                    <tr>
+//<th>Serial Number</th>
+//                        <th>ID</th>
+//<th>Complaint Type</th>
+//                        <th>Country</th>
+//                        <th>State</th>
+//                        <th>City</th>
+//                        <th>Area</th>
+//                        <th>Address</th>
+//                        <th>Description</th>
+//<th>User Id</th>
+//<th>Allocate Department</th>
+//                        <th>Status</th>
+//                        <th>Submit</th>
+//                    </tr>
+//                </thead>
+//                <tbody>
+//                    <c:forEach var="viewRaiseComplaintUsers" items="${viewRaiseComplaint}" varStatus="status">
+//                        <tr>
+//<td>${status.index + 1}</td>
+//<td>${viewRaiseComplaintUsers.complaintId}</td>
+//<td>${viewRaiseComplaintUsers.complaintType}</td>
+//<td>${viewRaiseComplaintUsers.country}</td>
+//<td>${viewRaiseComplaintUsers.state}</td>
+//<td>${viewRaiseComplaintUsers.city}</td>
+//<td>${viewRaiseComplaintUsers.area}</td>
+//<td>${viewRaiseComplaintUsers.address}</td>
+//<td>${viewRaiseComplaintUsers.description}</td>
+//<td>${viewRaiseComplaintUsers.signUpDTO.id}</td>
+//
+//                            <form action="update-department" method="post">
+//                                <input type="hidden" name="complaintId" value="${viewRaiseComplaintUsers.complaintId}">
+//                                <td>
+//                                    <select class="form-select status-select" name="departmentId">
+//                                        <option value="Select">Select</option>
+//                                        <c:forEach var="department" items="${departments}">
+//                                            <option value="${department.id}" ${viewRaiseComplaintUsers.departmentId == department.id ? 'selected' : ''}>${department.departmentName}</option>
+//                                        </c:forEach>
+//                                    </select>
+//                                </td>
+//                                <td>
+//                                    <select class="form-select status-select" name="status">
+//                                        <option value="Select">Select</option>
+//                                        <option value="Pending" ${viewRaiseComplaintUsers.status == 'Pending' ? 'selected' : ''}>Pending</option>
+//                                        <option value="In Process" ${viewRaiseComplaintUsers.status == 'In Process' ? 'selected' : ''}>In Process</option>
+//                                        <option value="Completed" ${viewRaiseComplaintUsers.status == 'Completed' ? 'selected' : ''}>Completed</option>
+//                                    </select>
+//                                </td>
+//                                <td>
+//                                    <button type="submit" class="btn btn-primary">Submit</button>
+//                                </td>
+//                            </form>
+//                        </tr>
+//                    </c:forEach>
+//                </tbody>
+//            </table>
+//        </div>
+//    </div>
+//</div>
+//</body>
+//</html>

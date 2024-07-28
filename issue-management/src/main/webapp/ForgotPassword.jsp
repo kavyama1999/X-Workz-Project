@@ -28,7 +28,7 @@
             <a class="navbar-brand" href="#">
                 <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
             </a>
-            <a class="navbar-brand text-white" href="index.jsp"><b>Home</b></a>
+            <a class="navbar-brand text-white" href="HomePage"><b>Home</b></a>
         </div>
     </div>
 </nav>

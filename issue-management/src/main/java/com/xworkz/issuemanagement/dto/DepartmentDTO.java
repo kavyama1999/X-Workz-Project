@@ -14,7 +14,7 @@ import javax.persistence.*;
 
 
 @Table(name = "department_table")
-public class ComplaintDepartmentDTO {
+public class DepartmentDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +22,13 @@ public class ComplaintDepartmentDTO {
     private int id;
 
 
+
     @Column(name = "department_address")
     private  String  address;
 
-    @Column(name = "department_type")
-    private String departmentType;
 
+    @Column(name = "department_name")
+    private String departmentName;
 
 
     @Column(name = "department_area")

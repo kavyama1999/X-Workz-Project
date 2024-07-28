@@ -19,8 +19,6 @@ import javax.persistence.*;
 public class RaiseComplaintDTO {
 
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "complaint_id")
@@ -34,8 +32,6 @@ public class RaiseComplaintDTO {
     private String country;
 
 
-
-
     //@Column(name = "state")
     private String state;
 
@@ -44,15 +40,15 @@ public class RaiseComplaintDTO {
     private String city;
 
 
-   // @Column(name = "area")
+    // @Column(name = "area")
     private String area;
 
 
-   // @Column(name = "address")
+    // @Column(name = "address")
     private String address;
 
 
-   // @Column(name = "description")
+    // @Column(name = "description")
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,6 +57,15 @@ public class RaiseComplaintDTO {
     //private SignUpDTO user;
 
     private SignUpDTO signUpDTO;
+
+
+    //its coming from department table
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id", referencedColumnName = "department_id")
+    private DepartmentDTO departmentDTO;
+
+    @Column(name = "status")
+    private String status;
 
 //    vRQ7Unhv1:kavya
 //    1J2<yr87T1:soumya

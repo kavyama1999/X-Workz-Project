@@ -35,6 +35,14 @@ public class HomeController {
     }
 
 
+    //raise complaint
+
+    @GetMapping("Raise_Complaint")
+    public String raiseComplaint()
+    {
+        return "RaiseComplaint";
+    }
+
     @GetMapping("Admin")
     public String Admin() {
         return "AdminPage";

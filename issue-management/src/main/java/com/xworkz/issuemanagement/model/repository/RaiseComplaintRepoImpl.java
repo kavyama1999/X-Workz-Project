@@ -103,6 +103,7 @@ public class RaiseComplaintRepoImpl implements RaiseComplaintRepo {
         }
     }
 
+    //update
     @Override
     public RaiseComplaintDTO updateRaiseComplaintUserDetails(RaiseComplaintDTO raiseComplaintDTO) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -126,6 +127,8 @@ public class RaiseComplaintRepoImpl implements RaiseComplaintRepo {
 
         return raiseComplaintDTO;
     }
+
+
 
 
 }

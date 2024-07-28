@@ -2,7 +2,7 @@ package com.xworkz.issuemanagement.model.repository;
 
 
 import com.xworkz.issuemanagement.dto.AdminDTO;
-import com.xworkz.issuemanagement.dto.ComplaintDepartmentDTO;
+import com.xworkz.issuemanagement.dto.DepartmentDTO;
 import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -170,7 +170,7 @@ public class AdminRepoImpl implements AdminRepo {
     }
 
     @Override
-    public ComplaintDepartmentDTO saveDepartment(ComplaintDepartmentDTO complaintDepartmentDTO) {
+    public DepartmentDTO saveDepartment(DepartmentDTO departmentDTO) {
 
         System.out.println("saveDepartment method running in AdminRepoImpl..");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -178,7 +178,7 @@ public class AdminRepoImpl implements AdminRepo {
 
         try {
             entityTransaction.begin();
-            entityManager.persist(complaintDepartmentDTO);
+            entityManager.persist(departmentDTO);
             entityTransaction.commit();
 
         } catch (PersistenceException persistenceException) {
@@ -187,8 +187,67 @@ public class AdminRepoImpl implements AdminRepo {
             entityManager.close();
             System.out.println("Connection closed");
         }
-        return complaintDepartmentDTO;
+        return departmentDTO;
     }
 
+
+    //fetch all department
+    @Override
+    public List<DepartmentDTO> findAll(String departmentName) {
+        System.out.println("findAll method running AdminRepoImpl..");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+
+        try {
+            String query = "SELECT d FROM DepartmentDTO d";
+            //String query = "SELECT d FROM ComplaintDepartmentDTO d WHERE d.departmentType = :departmentType";
+
+            Query query1 = entityManager.createQuery(query);
+//            query1.setParameter("departmentType", departmentType);
+            List<DepartmentDTO> data = query1.getResultList();
+            System.out.println("DepartmentName : " + data);
+
+            return data;
+
+        } catch (PersistenceException persistenceException) {
+            persistenceException.printStackTrace();
+        } finally {
+            entityManager.close();
+            System.out.println("Connection closed");
+        }
+        return null;
+    }
+
+
+    //update and status and departmentId
+
+
+    @Override
+    public void updateStatusAndDepartmentId(int complaintId, int departmentId, String status) {
+        System.out.println("updateStatusAndDepartmentId method running in RaiseComplaintRepoImpl..");
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            String updateQuery = "UPDATE RaiseComplaintDTO r SET r.departmentDTO.id = :departmentId, r.status = :status WHERE r.complaintId = :complaintId";
+            Query query = entityManager.createQuery(updateQuery);
+            query.setParameter("departmentId", departmentId);
+            query.setParameter("status", status);
+            query.setParameter("complaintId", complaintId);
+
+            int data = query.executeUpdate();
+            System.out.println("data :" +data);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+    }
 }
 

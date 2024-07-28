@@ -2,13 +2,12 @@ package com.xworkz.issuemanagement.model.service;
 
 
 import com.xworkz.issuemanagement.dto.AdminDTO;
-import com.xworkz.issuemanagement.dto.ComplaintDepartmentDTO;
+import com.xworkz.issuemanagement.dto.DepartmentDTO;
 import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 import com.xworkz.issuemanagement.model.repository.AdminRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
@@ -100,24 +99,58 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ComplaintDepartmentDTO saveDepartment(ComplaintDepartmentDTO complaintDepartmentDTO) {
+    public DepartmentDTO saveDepartment(DepartmentDTO departmentDTO) {
         System.out.println("saveDepartment method running in AdminServiceImpl..");
 
-        ComplaintDepartmentDTO data = adminRepo.saveDepartment(complaintDepartmentDTO);
+        DepartmentDTO data = adminRepo.saveDepartment(departmentDTO);
 
         System.out.println("data:" + data);
 
         if (data != null) {
             System.out.println("saveDepartment  successful in AdminServiceImpl..");
 
-            return  data;
-        }
-
-        else
-        {
+            return data;
+        } else {
             System.out.println("saveDepartment not successful in AdminServiceImpl..");
         }
 
         return null;
     }
-}
+
+
+    //find all department
+
+    @Override
+    public List<DepartmentDTO> findAll(String departmentType) {
+        System.out.println("findAll method running in AdminServiceImpl..");
+        List<DepartmentDTO> data = adminRepo.findAll(departmentType);
+        System.out.println("searchByComplaintTypeAndCity method running in AdminServiceImpl.. ");
+
+       if(data!=null)
+       {
+           System.out.println("findAll successful in AdminServiceImpl..");
+           return data;
+       }
+       else
+       {
+           System.out.println("findAll  not successful in AdminServiceImpl..");
+       }
+        return null;
+    }
+
+
+    //update department id and Status
+
+    @Override
+    public void updateStatusAndDepartmentId(int complaintId, int departmentId, String status) {
+
+        //update status and department id
+
+            System.out.println("updateStatusAndDepartmentId method running in RaiseComplaintService");
+            adminRepo.updateStatusAndDepartmentId(complaintId, departmentId, status);
+        }
+
+    }
+
+
+

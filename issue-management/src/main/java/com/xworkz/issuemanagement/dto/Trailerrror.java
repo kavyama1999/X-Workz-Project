@@ -1,41 +1,22 @@
-//@PostMapping("/search-user-complaints")
-//public String searchUserComplaintDetails(RaiseComplaintDto raiseComplaintDto, Model model) {
-//    System.out.println("viewUserDetails method in AdminController..");
+//@PostMapping("/allocate-department")
+//public String allocateDepartment(
+//        @RequestParam("complaintId") Long complaintId,
+//        @RequestParam("departmentId") Long departmentId,
+//        @RequestParam("status") String status,
+//        Model model
+//) {
+//    try {
+//        System.out.println("Running allocate department");
 //
-//    List<RaiseComplaintDto> listOfComplaintTypeAndCity = adminService.searchByUserComplaintTypeAndCity(raiseComplaintDto.getComplaintType(), raiseComplaintDto.getCity());
-//    if (!listOfComplaintTypeAndCity.isEmpty()) {
-//        model.addAttribute("listOfComplaintType", listOfComplaintTypeAndCity);
-//        return "AdminViewUserComplaintsSearchDetails";
+//        // Call the service method to allocate department
+//        adminService.allocateDepartment(complaintId, departmentId,status);
+//        System.out.println("complaintId"+complaintId);
+//        System.out.println("departmentId"+departmentId);
+//        model.addAttribute("successMessage", "Department allocated successfully!");
+//    } catch (Exception e) {
+//        model.addAttribute("errorMessage", "Failed to allocate department. Please try again.");
+//        e.printStackTrace();
 //    }
-//    else {
-//        List<RaiseComplaintDto> listOfComplaintTypeOrCity = adminService.searchByUserComplaintTypeOrCity(raiseComplaintDto.getComplaintType(), raiseComplaintDto.getCity());
-//        if (!listOfComplaintTypeOrCity.isEmpty()) {
-//            model.addAttribute("listOfComplaintType", listOfComplaintTypeOrCity);
-//            return "AdminViewUserComplaintsSearchDetails";
-//        }
-//    }
+//    return "AdminViewUserComplaintDetails";
 //
-//    return "AdminViewUserComplaintsSearchDetails";
-//}
-
-
-//@PostMapping("/search-user-complaints")
-//public String searchUserComplaintDetails(RaiseComplaintDto raiseComplaintDto, Model model) {
-//    System.out.println("viewUserDetails method in AdminController..");
-//
-//    List<RaiseComplaintDto> listOfComplaintTypeAndCity = adminService.searchByUserComplaintTypeAndCity(raiseComplaintDto.getComplaintType(), raiseComplaintDto.getCity());
-//    if (!listOfComplaintTypeAndCity.isEmpty()) {
-//        model.addAttribute("listOfComplaintType", listOfComplaintTypeAndCity);
-//        return "AdminViewUserComplaintsSearchDetails";
-//    }
-//    else {
-//        List<RaiseComplaintDto> listOfComplaintTypeOrCity = adminService.searchByUserComplaintTypeOrCity(raiseComplaintDto.getComplaintType(), raiseComplaintDto.getCity());
-//        if (!listOfComplaintTypeOrCity.isEmpty()) {
-//            model.addAttribute("listOfComplaintType", listOfComplaintTypeOrCity);
-//            return "AdminViewUserComplaintsSearchDetails";
-//        }
-//    }
-//
-//    return "AdminViewUserComplaintsSearchDetails";
-//}
 //}

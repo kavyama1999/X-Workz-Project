@@ -1,7 +1,7 @@
 package com.xworkz.issuemanagement.model.repository;
 
 import com.xworkz.issuemanagement.dto.AdminDTO;
-import com.xworkz.issuemanagement.dto.ComplaintDepartmentDTO;
+import com.xworkz.issuemanagement.dto.DepartmentDTO;
 import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 
@@ -31,7 +31,16 @@ public interface AdminRepo {
     List<RaiseComplaintDTO> searchByComplaintTypeOrCity(String complaintType, String city);
 
     //save department
-    ComplaintDepartmentDTO saveDepartment(ComplaintDepartmentDTO complaintDepartmentDTO);
+    DepartmentDTO saveDepartment(DepartmentDTO departmentDTO);
+
+
+    //find all department
+
+    List<DepartmentDTO> findAll(String  departmentType);
+
+    //update status and department id
+
+    void updateStatusAndDepartmentId(int complaintId, int departmentId, String status);
 
 }
 

@@ -1,210 +1,204 @@
-//
-//
 //<%@ page isELIgnored="false"%>
 //<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-//
 //
 //<!DOCTYPE html>
 //<html>
 //<head>
-//<meta charset="ISO-8859-1">
-//<title>Student Form</title>
-//<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+//    <meta charset="ISO-8859-1">
 //
-//<!---<script src="/winter_database/js/event.js"></script>--!>
+//     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+//    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+//    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 //
-// </head>
+//
+//<!--This for to adjust drop down button color!-->
+//<style>
+//        .dropdown-toggle-custom {
+//    color: #fff;
+//    background-color: transparent;
+//    border: 1px solid #fff;
+//    padding: 5px 10px;
+//    border-radius: 5px;
+//}
+//        .dropdown-toggle-custom:hover {
+//    background-color: #495057; /* Darker grey for hover */
+//}
+//    </style>
+//
+//
+//    <style>
+//
+//    .search-container {
+//    text-align: right;
+//    margin-bottom: 20px; /* Adjust as needed for spacing */
+//}
+//
+//    .search-button {
+//    padding: 10px 20px; /* Adjust as needed for button size */
+//    font-size: 16px; /* Adjust as needed for font size */
+//}
+//
+//.status-select {
+//    width: 180px; /* Adjust as needed for desired width */
+//}
+//
+//
+//.card-size{
+//    width: 1400px; /* Adjust as needed for desired width */
+//}
+//
+//    </style>
+//
+//
+//</head>
 //<body>
 //<nav class="navbar navbar-dark bg-dark">
-//
 //    <div class="container-fluid">
 //        <div class="navbar-header">
-//            <!-- Add your logo here -->
 //            <a class="navbar-brand" href="#">
 //                <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
 //            </a>
-//            <!-- End of logo -->
-//
-//            <a class="navbar-brand text-white" href="index.jsp"><b>Home</b></a>
-//           <!--<a href="collegeUniform.jsp" <span  class="navbar-brand mb-0 h1">CollegeUniformForm</span></a>--!>
-//
+//            <a class="navbar-brand text-white" href="HomePage"><b>Home</b></a>
+//            <a class="navbar-brand text-white" href="Admin"><b>Admin</b></a>
 //        </div>
+//
+//
+//
+//        <div class="dropdown">
+//                    <button class="dropdown-toggle dropdown-toggle-custom" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+//Admin
+//        </button>
+//                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+//
+//                    <li><a class="dropdown-item" href="view-user-details"><strong>ViewUserDetails</strong></a></li>
+//
+//
+//                    </ul>
+//                </div>
+//
 //    </div>
 //</nav>
 //
-//<div class="container   mt-5 w-100  mb-5 d-flex justify-content-center" ">
 //
-//    <div class="card p-4 ">
+//
+//
+//
+//<div class="container mt-5 mb-5">
+//    <div class="card card-size">
+//
+//        <div class="card-header">
+//            <h3><b>View Raise complaint Details  </b></h3>
+//
+//
+//   <div class="container">
+//        <div class="search-container">
+//            <a class="btn btn-dark search-button" href="search-by-complaint"><strong>Search</strong></a>
+//        </div>
+//
+//
+//
+//
+//
+//
+//
 //        <div class="card-body">
-//
-//            <form action="CountrySearched" method="post">
-//
-//                <!--<h3><b>Event Registration Form</b></h3>--!>
-//
-//                <!--<div class="text-primary">${EventName}</div>---!>
-//
-//                <span style="color:red;">
-//                    <c:forEach items="${errors}" var="objectError">
-//${objectError.defaultMessage}<br>
-//                    </c:forEach>
-//                </span>
-//
-//
-//
-//
-//
-//
+//            <table class="table table-bordered">
+//                <thead>
+//                <tr>
+//<th>Serial Number</th>
+//                    <th>ID</th>
+//<th>Complaint Type</th>
+//                    <th>Country</th>
+//                    <th>State </th>
+//                    <th>City </th>
+//                    <th>Area</th>
+//                    <th>Address</th>
+//                    <th>Description</th>
+//<th>User Id</th>
+//<th>Allocate Department</th>
+//                    <th>Status</th>
+//                    <th>Submit</th>
 //
 //
-// <div class="row mb-3">
-//                               <span id="countryNameError"></span>
-//                               <label for="countryName" class="form-label"><b>CountryName:</b></label>
-//                               <select class="form-select custom-select-width" id="countryName" onblur="countryNameValidation()" name="countryName">
-//                                   <option value="" ${countryDTO.countryName == null ? 'selected' : ''}>Select</option>
-//
-//                   <option value="India" ${countryDTO.countryName == 'India' ? 'selected' : ''}> India</option>
-//                   <option value="Germany" ${countryDTO.countryName == 'Germany' ? 'selected' : ''}>Germany</option>
-//                   <option value="Italy" ${countryDTO.countryName == 'Italy' ? 'selected' : ''}> Italy</option>
-//                   <option value="Japan" ${countryDTO.countryName == 'Japan' ? 'selected' : ''}>Japan</option>
-//                   <option value="Mexico" ${countryDTO.countryName == 'Mexico' ? 'selected' : ''}> Mexico</option>
-//                   <option value="Russia" ${countryDTO.countryName == 'Russia' ? 'selected' : ''}>Russia</option>
-//                   <option value="Saudi Arabia" ${countryDTO.countryName == 'Saudi Arabia' ? 'selected' : ''}> Saudi Arabia</option>
-//                   <option value="China" ${countryDTO.countryName == 'China' ? 'selected' : ''}> China</option>
-//                   <option value="South Korea" ${countryDTO.countryName == 'Phone' ? 'selected' : ''}>South Korea</option>
-//                   <option value="Turkey" ${countryDTO.countryName == 'Turkey' ? 'selected' : ''}> Turkey</option>
-//                   <option value="United Kingdom" ${countryDTO.countryName == 'United Kingdom' ? 'selected' : ''}>United Kingdom</option>
-//                   <option value="France" ${countryDTO.countryName == 'France' ? 'selected' : ''}>France</option>
+//                </tr>
+//                </thead>
+//                <tbody>
+//                <c:forEach var="viewRaiseComplaintUsers" items="${viewRaiseComplaint}" varStatus="status">
+//                    <tr>
+//<td>${status.index + 1}</td>
+//<td>${viewRaiseComplaintUsers.complaintId}</td>
+//<td>${viewRaiseComplaintUsers.complaintType}</td>
+//<td>${viewRaiseComplaintUsers.country}</td>
+//<td>${viewRaiseComplaintUsers.state}</td>
+//<td>${viewRaiseComplaintUsers.city}</td>
+//<td>${viewRaiseComplaintUsers.area}</td>
+//<td>${viewRaiseComplaintUsers.address}</td>
+//<td>${viewRaiseComplaintUsers.description}</td>
+//<td>${viewRaiseComplaintUsers.signUpDTO.id}</td>
 //
 //
-//                               </select><br>
-//                           </div>
+//      <form action="update-department" method="post">
+//                   <span style="color:green"><h4>${successMessage}</h4></span>
+//
+//    <input type="hidden" name="complaintId" value="${viewRaiseComplaintUsers.complaintId}" id="complaintId">
 //
 //
 //
+// <td>
+//<select class="form-select status-select" name="departmentId">
+//            <option value="Select">Select</option>
+//            <c:forEach var="department" items="${departments}">
+//                <option value="${department.id}">${department.departmentType}</option>
+//            </c:forEach>
+//        </select>
 //
-//               <div>
-//                  <input type="submit" id="submit" value="Submit" >
-//               </div>
+//</td>
+//                     <!--  <select class="form-select status-select ">
+//                   <option value="Select">Select</option>
 //
-//            </form>
+//                          <c:forEach var="department" items="${departments}">
+//                              <option value="${department.departmentType}">${department.departmentType}</option>
+//                               </c:forEach>
+//                   </select>--!>
 //
+//
+// <td>
+//        <select class="form-select status-select" name="status">
+//            <option value="Select">Select</option>
+//            <option value="Pending">Pending</option>
+//            <option value="In Process">In Process</option>
+//            <option value="Completed">Completed</option>
+//        </select>
+//    </td>
+//
+//
+// <td>
+//        <button type="submit" class="btn btn-primary">Submit</button>
+//</td>
+//
+//</form>
+//
+//
+//                    </tr>
+//                </c:forEach>
+//                </tbody>
+//            </table>
 //        </div>
 //    </div>
 //</div>
 //
 //
-//<!--for table to display--!>
-//
-//
-//<div class="container   mt-5   mb-5 d-flex justify-content-center">
-//
-//    <div class="card p-4 ">
-//        <div class="card-body">
-//
-//     <!-- <strong style="color:green;">Search result for,${EventName}</strong>--!>
-//
-//
-//
-//           <!--- <form action="CountrySearched" method="post">--!>
-//
-//                <!--<h3><b>Event Registration Form</b></h3>--!>
-//
-//                <div class="text-primary">${CountryName}</div>
-//
-//            <table class="table">
-//          <thead>
-//
-//            <tr>
-//
-//              <th scope="col">ID</th>
-//              <th scope="col">CountryName </th>
-//              <th scope="col">Population </th>
-//              <th scope="col">CapitalCity</th>
-//              <th scope="col">NoOfStates</th>
-//             <th scope="col">Edit</th>
-//                          <th scope="col" >Delete</th>
-//
-//
-//
-//            </tr>
-//
-//
-//          </thead>
-//
-//          <tbody>
-//               <c:forEach items="${listOfCountries}" var="country">
-//
-//                <!--var can be anything---!>
-//
-//
-//                      <tr>
-//
-//
-//
-//<td>${country.id}</td>
-//<td>${country.countryName}</td>
-//<td>${country.population}</td>
-//<td>${country.capitalCity}</td>
-//<td>${country.noOfStates}</td>
-//<td> <a href="country-edit?id=${country.id}">Edit</td>
-//<td> <a href="country-delete?id=${country.id}">Delete</td>
-//
-//
-//
-//                      </tr>
-//
-//
-//<!--jstl tag to print all details--!>
-//
-//               </c:forEach>
-//
-//          </tbody>
-//        </table>
-//
-//
-// </div>
-//    </div>
-//</div>
 //
 //</body>
-//</html>
+//</html>kavyaaa...
 
-//
-//import javax.persistence.EntityManager;
-//import javax.persistence.EntityTransaction;
-//import javax.persistence.PersistenceException;
-//import javax.persistence.Query;
-//import java.util.Collections;
-//import java.util.List;*********************************************************************
-//@Override
-//public List<CountryDTO> countrySearch(CountrySearchDTO countrySearchDTO) {
-//
-//    System.out.println("CountrySearch method ruuning in CountryRepoImpl");
-//
-//    //EntityMangerFactory will created by spring
-//
-//    EntityManager entityManager = entityManagerFactory.createEntityManager();
-//    EntityTransaction entityTransaction = entityManager.getTransaction();
-//    entityTransaction.begin();
-//
-//    try {
-//        String query = "SELECT ct FROM CountryDTO ct where ct.countryName=:country";
-//        Query query1 = entityManager.createQuery(query);
-//        query1.setParameter("country", countrySearchDTO.getCountryName());
-//        List<CountryDTO> countryDTOS = query1.getResultList();
-//
-//        entityTransaction.commit();
-//        return countryDTOS;
-//    } catch (PersistenceException persistenceException) {
-//        persistenceException.printStackTrace();
-//        entityTransaction.rollback();
-//    } finally {
-//        System.out.println("Connection closed");
-//
-//        entityManager.close();
-//
-//    }
-//
-//
-//    return Collections.emptyList();
+
+//@PostMapping("/update-department")
+//public String updateComplaint(@RequestParam("complaintId") int complaintId,
+//                              @RequestParam("departmentId") int departmentId,
+//                              @RequestParam("status") String status,
+//                              RedirectAttributes redirectAttributes) {
+//    adminService.updateStatusAndDepartmentId(complaintId, departmentId, status);
+//    redirectAttributes.addFlashAttribute("successMessage", "Department allocated successfully!");
+//    return "redirect:/View-raise-complaint";
 //}
