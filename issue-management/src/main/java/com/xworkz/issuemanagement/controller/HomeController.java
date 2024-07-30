@@ -66,4 +66,14 @@ public class HomeController {
     {
         return "AdminAddComplaints";
     }
+
+
+
+    //register department admin
+
+    @GetMapping("addDepartmentPage")
+    public String registerDepartmentAdmin()
+    {
+        return "RegisterDepartmentAdmin";
+    }
 }

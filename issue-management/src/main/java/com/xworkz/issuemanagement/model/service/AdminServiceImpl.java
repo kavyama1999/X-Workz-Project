@@ -1,10 +1,7 @@
 package com.xworkz.issuemanagement.model.service;
 
 
-import com.xworkz.issuemanagement.dto.AdminDTO;
-import com.xworkz.issuemanagement.dto.DepartmentDTO;
-import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
-import com.xworkz.issuemanagement.dto.SignUpDTO;
+import com.xworkz.issuemanagement.dto.*;
 import com.xworkz.issuemanagement.model.repository.AdminRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -126,15 +123,12 @@ public class AdminServiceImpl implements AdminService {
         List<DepartmentDTO> data = adminRepo.findAll(departmentType);
         System.out.println("searchByComplaintTypeAndCity method running in AdminServiceImpl.. ");
 
-       if(data!=null)
-       {
-           System.out.println("findAll successful in AdminServiceImpl..");
-           return data;
-       }
-       else
-       {
-           System.out.println("findAll  not successful in AdminServiceImpl..");
-       }
+        if (data != null) {
+            System.out.println("findAll successful in AdminServiceImpl..");
+            return data;
+        } else {
+            System.out.println("findAll  not successful in AdminServiceImpl..");
+        }
         return null;
     }
 
@@ -146,11 +140,31 @@ public class AdminServiceImpl implements AdminService {
 
         //update status and department id
 
-            System.out.println("updateStatusAndDepartmentId method running in RaiseComplaintService");
-            adminRepo.updateStatusAndDepartmentId(complaintId, departmentId, status);
-        }
-
+        System.out.println("updateStatusAndDepartmentId method running in RaiseComplaintService");
+        adminRepo.updateStatusAndDepartmentId(complaintId, departmentId, status);
     }
+
+    @Override
+    public boolean saveDepartmentAdminData(RegisterDepartmentAdminDTO registerDepartmentAdminDTO) {
+        System.out.println("saveDepartmentAdminData method running in saveDepartmentAdminData..");
+
+     boolean saveData= adminRepo.saveDepartmentAdminData(registerDepartmentAdminDTO);
+
+     if(saveData)
+     {
+         System.out.println("saveDepartmentAdminData saved successfully..");
+         return  true;
+     }
+
+     else
+     {
+         System.out.println("saveDepartmentAdminData not saved successfully....");
+     }
+
+     return false;
+    }
+
+}
 
 
 

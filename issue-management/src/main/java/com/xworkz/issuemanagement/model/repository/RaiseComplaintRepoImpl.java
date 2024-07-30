@@ -77,7 +77,9 @@ public class RaiseComplaintRepoImpl implements RaiseComplaintRepo {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
             TypedQuery<RaiseComplaintDTO> query = entityManager.createQuery(
-                    "SELECT r FROM RaiseComplaintDTO r WHERE r.signUpDTO.id = :userId", RaiseComplaintDTO.class);
+                    "SELECT r FROM RaiseComplaintDTO r WHERE r.signUpDTO.id = :userId ORDER BY r.complaintId DESC ", RaiseComplaintDTO.class);
+           // "SELECT r FROM RaiseComplaintDTO r WHERE r.signUpDTO.id = :userId ", RaiseComplaintDTO.class);
+
             query.setParameter("userId", id);
             List<RaiseComplaintDTO> results = query.getResultList();
             log.info("Found {} complaints for user ID {}", results.size(), id);
@@ -86,6 +88,7 @@ public class RaiseComplaintRepoImpl implements RaiseComplaintRepo {
             entityManager.close();
         }
     }
+
 
 
     //edit

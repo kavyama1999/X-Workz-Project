@@ -10,12 +10,27 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-    <script src="/issue-management/js/signup.js"></script>
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+   <script src="/issue-management/js/departmentAdmin.js"></script>
 
 
 
 
  <style>
+
+  .dropdown-toggle-custom {
+     color: #fff;
+     background-color: transparent;
+     border: 1px solid #fff;
+     padding: 5px 10px;
+     border-radius: 5px;
+ }
+         .dropdown-toggle-custom:hover {
+     background-color: #495057; /* Darker grey for hover */
+ }
         .oval-btn {
             border-radius: 50px;
             padding: 10px 20px;
@@ -23,7 +38,7 @@
 
 
        body {
-                    background-color: #e6f7ff; /* Change this to the desired background color */
+                    background-color:white; /* e6f7ff Change this to the desired background color */
                 }
     </style>
 
@@ -41,23 +56,40 @@
                     <a class="navbar-brand text-white" href="SignInPage"><b>SignIn</b></a>
 
             </div>
+
+
+            <div class="dropdown">
+                        <button class="dropdown-toggle dropdown-toggle-custom" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Admin
+               </button>
+               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+               <li><a class="dropdown-item" href="view-user-details"><strong>ViewUserDetails</strong></a></li>
+
+               <li><a class="dropdown-item" href="View-raise-complaint"><strong>ViewRaiseComplaintDetails</strong></a></li>
+
+              <li><a class="dropdown-item" href="add-complaints"><strong>AddComplaints</strong></a></li>
+
+
+                        </ul>
+                    </div>
         </div>
     </nav>
 
     <div class="card border-dark container w-25 mt-5 mb-5 justify-content-center">
         <div class="card-header">
-            <h3><b><center>Sign Up </center></b></h3>
+            <h3><b><center>Register Department Admin </center></b></h3>
         </div>
         <div class="card-body text-dark">
 
 
-            <form action="sign-up" method="post">
+            <form action="add-department-admin" method="post">
 
 
-                <div class="text-success"><strong>${msg}</strong></div>
+               <div class="text-success"><strong>${msg}</strong></div>
 
-                <!--<span style="color:red"><h4>${failedMsg}</h4></span>-->
+               <span style="color:red"><strong>${errorMsg}</strong></span>
 
+<!--to shows Server side validation errors--!>
                 <span style="color:red;">
                     <c:forEach items="${errors}" var="objectError">
                         ${objectError.defaultMessage}<br>
@@ -65,33 +97,40 @@
                 </span>
 
                 <div class="row mb-3">
-                    <label for="firstName" class="form-label "><b>First Name:</b></label>
+                    <label for="adminName" class="form-label "><b>AdminName:</b></label>
                     <div class="input-group">
-                     <span id="firstNameError"></span><br>
+                     <span id="adminNameError"></span><br>
 
                         <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
-                        <input type="text" class="form-control" id="firstName" onblur="firstNameValidation()" name="firstName" placeholder="Enter firstname">
+                        <input type="text" class="form-control" id="adminName" onblur="adminNameValidation()" name="adminName" placeholder="Enter name">
                     </div>
                 </div><br>
 
 
+<!--'1', 'Benagulru', 'Electric ', 'BTM', '0'
+'2', 'Bengaluru', 'Network ', 'Jayanagar', '0'
+'3', 'Bengaluru', 'Water ', 'Rajajinagar', '0'
+'4', 'Bengaluru', 'Gasline', 'Vijayanagar', '0'--!>
 
-                <div class="row mb-3">
-                    <label for="lastName" class="form-label"><b>Last Name:</b></label>
-                     <div class="input-group">
-                    <span id="lastNameError"></span><br>
 
-             <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
 
-                <input type="text" class="form-control" id="lastName" onblur="lastNameValidation()" name="lastName" placeholder="Enter lastname" >
+<div class="row mb-3">
+                    <span id="departmentNameError"></span>
+                    <label for="complaintType" class="form-label"><b>DepartmentName:</b></label>
+                    <select class="form-select custom-select-width" id="complaintType" name="departmentName"  onblur="departmentNameValidation()" >
+                        <option value="0" ${countryDTO.complaintType == null ? 'selected' : ''}>Select</option>
+                        <option value="Electric " ${countryDTO.complaintType == 'Electric' ? 'selected' : ''}>Electric </option>
+                        <option value="Network" ${countryDTO.complaintType == 'Network' ? 'selected' : ''}>Network</option>
+                        <option value="Water" ${countryDTO.complaintType == 'Water' ? 'selected' : ''}>Water</option>
+                        <option value="System" ${countryDTO.complaintType == 'System' ? 'selected' : ''}>System</option>
+                 <option value="Gas Leakage" ${countryDTO.complaintType == 'Gas leakage' ? 'selected' : ''}>Gas leakage</option>
+
+                    </select><br>
                 </div>
-              </div>
 
 
 
-
-
- <div class="row mb-3">
+<div class="row mb-3">
                 <span id="emailError" style="color:red;"></span><br>
                 <label for="email" class="form-label"><b>Email:</b></label>
                 <div class="input-group">
@@ -101,7 +140,7 @@
             </div>
 
 
-                <div class="row mb-3">
+   <div class="row mb-3">
               <span id="contactNumberError"></span><br>
 
                     <label for="contactNumber" class="form-label"><b>Contact Number:</b></label>
@@ -124,18 +163,8 @@
                </div>
 
 
-                <div class="mb-3">
-                    <span id="addressError"></span><br>
-                    <label for="address" class="form-label"><b>Address</b></label>
-                   <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                        <textarea class="form-control" id="address" style="height: 100px" name="address" onblur="addressValidation()"  placeholder="Enter address"></textarea>
-                    </div>
-                </div>
 
-
-
-                              <div>
+                          <div>
                                 <span id="agreeError"></span>
                                 <label for="agree" class="list-group-item">
                                     <input name="agree" id="agree" onchange="agreeValidation()" class="form-check-input me-1" type="checkbox" value="agree" ${signUpDTO.agree eq 'agree' ? 'checked' : ''}>
@@ -145,7 +174,7 @@
 
 
                 <div>
-                <center>    <input type="submit" id="submit" value="Apply" class="btn btn-primary oval-btn" disabled > </center>
+                <center>    <input type="submit" id="submit" value="Apply" class="btn btn-primary oval-btn"  disabled > </center>
                 </div>
 
 
@@ -162,9 +191,11 @@
 
 
 
-<script>
+<!--<script>
 
-<!-- ajax email validation--!>
+<!-- ajax email validation
+
+
 
      function emailAjaxValidation() {
                         console.log("Validate email");
@@ -244,9 +275,7 @@
                    }
        }
 }
-</script>
-
-
+</script>--!>
 
 </body>
 </html>

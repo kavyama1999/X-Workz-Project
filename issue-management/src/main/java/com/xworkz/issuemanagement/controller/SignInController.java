@@ -52,7 +52,7 @@ public class SignInController {
             String profileImageUrl = "/images/" + signUpDTO.getImageName();
             httpSession.setAttribute("profileImage", profileImageUrl);
 
-            signUpDTO.setImageName("profileicon.jpg");
+           // signUpDTO.setImageName("profileicon.jpg");
 
             model.addAttribute("ProfilePageMessage", "Welcome To Issue Management System, " + signUpDTO.getFirstName());
             return "Profile";

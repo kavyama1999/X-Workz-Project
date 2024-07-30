@@ -2,6 +2,7 @@ package com.xworkz.issuemanagement.model.service;
 
 import com.xworkz.issuemanagement.dto.DepartmentDTO;
 import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
+import com.xworkz.issuemanagement.dto.RegisterDepartmentAdminDTO;
 import com.xworkz.issuemanagement.dto.SignUpDTO;
 
 import java.util.List;
@@ -44,7 +45,11 @@ public interface AdminService {
     void updateStatusAndDepartmentId(int complaintId, int departmentId, String status);
 
 
-}
+    //save department admin data
+
+     boolean saveDepartmentAdminData(RegisterDepartmentAdminDTO registerDepartmentAdminDTO);
+
+    }
 
 
 //public List<RaiseComplaintDTO> searchByComplaintTypeAndCity(String complaintType, String city) {

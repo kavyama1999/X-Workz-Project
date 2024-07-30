@@ -49,6 +49,10 @@
 
              <li><a class="dropdown-item" href="View-raise-complaint"><strong>ViewRaiseComplaintDetails</strong></a></li>
 
+                       <li><a class="dropdown-item" href="add-complaints"><strong>AddComplaints</strong></a></li>
+
+                   <li><a class="dropdown-item" href="addDepartmentPage"><strong>AddDepartmentAdmin</strong></a></li>
+
 
             </ul>
         </div>

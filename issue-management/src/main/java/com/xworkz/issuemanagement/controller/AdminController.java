@@ -1,17 +1,17 @@
 package com.xworkz.issuemanagement.controller;
 
-import com.xworkz.issuemanagement.dto.AdminDTO;
-import com.xworkz.issuemanagement.dto.DepartmentDTO;
-import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
-import com.xworkz.issuemanagement.dto.SignUpDTO;
+import com.xworkz.issuemanagement.dto.*;
 import com.xworkz.issuemanagement.model.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
@@ -78,7 +78,7 @@ public class AdminController {
 
         List<RaiseComplaintDTO> viewData = adminService.findById(raiseComplaintDTO);
 
-        // Fetch the list of complaints and departments
+        // Fetch the list of  and departments
         List<DepartmentDTO> departments = adminService.findAll(departmentDTO.getDepartmentName());
 
         model.addAttribute("viewRaiseComplaint", viewData);
@@ -98,34 +98,73 @@ public class AdminController {
 
 
     // Combined search endpoint for both OR and AND conditions
+//    @PostMapping("/ComplaintTypeSearch")
+//    public String searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO, Model model) {
+//
+//        System.out.println("searchByComplaintType method running in AdminController..!!");
+//
+//
+//        List<RaiseComplaintDTO> listOfTypeAndCity = adminService.searchByComplaintTypeAndCity(raiseComplaintDTO.getComplaintType(), raiseComplaintDTO.getCity());
+//
+//        //  System.out.println("TypeAndCity : " + listOfTypeAndCity);
+//
+//        if (!listOfTypeAndCity.isEmpty()) {
+//            // System.out.println("searchByComplaintTypeAndCity successful in AdminController");
+//            model.addAttribute("viewRaiseComplaint", listOfTypeAndCity);
+//            return "AdminViewRaiseComplaintDetails";
+//        } else {
+//            List<RaiseComplaintDTO> listOfTypeOrCity = adminService.searchByComplaintTypeOrCity(raiseComplaintDTO.getComplaintType(), raiseComplaintDTO.getCity());
+//
+//            //System.out.println("TypeOrCity : " + listOfTypeOrCity);
+//            if (!listOfTypeOrCity.isEmpty()) {
+//                //   System.out.println("searchByComplaintTypeOrCity ");
+//                model.addAttribute("viewRaiseComplaint", listOfTypeOrCity);
+//                return "AdminViewRaiseComplaintDetails";
+//
+//            }
+//        }
+//
+//        return "AdminViewRaiseComplaintDetails";
+//    }
+
+
+    //****************************************************
+
+
     @PostMapping("/ComplaintTypeSearch")
-    public String searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO, Model model) {
-
-        System.out.println("searchByComplaintType method running in AdminController..!!");
-
-
+    public String searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO, DepartmentDTO departmentDTO, Model model) {
         List<RaiseComplaintDTO> listOfTypeAndCity = adminService.searchByComplaintTypeAndCity(raiseComplaintDTO.getComplaintType(), raiseComplaintDTO.getCity());
-
-        //  System.out.println("TypeAndCity : " + listOfTypeAndCity);
-
         if (!listOfTypeAndCity.isEmpty()) {
-            // System.out.println("searchByComplaintTypeAndCity successful in AdminController");
+            List<Integer> departmentIds = listOfTypeAndCity.stream()
+                    .filter(complaint -> complaint.getDepartmentDTO() != null)
+                    .map(complaint -> complaint.getDepartmentDTO().getId())
+                    .collect(Collectors.toList());
+
+            List<DepartmentDTO> departments = adminService.findAll(departmentDTO.getDepartmentName());
             model.addAttribute("viewRaiseComplaint", listOfTypeAndCity);
+            model.addAttribute("departments", departments);
             return "AdminViewRaiseComplaintDetails";
-        } else {
-            List<RaiseComplaintDTO> listOfTypeOrCity = adminService.searchByComplaintTypeOrCity(raiseComplaintDTO.getComplaintType(), raiseComplaintDTO.getCity());
+        }
 
-            //System.out.println("TypeOrCity : " + listOfTypeOrCity);
-            if (!listOfTypeOrCity.isEmpty()) {
-                //   System.out.println("searchByComplaintTypeOrCity ");
-                model.addAttribute("viewRaiseComplaint", listOfTypeOrCity);
-                return "AdminViewRaiseComplaintDetails";
+        List<RaiseComplaintDTO> listOfTypeOrCity = adminService.searchByComplaintTypeOrCity(raiseComplaintDTO.getComplaintType(), raiseComplaintDTO.getCity());
+        if (!listOfTypeOrCity.isEmpty()) {
+            List<Integer> departmentIds = listOfTypeOrCity.stream()
+                    .filter(complaint -> complaint.getDepartmentDTO() != null)
+                    .map(complaint -> complaint.getDepartmentDTO().getId())
+                    .collect(Collectors.toList());
+            // model.addAttribute("departments", departmentIds);
 
-            }
+
+            List<DepartmentDTO> departments = adminService.findAll(departmentDTO.getDepartmentName());
+            model.addAttribute("viewRaiseComplaint", listOfTypeOrCity);
+            model.addAttribute("departments", departments); //retain
+            return "AdminViewRaiseComplaintDetails";
         }
 
         return "AdminViewRaiseComplaintDetails";
     }
+
+//**************************************************************//
 
 
     //save  department
@@ -155,18 +194,17 @@ public class AdminController {
     }
 
 
-    //add departments
     @GetMapping("add-departments")
-    public String save(DepartmentDTO departmentDTO, Model model)
-    {
+    public String save(DepartmentDTO departmentDTO, Model model) {
         // Retrieve and add the list of departments to the model
-      // List<DepartmentDTO> departments = adminService.findAll(departmentDTO.getDepartmentType());
-       // model.addAttribute("departments", departments);
+        // List<DepartmentDTO> departments = adminService.findAll(departmentDTO.getDepartmentType());
+        // model.addAttribute("departments", departments);
         model.addAttribute("msg", "Successfully added department ");
 
 
         return "AdminAddComplaints";
     }
+
 
     //update department id  and status
 
@@ -178,6 +216,53 @@ public class AdminController {
         adminService.updateStatusAndDepartmentId(complaintId, departmentId, status);
         model.addAttribute("successMessage", "Department allocated successfully!");
         return "AdminViewRaiseComplaintDetails";
+    }
+
+
+    //****************************************************
+    //Add Department Admin and saved in database(register page)
+
+    @PostMapping("add-department-admin")
+    public String addDepartmentAdmin(@Valid RegisterDepartmentAdminDTO registerDepartmentAdminDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        System.out.println("addDepartmentAdmin method running in AdminController..");
+
+        System.out.println("RegisterDepartmentAdminDTO  : " + registerDepartmentAdminDTO);
+
+        if (bindingResult.hasErrors()) {
+            System.out.println("RegisterDepartmentAdminDTO has invalid data");
+            bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError.getDefaultMessage()));
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+           // model.addAttribute("errors", bindingResult.getAllErrors());
+            model.addAttribute("registerDepartmentAdminDTO", registerDepartmentAdminDTO); //this retaining values form form page
+
+            return "RegisterDepartmentAdmin";
+
+
+        } else {
+            boolean saveData = adminService.saveDepartmentAdminData(registerDepartmentAdminDTO);
+            if (saveData) {
+                System.out.println("saveDepartmentAdminData saved successful in addDepartmentAdmin");
+                redirectAttributes.addFlashAttribute("msg", "Department Admin data saved successfully..");
+               // model.addAttribute("msg", "Department Admin data saved successfully..");
+
+                return "redirect:/departmentAdmin";
+
+            } else {
+                System.out.println("saveDepartmentAdminData not saved successful..");
+                redirectAttributes.addFlashAttribute("errorMsg", "Department Admin data not saved successfully..");
+                //model.addAttribute("msg", "Department Admin data saved successfully..");
+
+            }
+
+            return "redirect:/departmentAdmin";
+        }
+    }
+
+
+    @GetMapping("departmentAdmin")
+    public String departmentAdmin(Model model) {
+       // model.addAttribute("msg", "Department Admin data saved successfully..");
+        return "RegisterDepartmentAdmin";
     }
 
 }

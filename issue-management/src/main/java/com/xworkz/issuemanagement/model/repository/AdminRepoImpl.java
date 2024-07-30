@@ -1,10 +1,7 @@
 package com.xworkz.issuemanagement.model.repository;
 
 
-import com.xworkz.issuemanagement.dto.AdminDTO;
-import com.xworkz.issuemanagement.dto.DepartmentDTO;
-import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
-import com.xworkz.issuemanagement.dto.SignUpDTO;
+import com.xworkz.issuemanagement.dto.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -238,7 +235,7 @@ public class AdminRepoImpl implements AdminRepo {
             query.setParameter("complaintId", complaintId);
 
             int data = query.executeUpdate();
-            System.out.println("data :" +data);
+            System.out.println("data :" + data);
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -248,6 +245,33 @@ public class AdminRepoImpl implements AdminRepo {
         } finally {
             entityManager.close();
         }
+    }
+
+
+    //save department admin data
+    @Override
+    public boolean saveDepartmentAdminData(RegisterDepartmentAdminDTO registerDepartmentAdminDTO) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+
+
+        try {
+            entityTransaction.begin();
+            entityManager.persist(registerDepartmentAdminDTO);
+            entityTransaction.commit();
+
+            return true;
+        } catch (PersistenceException persistenceException)
+        {
+            persistenceException.printStackTrace();
+        } finally
+        {
+            entityManager.close();
+            log.info("Connection closed");
+        }
+
+        return false;
     }
 }
 

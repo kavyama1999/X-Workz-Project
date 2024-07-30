@@ -107,9 +107,24 @@
                         <option value="Network Problem" ${countryDTO.complaintType == 'Network Problem' ? 'selected' : ''}>Network Problem</option>
                         <option value="System Problem" ${countryDTO.complaintType == 'System Problem' ? 'selected' : ''}>System Problem</option>
                         <option value="Water Problem" ${countryDTO.complaintType == 'Water Problem' ? 'selected' : ''}>Water Problem</option>
+                 <option value="Gas leakage" ${countryDTO.complaintType == 'Gas leakage' ? 'selected' : ''}>Gas leakage</option>
+
                     </select><br>
                 </div>
 
+<!---<div class="row mb-3">
+                    <span id="complaintTypeError"></span>
+                    <label for="complaintType" class="form-label"><b>DepartmentName:</b></label>
+                    <select class="form-select custom-select-width" id="complaintType" name="complaintType" required>
+                        <option value="0" ${countryDTO.complaintType == null ? 'selected' : ''}>Select</option>
+                        <option value="Electric " ${countryDTO.complaintType == 'Electric' ? 'selected' : ''}>Electric </option>
+                        <option value="Network" ${countryDTO.complaintType == 'Network' ? 'selected' : ''}>Network</option>
+                        <option value="Water" ${countryDTO.complaintType == 'Water' ? 'selected' : ''}>Water</option>
+                        <option value="System" ${countryDTO.complaintType == 'System' ? 'selected' : ''}>System</option>
+                 <option value="Gas Leakage" ${countryDTO.complaintType == 'Gas leakage' ? 'selected' : ''}>Gas leakage</option>
+
+                    </select><br>
+                </div>----!>
 
                 <!----Country ---!>
 

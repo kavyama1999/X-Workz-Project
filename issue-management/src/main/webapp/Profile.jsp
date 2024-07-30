@@ -60,7 +60,7 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="edit?email=${signUpDTO.email}"><strong>Edit</strong></a></li>
 
-                    <li><a class="dropdown-item" href="ChangePasswordPage"><strong>Password Reset</strong></a></li>
+                    <li><a class="dropdown-item" href="ChangePasswordPage"><strong>Change Password</strong></a></li>
 
                     <li><a class="dropdown-item" href="view-profile"><strong>View</strong></a></li>
 

@@ -10,10 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.jws.WebParam;
 import javax.validation.Valid;
@@ -39,13 +37,13 @@ public class SignUpController {
 
 
     @PostMapping("/sign-up")
-    public String signUp(@Valid SignUpDTO signUpDTO, BindingResult bindingResult, Model model, @RequestParam("email") String email) {
+    public String signUp(@Valid SignUpDTO signUpDTO, BindingResult bindingResult, Model model, @RequestParam("email") String email , RedirectAttributes redirectAttributes) {
         System.out.println("signUp method running in SignUpController..");
-        System.out.println("SignUpDTO ;" + signUpDTO);
+        System.out.println("SignUpDTO :" + signUpDTO);
         if (bindingResult.hasErrors()) {
             System.out.println("SignUpDTO has invalid data");
             bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError.getDefaultMessage()));
-            model.addAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             model.addAttribute("signUpDTO", signUpDTO); //this retaining values form form page
             return "SignUp";
 
@@ -56,6 +54,9 @@ public class SignUpController {
             boolean dataValid = this.signUpService.saveAndValidate(signUpDTO);
             if (dataValid) {
                 System.out.println("SignUpService registration successful in SignUpController:" + signUpDTO);
+
+
+                signUpDTO.setImageName("profileicon.jpg");
 
 //                // Send email with generated password
 //                String subject = "welcome to our Issue management";
@@ -84,8 +85,8 @@ public class SignUpController {
 
 
     @GetMapping("/sign-up-success")
-    public String signUpSuccess(SignUpDTO signUpDTO, Model model) {
-        model.addAttribute("msg", "Signup successful. " + signUpDTO.getFirstName() + " Please check your email for your password.");
+    public String signUpSuccess(@ModelAttribute("signUpDTO") SignUpDTO signUpDTO, Model model,RedirectAttributes redirectAttributes) {
+        model.addAttribute("msg", "Signup successful " + signUpDTO.getFirstName() + " Please check your email for your password.");
 
         // Return the success view
         return "SignUp";

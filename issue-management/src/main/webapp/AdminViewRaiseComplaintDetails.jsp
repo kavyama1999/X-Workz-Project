@@ -11,29 +11,29 @@
 
     <style>
         .dropdown-toggle-custom {
-            color: #fff;
-            background-color: transparent;
-            border: 1px solid #fff;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
         .dropdown-toggle-custom:hover {
-            background-color: #495057; /* Darker grey for hover */
-        }
+    background-color: #495057; /* Darker grey for hover */
+}
         .search-container {
-            text-align: right;
-            margin-bottom: 20px; /* Adjust as needed for spacing */
-        }
+    text-align: right;
+    margin-bottom: 20px; /* Adjust as needed for spacing */
+}
         .search-button {
-            padding: 10px 20px; /* Adjust as needed for button size */
-            font-size: 16px; /* Adjust as needed for font size */
-        }
+    padding: 10px 20px; /* Adjust as needed for button size */
+    font-size: 16px; /* Adjust as needed for font size */
+}
         .status-select {
-            width: 180px; /* Adjust as needed for desired width */
-        }
+    width: 180px; /* Adjust as needed for desired width */
+}
         .card-size {
-            width: 1400px; /* Adjust as needed for desired width */
-        }
+    width: 1400px; /* Adjust as needed for desired width */
+}
     </style>
 </head>
 <body>
@@ -46,12 +46,18 @@
             <a class="navbar-brand text-white" href="HomePage"><b>Home</b></a>
             <a class="navbar-brand text-white" href="Admin"><b>Admin</b></a>
         </div>
+
         <div class="dropdown">
             <button class="dropdown-toggle dropdown-toggle-custom" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                Admin
-            </button>
+Admin
+        </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="view-user-details"><strong>ViewUserDetails</strong></a></li>
+
+                <li><a class="dropdown-item" href="add-complaints"><strong>AddComplaints</strong></a></li>
+
+                <li><a class="dropdown-item" href="addDepartmentPage"><strong>AddDepartmentAdmin</strong></a></li>
+
             </ul>
         </div>
     </div>
@@ -71,6 +77,8 @@
                         <option value="Network Problem" ${complaint.complaintType == 'Network Problem' ? 'selected' : ''}>Network Problem</option>
                         <option value="System Problem" ${complaint.complaintType == 'System Problem' ? 'selected' : ''}>System Problem</option>
                         <option value="Water Problem" ${complaint.complaintType == 'Water Problem' ? 'selected' : ''}>Water Problem</option>
+                        <option value="Gas Leakage" ${complaint.complaintType == 'Gas Leakage' ? 'selected' : ''}>Gas Leakage</option>
+
                     </select><br>
                 </div>
                 <div class="mb-3">
@@ -94,17 +102,17 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Serial Number</th>
+                      <th>Serial Number</th>
                         <th>ID</th>
-                        <th>Complaint Type</th>
+                  <th>Complaint Type</th>
                         <th>Country</th>
                         <th>State</th>
                         <th>City</th>
                         <th>Area</th>
                         <th>Address</th>
                         <th>Description</th>
-                        <th>User Id</th>
-                        <th>Allocate Department</th>
+                         <th>User Id</th>
+                     <th>Allocate Department</th>
                         <th>Status</th>
                         <th>Submit</th>
                     </tr>
@@ -112,16 +120,16 @@
                 <tbody>
                     <c:forEach var="viewRaiseComplaintUsers" items="${viewRaiseComplaint}" varStatus="status">
                         <tr>
-                            <td>${status.index + 1}</td>
-                            <td>${viewRaiseComplaintUsers.complaintId}</td>
-                            <td>${viewRaiseComplaintUsers.complaintType}</td>
-                            <td>${viewRaiseComplaintUsers.country}</td>
-                            <td>${viewRaiseComplaintUsers.state}</td>
-                            <td>${viewRaiseComplaintUsers.city}</td>
-                            <td>${viewRaiseComplaintUsers.area}</td>
-                            <td>${viewRaiseComplaintUsers.address}</td>
-                            <td>${viewRaiseComplaintUsers.description}</td>
-                            <td>${viewRaiseComplaintUsers.signUpDTO.id}</td>
+<td>${status.index + 1}</td>
+<td>${viewRaiseComplaintUsers.complaintId}</td>
+<td>${viewRaiseComplaintUsers.complaintType}</td>
+<td>${viewRaiseComplaintUsers.country}</td>
+<td>${viewRaiseComplaintUsers.state}</td>
+<td>${viewRaiseComplaintUsers.city}</td>
+<td>${viewRaiseComplaintUsers.area}</td>
+<td>${viewRaiseComplaintUsers.address}</td>
+<td>${viewRaiseComplaintUsers.description}</td>
+<td>${viewRaiseComplaintUsers.signUpDTO.id}</td>
 
                             <form action="update-department" method="post">
         <input type="hidden" name="complaintId" value="${viewRaiseComplaintUsers.complaintId}">

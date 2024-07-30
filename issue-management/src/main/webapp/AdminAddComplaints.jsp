@@ -16,6 +16,17 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
+
+    .dropdown-toggle-custom {
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+        .dropdown-toggle-custom:hover {
+    background-color: #495057; /* Darker grey for hover */
+}
     .oval-btn {
         border-radius: 40px; /* Adjust the value as needed for an oval shape */
         padding: 20px 20px;  /* Adjust the padding to control the button size */
@@ -66,7 +77,7 @@
 
 <div class="card border-dark container  w-25 mt-5 mb-5 justify-content-center">
     <div class="card-header">
-        <h3><b><center>Add Complaint Form</center></b></h3>
+        <h3><b><center>Add Department Form</center></b></h3>
     </div>
 
     <div class="card-body text-dark">
@@ -80,7 +91,7 @@
                 <label for="departmentType" class="form-label"><b>Department Name:</b></label>
                 <div class="input-group">
                     <span class="input-group-text"></i></span>
-                    <input type="text" class="form-control" id="departmentType" name="departmentType" placeholder="Enter department name" value="" required>
+                    <input type="text" class="form-control" id="departmentType" name="departmentName" placeholder="Enter department name" value="" required>
                 </div>
             </div>
 
