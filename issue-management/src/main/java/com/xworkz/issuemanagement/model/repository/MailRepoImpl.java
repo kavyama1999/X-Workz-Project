@@ -44,7 +44,7 @@ public class MailRepoImpl implements MailRepo {
     }
 
 
-    //pruthvi
+    //pru...
     @Override
     public SignUpDTO findByEmail(String email) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();

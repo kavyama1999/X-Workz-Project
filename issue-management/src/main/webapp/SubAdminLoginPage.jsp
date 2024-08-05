@@ -24,7 +24,7 @@
             font-size: 1.5em;  /* Adjust the size as needed */
         }
 
-       body {
+    body {
                     background-color: white; /* Change this to the desired background color */
                 }
 </style>
@@ -45,15 +45,8 @@
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="navbar-header">
-
-        <!-- Add your logo here -->
-
-                                <a class="navbar-brand" href="#">
-                                    <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70" />
-                                </a>
-
-                    <!-- End of logo -->
             <a class="navbar-brand" href="#">
+                <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="xworkz" width="140" height="70">
             </a>
             <a class="navbar-brand text-white" href="HomePage"><b>Home</b></a>
         </div>
@@ -69,13 +62,20 @@
 
     <div class="card-body text-dark">
 
-      <!---  <span style="color:green"><strong>${adminMessage}</strong></span>
-        <span style="color:red">${errorAdminMessage}</span>---!>
+        <span style="color:green"><strong>${msg}</strong></span>
+       <!-- <span style="color:red"><strong>${errorMsg}</strong></span>--!>
 
-        <form action="admin" method="post">
+                <span style="color:red"><strong>${error}</strong></span>
+                        <span style="color:red"><strong>${accountError}</strong></span>
 
-        <span style="color:green"><strong>${adminMessage}</strong></span>
-                <span style="color:red"><strong>${errorAdminMessage}</strong></span>
+       <!-- <span style="color:red"><strong>${accountLocked}</strong></span> --!>
+
+
+
+
+
+        <form action="sub-admin-log-in" method="post">
+
             <div class="row mb-3">
                 <span id="emailError" style="color:red;"></span><br>
                 <label for="email" class="form-label"><b>Email:</b></label>
@@ -95,12 +95,12 @@
                 </div>
             </div>
 
-          <!--  <div class="mb-3">
-                <a href="ForgotPasswordPage" class="link-primary">Forgot Password?</a>
-            </div>--!>
+            <div class="mb-3">
+                <a href="forgot-password" class="link-primary">Forgot Password?</a>
+            </div>
 
             <div class="d-flex justify-content-center mt-3">
-                <input type="submit" value="LogIn" class="btn btn-dark oval-btn bold-text" id="signInButton">
+                <input type="submit" value="Login" class="btn btn-dark oval-btn bold-text" id="signInButton">
             </div>
         </form>
     </div>

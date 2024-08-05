@@ -65,16 +65,8 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
 
-                    <li><a class="dropdown-item" href="view-user-details"><strong>ViewUserDetails</strong></a></li>
+                    <li><a class="dropdown-item" href="SubAdminProfilePage.jsp"><strong>ChangePassword</strong></a></li>
 
-                   <li><a class="dropdown-item" href="View-raise-complaint"><strong>ViewRaiseComplaintDetails</strong></a></li>
-
-                   <li><a class="dropdown-item" href="add-complaints"><strong>AddComplaints</strong></a></li>
-
-                   <li><a class="dropdown-item" href="addDepartmentPage"><strong>AddDepartmentAdmin</strong></a></li>
-
-
-                  <li><a class="dropdown-item" href="SubAdminLoginPage.jsp"><strong>SubAdminLoginPage</strong></a></li>
 
 
                     </ul>

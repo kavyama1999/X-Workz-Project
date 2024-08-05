@@ -83,6 +83,7 @@ public class SignInController {
         if (success)
         {
             model.addAttribute("forgotPasswordMessage", "A new password has been sent to your email.");
+       return "SignIn";
         }
         else
             {

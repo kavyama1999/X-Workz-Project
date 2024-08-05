@@ -33,7 +33,7 @@ public interface AdminRepo {
 
     //find all department
 
-    List<DepartmentDTO> findAll(String  departmentType);
+    List<DepartmentDTO> findAll(String departmentType);
 
     //update status and department id
 
@@ -43,6 +43,28 @@ public interface AdminRepo {
     //register department admin data save
 
     boolean saveDepartmentAdminData(RegisterDepartmentAdminDTO registerDepartmentAdminDTO);
+
+
+    //subAdmin login id email exists in database
+    RegisterDepartmentAdminDTO findEmailAndPassword(String email, String password);
+
+
+    //to check email is their or not
+    RegisterDepartmentAdminDTO findByEmail(String email);
+    //RegisterDepartmentAdminDTO findByEmail(String email); // Add this method to find a user by email
+
+
+    //forgot password
+
+    public RegisterDepartmentAdminDTO resetPasswordEmail(String email);
+
+    //then I have to update forgot password in database
+
+    void updatePassword(String email, String password);
+
+    //update account locked and attempt failed
+
+    boolean update(RegisterDepartmentAdminDTO  registerDepartmentAdminDTO);
 
 }
 

@@ -52,4 +52,18 @@ public class RegisterDepartmentAdminDTO {
     private Long alternateContactNumber;
 
 
+    @Column(name = "password")
+    private String  password;
+
+
+    //email locked update in database
+    @Column(name = "failed_attempt")
+    private int failedAttempt=0;
+
+
+    public static final int MAX_LOGIN_ATTEMPTS=3;
+    @Column(name = "account_locked")
+    private boolean accountLocked=false;
+
+
 }

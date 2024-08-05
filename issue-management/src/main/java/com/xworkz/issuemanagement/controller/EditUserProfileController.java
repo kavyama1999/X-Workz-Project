@@ -38,10 +38,12 @@ public class EditUserProfileController {
     private HttpSession httpSession;
 
     @GetMapping("edit")
-    public String editUserProfile(@RequestParam("email") String email, Model model) {
+    public String editUserProfile( Model model) {
         String signedInUserEmail = (String) httpSession.getAttribute("signedInUserEmail");
-        if (signedInUserEmail != null && signedInUserEmail.equals(email)) {
-            SignUpDTO signUpDTO = editUserProfileService.getUserDetails(email);
+
+
+        if (signedInUserEmail != null && signedInUserEmail.equals(signedInUserEmail)) {
+            SignUpDTO signUpDTO = editUserProfileService.getUserDetails(signedInUserEmail);
             if (signUpDTO != null) {
                 model.addAttribute("editSignUpDTO", signUpDTO);
                 return "EditUserProfile"; // Assuming EditUserProfile.jsp exists

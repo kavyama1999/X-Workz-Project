@@ -49,17 +49,36 @@ public interface AdminService {
 
      boolean saveDepartmentAdminData(RegisterDepartmentAdminDTO registerDepartmentAdminDTO);
 
-    }
+
+    //subAdmin login id email exists in database
+
+    public RegisterDepartmentAdminDTO findEmailAndPassword(String email, String password);
 
 
-//public List<RaiseComplaintDTO> searchByComplaintTypeAndCity(String complaintType, String city) {
-//    // Implement the search logic here
-//}
-//
-//public List<RaiseComplaintDTO> searchByComplaintType(String complaintType) {
-//    // Implement the search logic here
-//}
-//
-//public List<RaiseComplaintDTO> searchComplaintByCity(String city) {
-//    // Implement the search logic here
-//}
+    //to reset password
+
+    public RegisterDepartmentAdminDTO resetPasswordEmail(String email);
+
+
+
+    //checking wrong password and lock the account
+
+    void incrementFailedAttempts(String email);
+
+    int getFailedAttempts(String email);
+
+    void resetFailedAttempts(String email);
+
+    void lockAccount(String email);
+
+
+    //to unlock when I new password generate
+    void unlockAccount(String email);
+
+    //to update
+    //to send password to email
+   //public void sendPasswordEmail(String toEmail, String subject, String body);
+
+}
+
+

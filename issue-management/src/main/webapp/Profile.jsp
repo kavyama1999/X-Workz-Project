@@ -58,7 +58,8 @@
 
 
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="edit?email=${signUpDTO.email}"><strong>Edit</strong></a></li>
+                  <!--  <li><a class="dropdown-item" href="edit?email=${signUpDTO.email}"><strong>Edit</strong></a></li>--!>
+           <li><a class="dropdown-item" href="edit"><strong>Edit</strong></a></li>
 
                     <li><a class="dropdown-item" href="ChangePasswordPage"><strong>Change Password</strong></a></li>
 

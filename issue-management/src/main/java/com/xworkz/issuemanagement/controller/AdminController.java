@@ -1,7 +1,10 @@
 package com.xworkz.issuemanagement.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xworkz.issuemanagement.dto.*;
 import com.xworkz.issuemanagement.model.service.AdminService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.taglibs.standard.extra.spath.Step;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
+@Slf4j
 @RequestMapping("/")
 public class AdminController {
 
@@ -135,12 +139,9 @@ public class AdminController {
     public String searchByComplaintType(RaiseComplaintDTO raiseComplaintDTO, DepartmentDTO departmentDTO, Model model) {
         List<RaiseComplaintDTO> listOfTypeAndCity = adminService.searchByComplaintTypeAndCity(raiseComplaintDTO.getComplaintType(), raiseComplaintDTO.getCity());
         if (!listOfTypeAndCity.isEmpty()) {
-            List<Integer> departmentIds = listOfTypeAndCity.stream()
-                    .filter(complaint -> complaint.getDepartmentDTO() != null)
-                    .map(complaint -> complaint.getDepartmentDTO().getId())
-                    .collect(Collectors.toList());
 
             List<DepartmentDTO> departments = adminService.findAll(departmentDTO.getDepartmentName());
+
             model.addAttribute("viewRaiseComplaint", listOfTypeAndCity);
             model.addAttribute("departments", departments);
             return "AdminViewRaiseComplaintDetails";
@@ -148,10 +149,7 @@ public class AdminController {
 
         List<RaiseComplaintDTO> listOfTypeOrCity = adminService.searchByComplaintTypeOrCity(raiseComplaintDTO.getComplaintType(), raiseComplaintDTO.getCity());
         if (!listOfTypeOrCity.isEmpty()) {
-            List<Integer> departmentIds = listOfTypeOrCity.stream()
-                    .filter(complaint -> complaint.getDepartmentDTO() != null)
-                    .map(complaint -> complaint.getDepartmentDTO().getId())
-                    .collect(Collectors.toList());
+
             // model.addAttribute("departments", departmentIds);
 
 
@@ -206,6 +204,8 @@ public class AdminController {
     }
 
 
+    //*********************************************************************//
+
     //update department id  and status
 
     @PostMapping("/update-department")
@@ -232,7 +232,7 @@ public class AdminController {
             System.out.println("RegisterDepartmentAdminDTO has invalid data");
             bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError.getDefaultMessage()));
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-           // model.addAttribute("errors", bindingResult.getAllErrors());
+            // model.addAttribute("errors", bindingResult.getAllErrors());//in page we will get all errors
             model.addAttribute("registerDepartmentAdminDTO", registerDepartmentAdminDTO); //this retaining values form form page
 
             return "RegisterDepartmentAdmin";
@@ -243,7 +243,7 @@ public class AdminController {
             if (saveData) {
                 System.out.println("saveDepartmentAdminData saved successful in addDepartmentAdmin");
                 redirectAttributes.addFlashAttribute("msg", "Department Admin data saved successfully..");
-               // model.addAttribute("msg", "Department Admin data saved successfully..");
+                // model.addAttribute("msg", "Department Admin data saved successfully..");
 
                 return "redirect:/departmentAdmin";
 
@@ -261,10 +261,84 @@ public class AdminController {
 
     @GetMapping("departmentAdmin")
     public String departmentAdmin(Model model) {
-       // model.addAttribute("msg", "Department Admin data saved successfully..");
+        // model.addAttribute("msg", "Department Admin data saved successfully..");
         return "RegisterDepartmentAdmin";
     }
 
+
+    //********************************************************************************//
+    //sub admin login
+    @PostMapping("sub-admin-log-in")
+    public String subAdminLogin(RegisterDepartmentAdminDTO registerDepartmentAdminDTO, @RequestParam("email") String email,
+                                @RequestParam("password") String password, Model model) {
+
+        System.out.println("subAdminLogin method running in AdminController..");
+        RegisterDepartmentAdminDTO login = adminService.findEmailAndPassword(email, password);
+
+        if (login != null) {
+            log.info("subAdminLogin successful AdminController..");
+
+            adminService.resetFailedAttempts(email); //locked
+
+            model.addAttribute("msg", "Login successful");
+            //return "SubAdminLoginPage";
+            return "SubAdminProfilePage";
+
+        } else {
+            log.info("subAdminLogin not successful in AdminController..");
+            adminService.incrementFailedAttempts(email); //locked
+
+            int failedAttempts = adminService.getFailedAttempts(email);
+            System.out.println("Failed attempts for " + email + " : " + failedAttempts);
+            model.addAttribute("errorMsg", "Failed to login please check your email and password");
+
+            if (failedAttempts >= 3) {
+                adminService.lockAccount(email);// Lock account after 3 failed attempts
+                System.out.println(email + " :Your account is locked due to too many failed attempts");
+
+                model.addAttribute("accountError", "Your account is locked due to too many failed attempts.");
+                model.addAttribute("accountLocked", true);
+
+            } else {
+                model.addAttribute("error", "Invalid email id and password. Attempts:" + failedAttempts);
+                System.out.println("Invalid email Id and password");
+                model.addAttribute("accountLocked", false);
+            }
+
+//            return "SubAdminLoginPage";
+            return "SubAdminProfilePage";
+
+        }
+    }
+
+    //*****************************************************************
+
+    //forgot password
+
+
+    @PostMapping("sub-admin-forgot-password")
+    public String forgotPassword(@RequestParam String email, Model model) {
+
+        log.info("forgotPassword method running in AdminController..");
+
+        RegisterDepartmentAdminDTO resetEmail = adminService.resetPasswordEmail(email);
+
+        if (resetEmail != null) {
+            log.info("forgotPassword successful in AdminController..");
+            model.addAttribute("msg", "A new password has been sent to your email.");
+
+            // Reset failed attempts
+            adminService.resetFailedAttempts(email);
+            adminService.unlockAccount(email);
+
+            return "SubAdminForgotPassword";
+        } else {
+            log.info("forgotPassword not successful in AdminController..");
+            model.addAttribute("errorMsg", "Email Address not found");
+        }
+
+        return "SubAdminForgotPassword";
+    }
 }
 
 

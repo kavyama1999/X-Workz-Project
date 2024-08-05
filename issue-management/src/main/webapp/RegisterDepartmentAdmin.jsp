@@ -179,7 +179,7 @@
 
 
 <div class="mb-3">
-        <center>  <p> Have already have account?     <a href="SignInPage" class="link-primary"><strong>SignIn Here?</strong></a></p></center>
+        <center>  <p> Have already have account?     <a href="sum-Admin-page" class="link-primary"><strong>LogIn Here?</strong></a></p></center>
             </div>
 
             </form>
@@ -189,93 +189,6 @@
 
     </div>
 
-
-
-<!--<script>
-
-<!-- ajax email validation
-
-
-
-     function emailAjaxValidation() {
-                        console.log("Validate email");
-                        let email = document.getElementById("email").value;
-                        console.log(email);
-                        let error = document.getElementById("emailError");
-                        if(email== "")
-                        {
-                        document.getElementById("emailError").innerHTML="Please Enter Valid email";
-
-                        }
-                        else
-                        {
-
-                        const request = new XMLHttpRequest();
-
-                        request.open("GET", "http://localhost:8082/issue-management/validateEmail/" + email);
-                        request.send();
-                        console.log(request);
-                        request.onload = function () {
-                            var ref = this.responseText;
-                            console.log(ref);
-                            error.innerHTML = ref;
-
-                    <!--enable and disable submit button for ajax_email validation--!>
-
-                            if (ref === "") {
-                            fieldsChecks["email"] = true;
-                           } else {
-                           fieldsChecks["email"] = false;
-                           }
-
-                           validateAndEnableSubmit();
-                           }
-                        }
-
-}
-
-   function contactNumberAjaxValidation() {
-           console.log("Validate contact number");
-           let contactNumber = document.getElementById("contactNumber").value;
-           console.log(contactNumber);
-           let error = document.getElementById("contactNumberError");
-
-           if(contactNumber == "")
-
-           {
-           document.getElementById("contactNumberError").innerHTML="Please enter valid contactNumber";
-           }
-
-           else
-
-           {
-           const request = new XMLHttpRequest();
-           request.open("GET", "http://localhost:8082/issue-management/validateContactNumber/" + contactNumber);
-           request.send();
-           console.log(request);
-           request.onload = function () {
-               var ref = this.responseText;
-               console.log(ref);
-               error.innerHTML = ref;
-
-               // Enable and disable submit button for AJAX contact number validation
-               if (ref === "") {
-                   fieldsChecks["contactNumber"] = true;
-               } else {
-                   fieldsChecks["contactNumber"] = false;
-               }
-
-               validateAndEnableSubmit();
-           }
-           request.onerror = function () {
-                       console.error("Request failed");
-                       error.innerHTML = "<span style='color:red;'>Validation failed. Please try again.</span>";
-                       fieldsChecks["contactNumber"] = false;
-                       validateAndEnableSubmit();
-                   }
-       }
-}
-</script>--!>
 
 </body>
 </html>

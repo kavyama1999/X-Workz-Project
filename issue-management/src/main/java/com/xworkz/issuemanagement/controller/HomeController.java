@@ -38,8 +38,7 @@ public class HomeController {
     //raise complaint
 
     @GetMapping("Raise_Complaint")
-    public String raiseComplaint()
-    {
+    public String raiseComplaint() {
         return "RaiseComplaint";
     }
 
@@ -49,11 +48,9 @@ public class HomeController {
     }
 
 
-
     //search
     @GetMapping("search-by-complaint")
-    public String searchComplaint()
-    {
+    public String searchComplaint() {
         return "SearchRaiseComplaint";
     }
 
@@ -62,18 +59,32 @@ public class HomeController {
 
 
     @GetMapping("add-complaints")
-    public String addDepartmentByAdmin()
-    {
+    public String addDepartmentByAdmin() {
         return "AdminAddComplaints";
     }
-
 
 
     //register department admin
 
     @GetMapping("addDepartmentPage")
-    public String registerDepartmentAdmin()
-    {
+    public String registerDepartmentAdmin() {
         return "RegisterDepartmentAdmin";
     }
+
+    //sub admin login page
+
+
+    @GetMapping("sum-Admin-page")
+    public String subAdminLogin() {
+        return "SubAdminLoginPage";
+    }
+
+    //forgot password
+
+    @GetMapping("forgot-password")
+    public String forgotPassword()
+    {
+       return "SubAdminForgotPassword";
+    }
+
 }
