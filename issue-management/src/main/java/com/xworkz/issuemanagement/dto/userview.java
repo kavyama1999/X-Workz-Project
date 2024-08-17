@@ -202,3 +202,138 @@
 //    redirectAttributes.addFlashAttribute("successMessage", "Department allocated successfully!");
 //    return "redirect:/View-raise-complaint";
 //}
+
+
+
+//@PostMapping("admin-reset-password")
+//public String passwordReset(@RequestParam("departmentAdminEmailId")  String email, String oldPassword, String newPassword, String confirmPassword,Model model) {
+//    System.out.println("email"+email+"old"+oldPassword+"new"+newPassword+"con"+confirmPassword);
+//    boolean resetSuccessful = adminService.changePassword(email, oldPassword, newPassword, confirmPassword);
+//    if (resetSuccessful) {
+//        System.out.println("Password reset Successful: " + resetSuccessful);
+//        model.addAttribute("passwordResetMessage", "Password reset successful");
+//        return "DepartmentAdminResetPassword";
+//    } else {
+//        model.addAttribute("passwordResetError", "Failed to reset password. Please check your password");
+//    }
+//
+//    return "DepartmentAdminResetPassword";
+//}
+
+
+
+//@Override
+//public DepartmentAdminDto findByEmailId(String email) {
+//    System.out.println("Running findByEmailId method... ");
+//    EntityManager entityManager =entityManagerFactory.createEntityManager();
+//    try {
+//        Query query =entityManager.createQuery("Select s from DepartmentAdminDto s where s.departmentAdminEmailId=:email");
+//        query.setParameter("email",email);
+//        DepartmentAdminDto departmentAdminDto= (DepartmentAdminDto) query.getSingleResult();
+//        return departmentAdminDto;
+//    }
+//    catch (Exception e)
+//    {
+//        e.printStackTrace();
+//    }
+//    finally {
+//        entityManager.close();
+//    }
+//    return null;
+//}
+//@Override
+//public DepartmentAdminDto findByEmailIdAndPassword(String emailId, String password) {
+//    System.out.println("Running findByEmailIdAndPassword method... ");
+//    EntityManager entityManager = entityManagerFactory.createEntityManager();
+//    try {
+//        Query query = entityManager.createQuery("SELECT s FROM DepartmentAdminDto s WHERE s.departmentAdminEmailId = :emailId AND s.departmentAdminPassword = :password");
+//        query.setParameter("emailId", emailId);
+//        query.setParameter("password", password);
+//        DepartmentAdminDto departmentAdminDto = (DepartmentAdminDto) query.getSingleResult();
+//        return departmentAdminDto;
+//    } catch (NoResultException e) {
+//        System.out.println("No result found for email: " + emailId + " with the given password.");
+//        return null;
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//        return null;
+//    } finally {
+//        entityManager.close();
+//    }
+//}
+//
+//
+//@Override
+//public boolean updateDepartmentAdminDetails(DepartmentAdminDto departmentAdminDto) {
+//    System.out.println("Running updateDepartmentAdminPassword method AdminRepoImpl...");
+//    EntityManager entityManager = entityManagerFactory.createEntityManager();
+//    EntityTransaction transaction = entityManager.getTransaction();
+//    try {
+//        transaction.begin();
+//        entityManager.merge(departmentAdminDto);
+//        transaction.commit();
+//        return true;
+//    }
+//    catch (PersistenceException e) {
+//        if (transaction.isActive()) {
+//            transaction.rollback();
+//        }
+//        e.printStackTrace();
+//        return false;
+//    }
+//    finally {
+//        entityManager.close();
+//    }
+//}
+
+
+//@Override
+//public boolean changePassword(String email, String oldPassword, String newPassword, String confirmPassword) {
+//    System.out.println("Attempting to change password for email: " + email);
+//
+//    // Step 1: Check if newPassword matches confirmPassword
+//    if (!newPassword.equals(confirmPassword)) {
+//        System.out.println("New password and confirm password do not match.");
+//        return false;
+//    }
+//
+//    // Step 2: Retrieve departmentAdminDto based on emailId
+//    DepartmentAdminDto departmentAdminDto = this.adminRepo.findByEmailId(email);
+//    if (departmentAdminDto == null) {
+//        System.out.println("User with email " + email + " not found.");
+//        return false;
+//        // User not found
+//    }
+//
+//    String storedPassword = departmentAdminDto.getDepartmentAdminPassword();
+//    System.out.println("Stored password: " + storedPassword);
+
+    // Step 3: Verify oldPassword matches the stored password
+//    if (!passwordEncoder.matches(oldPassword, storedPassword)) {
+//        System.out.println("Old password verification failed for email: " + email);
+//        return false; // Old password doesn't match
+//    }
+//
+//    // Step 4: Encode and update the new password in SignupDto
+//    String encodedNewPassword = passwordEncoder.encode(newPassword);
+//    departmentAdminDto.setDepartmentAdminPassword(encodedNewPassword);
+//
+//    // Step 5: Save the updated password in the repository
+//    boolean save = adminRepo.updateDepartmentAdminDetails(departmentAdminDto);
+//
+//    // Step 6: Send email notification if password update was successful
+//    if (save) {
+//        System.out.println("Password updated successfully for email: " + email);
+//        try {
+//            mailSending.sendAdminResetPassword(departmentAdminDto, newPassword);
+//            return true; // Password successfully updated and email sent
+//        } catch (MailException e) {
+//            // Handle exception if email sending fails (log it or take appropriate action)
+//            e.printStackTrace();
+//            return false; // Indicate failure if email sending failed
+//        }
+//    }
+//
+//    return false; // Password update failed
+//}
+

@@ -7,6 +7,7 @@ import com.xworkz.issuemanagement.model.repository.AdminRepo;
 import com.xworkz.issuemanagement.util.EmailPasswordGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -194,25 +195,33 @@ public class AdminServiceImpl implements AdminService {
 
     //******************************************************************//
     //subAdmin login using email and password
+    //here we also match department name
     @Override
-    public RegisterDepartmentAdminDTO findEmailAndPassword(String email, String password) {
+    public RegisterDepartmentAdminDTO findEmailAndPassword(String email, String password, String departmentName) {
         log.info("findEmailAndPassword method running in AdminServiceImpl..");
 
-//      RegisterDepartmentAdminDTO data=  adminRepo.findEmailAndPassword(email,password);
+        // Retrieve the RegisterDepartmentAdminDTO by email
         RegisterDepartmentAdminDTO registerDepartmentAdminDTO = adminRepo.findByEmail(email);
-        System.out.println(registerDepartmentAdminDTO.getPassword() + "********" + password);
 
-        if (registerDepartmentAdminDTO != null && passwordEncoder.matches(password, registerDepartmentAdminDTO.getPassword())) {
-            log.info("findEmailAndPassword successful in  AdminServiceImpl..");
-            return registerDepartmentAdminDTO;
+        // Check if the retrieved object is null
+        if (registerDepartmentAdminDTO != null) {
+            // Compare passwords and department name
+            if (passwordEncoder.matches(password, registerDepartmentAdminDTO.getPassword()) && registerDepartmentAdminDTO.getDepartmentName().equals(departmentName)) {
+                log.info("findEmailAndPassword successful in AdminServiceImpl..");
+                return registerDepartmentAdminDTO;
+            } else {
+                log.info("findEmailAndPassword not successful in AdminServiceImpl..");
+                return null;
+            }
         } else {
-            log.info("findEmailAndPassword not successful in AdminServiceImpl..");
+            // Log that the email was not found
+            log.info("No account found with email: " + email);
             return null;
-
         }
-
-
     }
+
+
+
 
     //**************************************************************//
     //reset password
@@ -235,7 +244,7 @@ public class AdminServiceImpl implements AdminService {
             adminMailSend.forgotPassword(resetEmail);
 
             // Reset failed attempts
-           // adminRepo.resetFailedAttempts(email);
+            // adminRepo.resetFailedAttempts(email);
             //mailService.unlockAccount(email);
             //
             return resetEmail;
@@ -302,7 +311,7 @@ public class AdminServiceImpl implements AdminService {
     //public void sendPasswordEmail(String toEmail, String subject, String body) {
 
 
-        //to send password to email
+    //to send password to email
 
 //it is class of spring frameWork
 //        SimpleMailMessage message = new SimpleMailMessage();
@@ -316,9 +325,6 @@ public class AdminServiceImpl implements AdminService {
 //    }
 
 
-
-
-
     //to unlock account when i new password generate
     @Override
     public void unlockAccount(String email) {
@@ -328,7 +334,115 @@ public class AdminServiceImpl implements AdminService {
             adminRepo.update(user);
         }
     }
-}
 
+
+    //*****************************************************
+    //change password
+
+    @Override
+    public boolean changePassword(String email, String oldPassword, String newPassword, String confirmPassword) {
+        System.out.println("Trying to change password for email : " + email);
+
+        // Step 1: Check if newPassword matches confirmPassword
+        if (!newPassword.equals(confirmPassword)) {
+            System.out.println("New password and confirm password do not match.");
+            return false;
+        }
+
+        // Step 2: Retrieve RegisterDepartmentAdminDTO based on email
+
+        RegisterDepartmentAdminDTO registerDepartmentAdminDTO = this.adminRepo.findByEmail(email);
+        if (registerDepartmentAdminDTO == null) {
+            System.out.println("User with email : " + email + "not found..");
+            return false;
+        }
+
+        String storedPassword = registerDepartmentAdminDTO.getPassword();
+        System.out.println("Stored password : " + storedPassword); // Encoded password
+
+        // Step 3: Verify oldPassword matches the stored password
+        if (!passwordEncoder.matches(oldPassword, storedPassword)) {
+            System.out.println("Old password verification failed for email : " + email);
+            return false; // Old password doesn't match
+        }
+
+        registerDepartmentAdminDTO.setPassword(passwordEncoder.encode(newPassword));
+        boolean saveEmail = adminRepo.departmentAdminUpdatePassword(email, registerDepartmentAdminDTO.getPassword());
+
+        if (saveEmail) {
+            System.out.println("Password updated successfully for email: " + email);
+
+
+            // Step 4: Send the plain text new password in the email before encoding it
+            try {
+                adminMailSend.sendChangePassword(registerDepartmentAdminDTO, newPassword); // Send plain text new password in email
+
+                return  true;
+            } catch (MailException e) {
+                // Handle exception if email sending fails (log it or take appropriate action)
+
+                e.printStackTrace();
+                return false; // Indicate failure if email sending failed
+            }
+            // return true; // Password successfully updated
+        }
+        return false; // Password update failed
+
+    }
+
+    //to save department id in department admin table
+    @Override
+    public DepartmentDTO findDepartmentByName(String departmentName) {
+
+        System.out.println("findDepartmentByName method running in AdminServiceImpl..");
+
+        DepartmentDTO departmentid1= adminRepo.findDepartmentByName(departmentName);
+        System.out.println(departmentid1+"**********");
+        if(departmentid1!=null)
+        {
+            System.out.println("findDepartmentByName successful in AdminServiceImpl");
+            return departmentid1;
+        }
+
+        else
+        {
+            System.out.println("findDepartmentByName not successful in AdminServiceImpl..");
+        }
+        return null;
+    }
+
+
+    //************************************************************************
+   @Override
+    public List<DepartmentDTO> getAllDepartments() {
+
+        return adminRepo.getAllDepartments();
+       // return Collections.emptyList();
+    }
+
+
+    //***********************************************************************
+    //department admin can view particular department raise complaint details
+    @Override
+    public List<RaiseComplaintDTO> getParticularDepartments(String complaintType) {
+        System.out.println("getParticularDepartments method running in AdminServiceImpl..");
+       List<RaiseComplaintDTO> getParticularDepartment= adminRepo.getParticularDepartments(complaintType);
+        log.info("RaiseComplaintDTO : {}", getParticularDepartment);
+
+        if(!getParticularDepartment.isEmpty())
+        {
+          log.info("RaiseComplaintDTO data successful in AdminServiceImpl");
+          return getParticularDepartment;
+        }
+
+        else
+        {
+            log.info("RaiseComplaintDTO data not successful in AdminServiceImpl");
+        }
+
+        return Collections.emptyList();
+    }
+
+}
 
 

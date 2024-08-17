@@ -51,4 +51,18 @@ public class AdminMailSend {
 
 
     //********************************************************
+
+    public void sendChangePassword(RegisterDepartmentAdminDTO registerDepartmentAdminDTO,String newPassword) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(registerDepartmentAdminDTO.getEmail());
+        message.setSubject("Change password");
+        message.setText("Dear " + registerDepartmentAdminDTO.getAdminName() +  ", A Change Password has been sent to your email. ,\n\n" +
+                "Please Sign in through Change password: " + newPassword+ "\n\n" +
+                "Thanks and Regards,\n" + " " +
+                "X-workz Project Team");
+        javaMailSender.send(message);
+    }
+
+
+
 }

@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -86,7 +88,7 @@ public class AdminController {
         List<DepartmentDTO> departments = adminService.findAll(departmentDTO.getDepartmentName());
 
         model.addAttribute("viewRaiseComplaint", viewData);
-        model.addAttribute("departments", departments);// Fetch the list of complaints and departments
+        model.addAttribute("departments", departments);// Fetch the list of  and departments(complaints)
 
         if (viewData != null) {
             System.out.println("View raise complaint data successful in AdminController");
@@ -222,67 +224,94 @@ public class AdminController {
     //****************************************************
     //Add Department Admin and saved in database(register page)
 
+
     @PostMapping("add-department-admin")
     public String addDepartmentAdmin(@Valid RegisterDepartmentAdminDTO registerDepartmentAdminDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         System.out.println("addDepartmentAdmin method running in AdminController..");
-
         System.out.println("RegisterDepartmentAdminDTO  : " + registerDepartmentAdminDTO);
+
+        // Fetch and add the department list to the model
+        List<DepartmentDTO> departments = adminService.getAllDepartments();
+        model.addAttribute("departments", departments);
 
         if (bindingResult.hasErrors()) {
             System.out.println("RegisterDepartmentAdminDTO has invalid data");
             bindingResult.getAllErrors().forEach(objectError -> System.out.println(objectError.getDefaultMessage()));
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            // model.addAttribute("errors", bindingResult.getAllErrors());//in page we will get all errors
-            model.addAttribute("registerDepartmentAdminDTO", registerDepartmentAdminDTO); //this retaining values form form page
+            model.addAttribute("registerDepartmentAdminDTO", registerDepartmentAdminDTO); // Retain form values
 
-            return "RegisterDepartmentAdmin";
-
-
+            return "RegisterDepartmentAdmin"; // Return directly to the form page with errors
         } else {
-            boolean saveData = adminService.saveDepartmentAdminData(registerDepartmentAdminDTO);
-            if (saveData) {
-                System.out.println("saveDepartmentAdminData saved successful in addDepartmentAdmin");
-                redirectAttributes.addFlashAttribute("msg", "Department Admin data saved successfully..");
-                // model.addAttribute("msg", "Department Admin data saved successfully..");
+            // Fetch the department by name and to save departmentId in department table
+            DepartmentDTO departmentDTO = adminService.findDepartmentByName(registerDepartmentAdminDTO.getDepartmentName());
 
-                return "redirect:/departmentAdmin";
+            System.out.println(registerDepartmentAdminDTO.getDepartmentName());
+            System.out.println(departmentDTO);
+            if (departmentDTO != null) {
+                registerDepartmentAdminDTO.setDepartmentId(departmentDTO); //to save departmentId in departmnet table
 
-            } else {
-                System.out.println("saveDepartmentAdminData not saved successful..");
-                redirectAttributes.addFlashAttribute("errorMsg", "Department Admin data not saved successfully..");
-                //model.addAttribute("msg", "Department Admin data saved successfully..");
-
+                boolean saveData = adminService.saveDepartmentAdminData(registerDepartmentAdminDTO);
+                if (saveData) {
+                    System.out.println("saveDepartmentAdminData saved successfully in addDepartmentAdmin");
+                    redirectAttributes.addFlashAttribute("msg", "Department Admin data saved successfully.");
+                    return "redirect:/departmentAdmin";
+                } else {
+                    System.out.println("saveDepartmentAdminData not saved successfully.");
+                    redirectAttributes.addFlashAttribute("errorMsg", "Department Admin data not saved successfully.");
+                }
+            }
+            else {
+                System.out.println("Department not found.");
+                redirectAttributes.addFlashAttribute("errorMsg", "Invalid Department Name.");
             }
 
             return "redirect:/departmentAdmin";
         }
     }
 
-
     @GetMapping("departmentAdmin")
     public String departmentAdmin(Model model) {
-        // model.addAttribute("msg", "Department Admin data saved successfully..");
+        List<DepartmentDTO> departments = adminService.getAllDepartments();
+        model.addAttribute("departments", departments);
         return "RegisterDepartmentAdmin";
     }
+
+
+
 
 
     //********************************************************************************//
     //sub admin login
     @PostMapping("sub-admin-log-in")
     public String subAdminLogin(RegisterDepartmentAdminDTO registerDepartmentAdminDTO, @RequestParam("email") String email,
-                                @RequestParam("password") String password, Model model) {
+                                @RequestParam("password") String password, @RequestParam("departmentName") String departmentName, Model model, RedirectAttributes redirectAttributes,
+                                HttpServletRequest httpServletRequest) {
 
         System.out.println("subAdminLogin method running in AdminController..");
-        RegisterDepartmentAdminDTO login = adminService.findEmailAndPassword(email, password);
+        RegisterDepartmentAdminDTO login = adminService.findEmailAndPassword(email, password,departmentName);
 
         if (login != null) {
             log.info("subAdminLogin successful AdminController..");
 
             adminService.resetFailedAttempts(email); //locked
 
-            model.addAttribute("msg", "Login successful");
-            //return "SubAdminLoginPage";
-            return "SubAdminProfilePage";
+            redirectAttributes.addFlashAttribute("msg", "Login successful");
+            model.addAttribute("DepartmentAdminProfileMsg", "Sub Admin Login successful ");
+
+
+            //session
+
+
+            HttpSession session=httpServletRequest.getSession();
+
+
+
+            session.setAttribute("departmentAdmin",login.getDepartmentName());//session key
+
+
+
+
+            //return "DepartmentAdminLoginPage";
+            return "DepartmentAdminProfilePage";
 
         } else {
             log.info("subAdminLogin not successful in AdminController..");
@@ -296,20 +325,29 @@ public class AdminController {
                 adminService.lockAccount(email);// Lock account after 3 failed attempts
                 System.out.println(email + " :Your account is locked due to too many failed attempts");
 
-                model.addAttribute("accountError", "Your account is locked due to too many failed attempts.");
+                redirectAttributes.addFlashAttribute("accountError", "Your account is locked due to too many failed attempts.");
                 model.addAttribute("accountLocked", true);
 
             } else {
-                model.addAttribute("error", "Invalid email id and password. Attempts:" + failedAttempts);
+                redirectAttributes.addFlashAttribute("error", "Invalid email id and password. Attempts:" + failedAttempts);
                 System.out.println("Invalid email Id and password");
                 model.addAttribute("accountLocked", false);
             }
 
-//            return "SubAdminLoginPage";
-            return "SubAdminProfilePage";
+            return "redirect:/departmentAdminLogIn";
+            // return "DepartmentAdminProfilePage";
 
         }
     }
+
+    @GetMapping("departmentAdminLogIn")
+    public String departmentAdminLogIn(Model model) {
+        List<DepartmentDTO> departments = adminService.getAllDepartments();
+        model.addAttribute("departments", departments);
+        return "DepartmentAdminLoginPage";
+    }
+
+
 
     //*****************************************************************
 
@@ -331,13 +369,79 @@ public class AdminController {
             adminService.resetFailedAttempts(email);
             adminService.unlockAccount(email);
 
-            return "SubAdminForgotPassword";
+            return "DepartmentAdminForgotPassword";
         } else {
             log.info("forgotPassword not successful in AdminController..");
             model.addAttribute("errorMsg", "Email Address not found");
         }
 
-        return "SubAdminForgotPassword";
+        return "DepartmentAdminForgotPassword";
+    }
+
+
+    //*******************************************************************
+    //sub Admin change password
+
+    @PostMapping("change-password")
+    public String subAdminChangePassword(Model model, @RequestParam String email, @RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirmPassword) {
+
+        System.out.println("email"+email+"old"+oldPassword+"new"+newPassword+"con"+confirmPassword);
+
+        log.info("subAdminChangePassword method running in AdminController..");
+
+        boolean changePasswordSuccessful = adminService.changePassword(email, oldPassword, newPassword, confirmPassword);
+        if (changePasswordSuccessful) {
+            System.out.println("Change password Successful:" + changePasswordSuccessful);
+            model.addAttribute("DepartmentAdminChangePasswordMessage" + "", "Change Password  successful");
+
+            return "DepartmentAdminChangePassword";
+
+        } else {
+            model.addAttribute("DepartmentAdminChangePasswordError", "Failed to change password.Please check your password and email");
+//           // return "SubAdminChangePassword";
+        }
+
+        // Retain email to display in the form again
+        model.addAttribute("email", email);
+        return "DepartmentAdminChangePassword";
+
+    }
+
+
+
+    //**************************************************************************
+
+    //department admin can view particular department raise complaint details
+
+
+
+
+    @GetMapping("department-admin-view-particular-department")
+    public String  getParticularDepartment(RaiseComplaintDTO raiseComplaintDTO,Model model,
+                                           HttpServletRequest httpServletRequest)
+    {
+      log.info("getParticularDepartment method running in AdminController...");
+
+      //session
+
+        HttpSession session=httpServletRequest.getSession();
+        String  departmentDTO= (String) session.getAttribute("departmentAdmin");
+
+    List<RaiseComplaintDTO> getData=  adminService.getParticularDepartments(departmentDTO);
+
+    if(getData!=null)
+    {
+        log.info("getParticularDepartment data successful in AdminController");
+        model.addAttribute("particularDepartment",getData);
+        return "DepartmentAdminViewComplaintRaiseDetails";
+    }
+
+    else
+    {
+        log.info("getParticularDepartment data not successful in AdminController..");
+    }
+
+    return "DepartmentAdminViewComplaintRaiseDetails";
     }
 }
 

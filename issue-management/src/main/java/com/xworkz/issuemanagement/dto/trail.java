@@ -87,3 +87,29 @@
 //        return "redirect:/View-raise-complaint";
 //    }
 //}
+
+
+//@Override
+//public RegisterDepartmentAdminDTO findEmailAndPassword(String email, String password, String departmentName) {
+//    log.info("findEmailAndPassword method running in AdminServiceImpl..");
+//
+//    // Retrieve the RegisterDepartmentAdminDTO by email
+//    RegisterDepartmentAdminDTO registerDepartmentAdminDTO = adminRepo.findByEmail(email);
+//
+//    // Check if the retrieved object is null
+//    if (registerDepartmentAdminDTO != null) {
+//        // Compare passwords and department name
+//        if (passwordEncoder.matches(password, registerDepartmentAdminDTO.getPassword())
+//                && registerDepartmentAdminDTO.getDepartmentName().equals(departmentName)) {
+//            log.info("findEmailAndPassword successful in AdminServiceImpl..");
+//            return registerDepartmentAdminDTO;
+//        } else {
+//            log.info("findEmailAndPassword not successful in AdminServiceImpl..");
+//            return null;
+//        }
+//    } else {
+//        // Log that the email was not found
+//        log.info("No account found with email: " + email);
+//        return null;
+//    }
+//}

@@ -46,6 +46,7 @@
 
 
 </head>
+
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
@@ -71,10 +72,14 @@
 
                    <li><a class="dropdown-item" href="add-complaints"><strong>AddComplaints</strong></a></li>
 
-                   <li><a class="dropdown-item" href="addDepartmentPage"><strong>AddDepartmentAdmin</strong></a></li>
+                 <!--  <li><a class="dropdown-item" href="addDepartmentPage"><strong>AddDepartmentAdmin</strong></a></li>--!>
+
+                   <li><a class="dropdown-item" href="departmentAdmin"><strong>AddDepartmentAdmin</strong></a></li>
 
 
-                  <li><a class="dropdown-item" href="SubAdminLoginPage.jsp"><strong>SubAdminLoginPage</strong></a></li>
+
+
+                  <li><a class="dropdown-item" href="departmentAdminLogIn"><strong>SubAdminLoginPage</strong></a></li>
 
 
                     </ul>

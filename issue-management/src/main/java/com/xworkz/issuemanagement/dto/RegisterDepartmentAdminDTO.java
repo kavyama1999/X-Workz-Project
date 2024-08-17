@@ -66,4 +66,22 @@ public class RegisterDepartmentAdminDTO {
     private boolean accountLocked=false;
 
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_department_id",referencedColumnName = "department_id") //parent...left one child
+    private DepartmentDTO departmentId;
+
+
+
+//    @Column(name = "department_names")
+//   // @ManyToOne(fetch =FetchType.LAZY)
+//    //@JoinColumn(name = "depart_name",referencedColumnName = "department_name")
+//    private String departmentNames;
+
+
+
+
+
+
+
 }

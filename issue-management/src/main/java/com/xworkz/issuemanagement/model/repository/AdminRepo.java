@@ -46,7 +46,7 @@ public interface AdminRepo {
 
 
     //subAdmin login id email exists in database
-    RegisterDepartmentAdminDTO findEmailAndPassword(String email, String password);
+    RegisterDepartmentAdminDTO findEmailAndPassword(String email, String password,String departmentName);
 
 
     //to check email is their or not
@@ -66,5 +66,31 @@ public interface AdminRepo {
 
     boolean update(RegisterDepartmentAdminDTO  registerDepartmentAdminDTO);
 
-}
+
+    //************************************************
+    //Sub Admin change password
+
+
+    RegisterDepartmentAdminDTO emailExists(String email);
+
+    RegisterDepartmentAdminDTO verifyOldPassword(String email, String oldPassword);
+
+    boolean departmentAdminUpdatePassword(String email, String newPassword);
+
+
+    //to add departId in department admin table
+
+    DepartmentDTO findDepartmentByName(String departmentName);
+
+
+    //to get all departments in jsp
+
+    public List<DepartmentDTO> getAllDepartments();
+
+
+    //admin can view particular department raise complaint details
+
+    List<RaiseComplaintDTO> getParticularDepartments(String complaintType);
+
+    }
 

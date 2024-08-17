@@ -72,12 +72,12 @@ Admin
                     <label for="complaintType" class="form-label"><b>Complaint Type:</b></label>
                     <select class="form-select custom-select-width" id="complaintType" name="complaintType" required>
                         <option value="0" ${complaint.complaintType == null ? 'selected' : ''}>Select</option>
-                        <option value="Electric issue" ${complaint.complaintType == 'Electric issue' ? 'selected' : ''}>Electric issue</option>
-                        <option value="Water Supply" ${complaint.complaintType == 'Water Supply' ? 'selected' : ''}>Water Supply</option>
-                        <option value="Network Problem" ${complaint.complaintType == 'Network Problem' ? 'selected' : ''}>Network Problem</option>
-                        <option value="System Problem" ${complaint.complaintType == 'System Problem' ? 'selected' : ''}>System Problem</option>
-                        <option value="Water Problem" ${complaint.complaintType == 'Water Problem' ? 'selected' : ''}>Water Problem</option>
+                        <option value="Electric" ${complaint.complaintType == 'Electric' ? 'selected' : ''}>Electric</option>
+                        <option value="Network" ${complaint.complaintType == 'Network' ? 'selected' : ''}>Network</option>
+                         <option value="Water" ${complaint.complaintType == 'Water' ? 'selected' : ''}>Water</option>
                         <option value="Gas Leakage" ${complaint.complaintType == 'Gas Leakage' ? 'selected' : ''}>Gas Leakage</option>
+
+                        <option value="System" ${complaint.complaintType == 'System' ? 'selected' : ''}>System</option>
 
                     </select><br>
                 </div>
@@ -133,25 +133,31 @@ Admin
 
                             <form action="update-department" method="post">
         <input type="hidden" name="complaintId" value="${viewRaiseComplaintUsers.complaintId}">
+
            <td>
-                                    <select class="form-select status-select" name="departmentId">
-                                        <option value="Select">Select</option>
-                                        <c:forEach var="department" items="${departments}">
-                                           <!-- <option value="${department.id}" ${viewRaiseComplaintUsers.complaintId == department.id ? 'selected' : ''}>${department.departmentName}</option>--!>
+              <select class="form-select status-select" name="departmentId">
+                  <option value="Select">Select</option>
+                  <c:forEach var="department" items="${departments}">
+                     <!-- <option value="${department.id}" ${viewRaiseComplaintUsers.complaintId == department.id ? 'selected' : ''}>${department.departmentName}</option>--!>
 
     <option value="${department.id}" ${viewRaiseComplaintUsers.departmentDTO != null && viewRaiseComplaintUsers.departmentDTO.id == department.id ? 'selected' : ''}>${department.departmentName}</option>
 
-                                        </c:forEach>
-                                    </select>
-                                </td>
+              </c:forEach>
+                  </select>
+              </td>
+
+
+
                                 <td>
-                                    <select class="form-select status-select" name="status">
-                                        <option value="Select">Select</option>
-                                        <option value="Pending" ${viewRaiseComplaintUsers.status == 'Pending' ? 'selected' : ''}>Pending</option>
-                                        <option value="In Process" ${viewRaiseComplaintUsers.status == 'In Process' ? 'selected' : ''}>In Process</option>
-                                        <option value="Completed" ${viewRaiseComplaintUsers.status == 'Completed' ? 'selected' : ''}>Completed</option>
-                                    </select>
+                      <select class="form-select status-select" name="status">
+                          <option value="Select">Select</option>
+                          <option value="Pending" ${viewRaiseComplaintUsers.status == 'Pending' ? 'selected' : ''}>Pending</option>
+                          <option value="In Process" ${viewRaiseComplaintUsers.status == 'In Process' ? 'selected' : ''}>In Process</option>
+                          <option value="Completed" ${viewRaiseComplaintUsers.status == 'Completed' ? 'selected' : ''}>Completed</option>
+                      </select>
                                 </td>
+
+
                                 <td>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </td>

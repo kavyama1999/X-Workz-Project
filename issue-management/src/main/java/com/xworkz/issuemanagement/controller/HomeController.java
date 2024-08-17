@@ -76,15 +76,35 @@ public class HomeController {
 
     @GetMapping("sum-Admin-page")
     public String subAdminLogin() {
-        return "SubAdminLoginPage";
+        return "DepartmentAdminLoginPage";
     }
 
     //forgot password
 
     @GetMapping("forgot-password")
-    public String forgotPassword()
-    {
-       return "SubAdminForgotPassword";
+    public String forgotPassword() {
+        return "DepartmentAdminForgotPassword";
     }
 
+    //change password for department admin
+
+    @GetMapping("department-change-password")
+    public String departmentAdminChangePassword() {
+        return "DepartmentAdminChangePassword";
+    }
+
+//***********************************************************************************************
+//*************************************************************************************
+
+
+    @GetMapping("employee-page")
+
+    public String saveEmployeeDetails() {
+        return "EmployeePage";
+    }
+
+
+
 }
+
+

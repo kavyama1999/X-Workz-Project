@@ -22,6 +22,21 @@
         padding: 10px 20px;  /* Adjust the padding to control the button size */
     }
 </style>
+
+
+<style>
+        .dropdown-toggle-custom {
+            color: #fff;
+            background-color: transparent;
+            border: 1px solid #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .dropdown-toggle-custom:hover {
+            background-color: #495057; /* Darker grey for hover */
+        }
+    </style>
+
 </head>
 <body>
 
@@ -37,36 +52,20 @@
 
 
 
-      <div class="dropdown">
-                      <div class="dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-
-                         <!----image display in icon when user sign in--!>
-                        <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">
-
-                  </div>
+     <div class="dropdown">
+                         <button class="dropdown-toggle dropdown-toggle-custom" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                             Admin
+                         </button>
+                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
 
 
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
 
-                    <li><a class="dropdown-item" href="edit?email=${signUpDTO.email}"><strong>Edit</strong></a></li>
+                    <!--   <li><a class="dropdown-item" href="SubAdminLoginPage.jsp"><strong>SubAdminLoginPage</strong></a></li>--!>
 
 
-                          <li><a class="dropdown-item" href="view-profile"><strong>UserView</strong></a></li>
+                         </ul>
+                     </div>
 
-                         <!--<li><a class="dropdown-item" href="raise-complaint-view"><strong>ViewRaiseComplaint</strong></a></li>--!>
-
-                       <!-- <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewModal" ><strong> Modal</strong></a></li>--!>
-
-                          <li><a class="dropdown-item" href="Raise_Complaint"><strong>RaiseComplaint</strong></a></li>
-
-                      <li> <a class="dropdown-item" href="view-raise-complaint"><strong>ViewRaiseComplaint</strong></a></li>
-
-                       <li><a class="dropdown-item" href="HomePage"><strong>Logout</strong></a></li>
-
-         <!-- <a class="dropdown-item" href="raise-complaint-view?complaintId=${complaint.complaintId}">---!>
-
-                      </ul>
-                  </div>
 
 
 
@@ -78,16 +77,20 @@
         <h3><b><center>Change Password</center></b></h3>
     </div>
     <div class="card-body text-dark">
-        <span style="color:blue"><strong>${changePasswordMessage}</strong></span>
-        <span style="color:red"><strong>${changePasswordError}</strong></span>
+        <span style="color:green"><strong>${DepartmentAdminChangePasswordMessage}</strong></span>
+        <span style="color:red"><strong>${DepartmentAdminChangePasswordError}</strong></span>
 
-        <form action="reset-password" method="post">
+        <form action="change-password" method="post">
+
+
             <div class="row mb-3">
                 <span id="emailError" style="color:red;"></span>
                 <label for="email" class="form-label"><b>Email:</b></label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                    <input type="email" class="form-control" id="email" name="email" value="${sessionScope.signedInUserEmail}" readonly autocomplete="email" placeholder="Enter email">
+                  <input type="email" class="form-control" id="email" name="email" value=""  autocomplete="email" placeholder="Enter email">
+
+
                 </div>
             </div>
 
@@ -123,7 +126,7 @@
             </div>
 
             <div class="mb-3">
-                <center><a href="SignInPage" class="link-primary"><strong>SignIn Here?</strong></a></center>
+                <center><a href="departmentAdminLogIn" class="link-primary"><strong>Login Here?</strong></a></center>
             </div>
         </form>
     </div>

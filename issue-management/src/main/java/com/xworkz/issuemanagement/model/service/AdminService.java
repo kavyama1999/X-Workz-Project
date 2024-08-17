@@ -37,7 +37,7 @@ public interface AdminService {
 
     //find all Department
 
-     List<DepartmentDTO> findAll(String departmentType) ;
+    List<DepartmentDTO> findAll(String departmentType);
 
 
 //update status and department id
@@ -47,18 +47,17 @@ public interface AdminService {
 
     //save department admin data
 
-     boolean saveDepartmentAdminData(RegisterDepartmentAdminDTO registerDepartmentAdminDTO);
+    boolean saveDepartmentAdminData(RegisterDepartmentAdminDTO registerDepartmentAdminDTO);
 
 
     //subAdmin login id email exists in database
-
-    public RegisterDepartmentAdminDTO findEmailAndPassword(String email, String password);
+//here we also match department name
+    public RegisterDepartmentAdminDTO findEmailAndPassword(String email, String password, String departmentName);
 
 
     //to reset password
 
     public RegisterDepartmentAdminDTO resetPasswordEmail(String email);
-
 
 
     //checking wrong password and lock the account
@@ -77,7 +76,27 @@ public interface AdminService {
 
     //to update
     //to send password to email
-   //public void sendPasswordEmail(String toEmail, String subject, String body);
+    //public void sendPasswordEmail(String toEmail, String subject, String body);
+
+
+    //*****************************************************
+    //sub admin change password
+
+    public boolean changePassword(String email, String oldPassword, String newPassword, String confirmPassword);
+
+
+    //to save department id in Department admin table
+
+    DepartmentDTO findDepartmentByName(String departmentName);
+
+    //to get all departments in jsp
+
+    public List<DepartmentDTO> getAllDepartments();
+
+
+    //department admin can view particular department complaint raise details
+
+    List<RaiseComplaintDTO> getParticularDepartments(String complaintType);
 
 }
 

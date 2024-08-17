@@ -76,6 +76,23 @@
 
         <form action="sub-admin-log-in" method="post">
 
+
+
+<div class="mb-3">
+        <span id="departmentNameError"></span>
+
+          <label for="complaintType" class="form-label"><b>DepartmentName:</b></label>
+     <select class="form-select" name="departmentName" id="complaintType" onblur="departmentNameValidation()">
+      <option value="" disabled selected>Select</option>
+
+            <c:forEach var="department" items="${departments}">
+          <option value="${department.departmentName}">${department.departmentName}</option>
+      </c:forEach>
+                    </select>
+                       </select>
+                 </div>
+
+
             <div class="row mb-3">
                 <span id="emailError" style="color:red;"></span><br>
                 <label for="email" class="form-label"><b>Email:</b></label>

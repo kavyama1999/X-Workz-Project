@@ -65,9 +65,18 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
 
-                    <li><a class="dropdown-item" href="SubAdminProfilePage.jsp"><strong>ChangePassword</strong></a></li>
+                    <li><a class="dropdown-item" href="department-change-password"><strong>ChangePassword</strong></a></li>
 
 
+                   <!-- <li><a class="dropdown-item" href="department-admin-view-particular-department?departmentName=${particularData.departmentName}"><strong>ViewParticularDepartment</strong></a></li>--!>
+
+                    <li><a class="dropdown-item" href="department-admin-view-particular-department"><strong>ViewParticularDepartment</strong></a></li>
+
+                    <li><a class="dropdown-item" href="employeeRegister"><strong>EmployeeRegister</strong></a></li>
+
+
+
+<!--<a href="department-admin-view-particular-department?departmentName=${department.departmentName}">View Department Complaints</a>--!>
 
                     </ul>
                 </div>
@@ -92,7 +101,7 @@
 
       <center>
           <strong style="color:blue">
-              <h3 class="mt-5   extra-margin-top">${AdminProfilePageMessage}</h3>
+              <h3 class="mt-5   extra-margin-top">${DepartmentAdminProfileMsg}</h3>
           </strong>
       </center>
 

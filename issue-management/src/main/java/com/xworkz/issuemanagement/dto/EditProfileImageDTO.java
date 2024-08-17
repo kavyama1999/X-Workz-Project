@@ -38,7 +38,7 @@ public class EditProfileImageDTO {
 //    private int imageUserId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_user_id", referencedColumnName = "id")
+    @JoinColumn(name = "image_user_id", referencedColumnName = "id")//parent ..left one child
     private SignUpDTO user;
 
     @Column(name = "created_by")
