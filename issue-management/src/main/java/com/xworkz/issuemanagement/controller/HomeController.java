@@ -94,7 +94,7 @@ public class HomeController {
     }
 
 //***********************************************************************************************
-//*************************************************************************************
+//***********************Employee Information**************************************************************
 
 
     @GetMapping("employee-page")
@@ -104,6 +104,13 @@ public class HomeController {
     }
 
 
+    //employee login
+
+    @GetMapping("employee-otp-page")
+    public String  employeeLogin()
+    {
+        return "EmployeeOTPPage";
+    }
 
 }
 

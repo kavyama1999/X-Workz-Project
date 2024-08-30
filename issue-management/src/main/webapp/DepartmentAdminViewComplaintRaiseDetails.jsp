@@ -114,18 +114,20 @@
 
 
 
-           <td>
-              <select class="form-select status-select" name="departmentId">
-         <option value="Select" disabled selected>Select</option>
 
-                  <c:forEach var="department" items="${departments}">
-                     <!-- <option value="${department.id}" ${viewRaiseComplaintUsers.complaintId == department.id ? 'selected' : ''}>${department.departmentName}</option>--!>
 
-    <option value="${department.id}" ${viewRaiseComplaintUsers.departmentDTO != null && viewRaiseComplaintUsers.departmentDTO.id == department.id ? 'selected' : ''}>${department.departmentName}</option>
 
-              </c:forEach>
+              <td>
+                  <select class="form-select status-select" name="employeeId">
+                      <option value="Select" disabled selected>Select</option>
+
+                      <c:forEach var="fetchEmployee" items="${fetchEmployeeNames}">
+                          <option value="${fetchEmployee}"> ${fetchEmployee}
+                          </option>
+                      </c:forEach>
                   </select>
               </td>
+
 
 
 

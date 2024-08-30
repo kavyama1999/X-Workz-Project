@@ -120,16 +120,16 @@ Admin
                 <tbody>
                     <c:forEach var="viewRaiseComplaintUsers" items="${viewRaiseComplaint}" varStatus="status">
                         <tr>
-<td>${status.index + 1}</td>
-<td>${viewRaiseComplaintUsers.complaintId}</td>
-<td>${viewRaiseComplaintUsers.complaintType}</td>
-<td>${viewRaiseComplaintUsers.country}</td>
-<td>${viewRaiseComplaintUsers.state}</td>
-<td>${viewRaiseComplaintUsers.city}</td>
-<td>${viewRaiseComplaintUsers.area}</td>
-<td>${viewRaiseComplaintUsers.address}</td>
-<td>${viewRaiseComplaintUsers.description}</td>
-<td>${viewRaiseComplaintUsers.signUpDTO.id}</td>
+    <td>${status.index + 1}</td>
+    <td>${viewRaiseComplaintUsers.complaintId}</td>
+    <td>${viewRaiseComplaintUsers.complaintType}</td>
+    <td>${viewRaiseComplaintUsers.country}</td>
+    <td>${viewRaiseComplaintUsers.state}</td>
+    <td>${viewRaiseComplaintUsers.city}</td>
+    <td>${viewRaiseComplaintUsers.area}</td>
+    <td>${viewRaiseComplaintUsers.address}</td>
+    <td>${viewRaiseComplaintUsers.description}</td>
+    <td>${viewRaiseComplaintUsers.signUpDTO.id}</td>
 
                             <form action="update-department" method="post">
         <input type="hidden" name="complaintId" value="${viewRaiseComplaintUsers.complaintId}">

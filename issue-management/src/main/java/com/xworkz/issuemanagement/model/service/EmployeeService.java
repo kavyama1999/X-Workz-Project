@@ -2,6 +2,8 @@ package com.xworkz.issuemanagement.model.service;
 
 import com.xworkz.issuemanagement.dto.EmployeeDTO;
 
+import java.util.List;
+
 public interface EmployeeService {
 
 
@@ -9,9 +11,15 @@ public interface EmployeeService {
     boolean saveEmployeeData(EmployeeDTO employeeDTO);
 
 
+
+    //to fetch employeeName from employee table
+
+
+    List<String> fetchEmployeeName();
+
 //to check whether emailId exists or not in database
 
-    //EmployeeDTO findByEmail(String  emailId);
+    EmployeeDTO findByEmail(String  emailId);
 
 
 

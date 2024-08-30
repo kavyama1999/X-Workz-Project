@@ -15,9 +15,15 @@ public class EmailOTPGenerator {
         this.random = new Random();
     }
 
+//    // Method to generate a 6-digit OTP
+//    public String generateOtp() {
+//        return String.format("%06d", random.nextInt(1000000));
+//    }
+
     // Method to generate a 6-digit OTP
     public String generateOtp() {
-        return String.format("%06d", random.nextInt(1000000));
+       int otp = random.nextInt(1000000); // Generates a number between 0 and 999999
+       return String.format("%06d", otp); // Ensures the OTP is 6 digits, with leading zeros if necessary
     }
 
     // Method to check if the OTP is valid within the time limit (e.g., 1 minute)

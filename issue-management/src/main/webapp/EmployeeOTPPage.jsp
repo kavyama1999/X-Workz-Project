@@ -57,65 +57,49 @@
 
 <div class="card border-dark container  w-25 mt-5 mb-5 justify-content-center">
     <div class="card-header">
-        <h3><b><center>Log In</center></b></h3>
+        <h3><b><center>Get OTP</center></b></h3>
     </div>
 
     <div class="card-body text-dark">
 
-        <span style="color:green"><strong>${msg}</strong></span>
-       <!-- <span style="color:red"><strong>${errorMsg}</strong></span>--!>
+        <span style="color:green"><strong>${generatedOTP}</strong></span>
 
-                <span style="color:red"><strong>${error}</strong></span>
-                        <span style="color:red"><strong>${accountError}</strong></span>
-
-       <!-- <span style="color:red"><strong>${accountLocked}</strong></span> --!>
+         <span style="color:red"><strong>${failed}</strong></span>
+         <span style="color:red"><strong>${emailNotFound}</strong></span>
 
 
 
 
 
-        <form action="sub-admin-log-in" method="post">
+
+        <form action="generateOtp" method="post">
+
+        <!--<form id="otpForm" method="post" action="/generateOtp">--!>
 
 
 
-<!--<div class="mb-3">
-        <span id="departmentNameError"></span>
-
-          <label for="complaintType" class="form-label"><b>DepartmentName:</b></label>
-     <select class="form-select" name="departmentName" id="complaintType" onblur="departmentNameValidation()">
-      <option value="" disabled selected>Select</option>
-
-            <c:forEach var="department" items="${departments}">
-          <option value="${department.departmentName}">${department.departmentName}</option>
-      </c:forEach>
-                    </select>
-                       </select>
-                 </div>--!>
 
 
-          <!--  <div class="row mb-3">
+
+
+            <div class="row mb-3">
                 <span id="emailError" style="color:red;"></span><br>
-                <label for="emailId" class="form-label"><b>EmailID:</b></label>
+                <label for="email" class="form-label"><b>EmailID:</b></label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                    <input type="email" class="form-control" id="emailId" name="emailId" placeholder="Enter emailId" value="" onblur="emailValidation()" required>
-                </div>
-            </div>--!>
-
-
-            <div class="mb-3">
-                <span id="OTPError" style="color:red;"></span><br>
-                <label for="otp" class="form-label"><b>Enter OTP:</b></label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                    <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" value="" onblur="passwordValidation"  required>
+                    <input type="email" class="form-control" id="email" name="emailId" placeholder="Enter email" value="" onblur="emailValidation()">
                 </div>
             </div>
 
 
 
+
+         <div class="mb-3">
+                <a href="EmployeeLoginPage.jsp" class="link-primary">Login Here</a>
+            </div>
+
             <div class="d-flex justify-content-center mt-3">
-                <input type="submit" value="Login" class="btn btn-dark oval-btn bold-text" id="signInButton">
+                <input type="submit" value="Send" class="btn btn-dark oval-btn bold-text" id="signInButton">
             </div>
         </form>
     </div>

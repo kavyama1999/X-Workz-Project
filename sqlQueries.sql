@@ -15,6 +15,9 @@ select * from complaint_raise order by status desc limit 3;
 
 select * from complaint_raise;
 
+
+
+
 -- SELECT * FROM Employees
 -- ORDER BY EmployeeID
 -- OFFSET 10 ROWS FETCH NEXT 5 ROWS ONLY; its not suppport in mysql..it support postre
@@ -49,3 +52,30 @@ REFERENCES department_table(department_id);
 
 
 alter table employee_table add column(otp long);
+
+
+-- to get only 1st record (min)  
+
+select * from complaint_raise where complaint_id=(select min(complaint_id)  from  complaint_raise);
+
+-- to get last record (max)
+select * from complaint_raise where complaint_id=(select max(complaint_id) from complaint_raise);
+
+
+
+SELECT *
+FROM EmpInfo
+LIMIT (SELECT COUNT(*) / 2 FROM EmpInfo);
+
+
+SELECT *
+FROM EmpInfo
+ORDER BY RANDOM()
+LIMIT (SELECT COUNT(*) / 2 FROM EmpInfo);
+
+
+
+SELECT *
+FROM EmpInfo
+ORDER BY RANDOM()
+LIMIT 10;

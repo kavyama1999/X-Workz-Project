@@ -51,6 +51,9 @@ public class EmployeeDTO {
     private DepartmentDTO departmentId;
 
 
+
+    private Long otp;
+
 //    //its coming from department table
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "department_id", referencedColumnName = "department_id")

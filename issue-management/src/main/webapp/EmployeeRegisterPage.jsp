@@ -188,7 +188,7 @@
 
 
   <div class="mb-3">
-        <center>  <p> Have already have account?  <a href="EmployeeLoginPage.jsp" class="link-primary"><strong>LogIn Here?</strong></a></p></center>
+        <center>  <p> Have already have account?  <a href="EmployeeOTPPage.jsp" class="link-primary"><strong>Please Login To get OTP to click here?</strong></a></p></center>
             </div>
 
             </form>

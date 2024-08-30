@@ -3,6 +3,7 @@ package com.xworkz.issuemanagement.controller;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xworkz.issuemanagement.dto.*;
 import com.xworkz.issuemanagement.model.service.AdminService;
+import com.xworkz.issuemanagement.model.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.taglibs.standard.extra.spath.Step;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+
+    @Autowired
+    private EmployeeService employeeService;
 
     public AdminController() {
         System.out.println("No parameter constructor created for AdminController...");
@@ -428,11 +433,16 @@ public class AdminController {
         String  departmentDTO= (String) session.getAttribute("departmentAdmin");
 
     List<RaiseComplaintDTO> getData=  adminService.getParticularDepartments(departmentDTO);
+  List<String> getEmployeeNames=  employeeService.fetchEmployeeName();
+
+  //log.info("EmployeeName: {}",getEmployeeNames);
+
 
     if(getData!=null)
     {
         log.info("getParticularDepartment data successful in AdminController");
         model.addAttribute("particularDepartment",getData);
+        model.addAttribute("fetchEmployeeNames",getEmployeeNames);
         return "DepartmentAdminViewComplaintRaiseDetails";
     }
 
