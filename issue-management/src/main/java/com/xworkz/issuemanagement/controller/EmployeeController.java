@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -32,19 +33,19 @@ public class EmployeeController {
     @Autowired
     private OTPMailSend otpMailSend;
 
-
+    @Autowired
+    private HttpSession httpSession;
 
 
     @Autowired
     private EmailOTPGenerator emailOTPGenerator;  // Inject the OTP generator
 
 
-
     public EmployeeController() {
         log.info("no parameter constructor in EmployeeController ");
     }
 
-
+    //employee register
     @PostMapping("employeeData")
     public String saveEmployeeData(EmployeeDTO employeeDTO, Model model, RedirectAttributes redirectAttributes) {
         log.info("saveEmployeeData method running in EmployeeController..");
@@ -55,10 +56,10 @@ public class EmployeeController {
         DepartmentDTO departmentDTO = adminService.findDepartmentByName(employeeDTO.getDepartmentName());
 
         System.out.println(employeeDTO.getDepartmentName());
-        System.out.println("departmentDTO od department name :" +departmentDTO);
+        System.out.println("departmentDTO od department name :" + departmentDTO);
 
 
-        if(departmentDTO!=null) {
+        if (departmentDTO != null) {
             employeeDTO.setDepartmentId(departmentDTO);
 
             boolean saveEmployeeData = employeeService.saveEmployeeData(employeeDTO);
@@ -85,55 +86,94 @@ public class EmployeeController {
 
 
     ///*******************************************************
+    //employee login
+    // Employee Login with CAPTCHA validation
+    // Employee Login with CAPTCHA and OTP generation
     @PostMapping("generateOtp")
-    public String generateOtp(@RequestParam("emailId") String emailId, Model model,RedirectAttributes redirectAttributes) {
+    public String generateOtp(@RequestParam("emailId") String emailId,
+                              @RequestParam("captcha") String captchaInput,
+                              HttpSession session,
+                              Model model,
+                              RedirectAttributes redirectAttributes) {
         log.info("generateOtp method running in EmployeeController..");
 
         // Check if the email exists in the database
         EmployeeDTO employeeDTO = employeeService.findByEmail(emailId);
-        if (employeeDTO != null) {
-            // Generate OTP
-            String otp = emailOTPGenerator.generateOtp();
-            System.out.println("OTP : "+otp);
-
-            // Set the OTP and the current time in the employeeDTO
-            employeeDTO.setOtp(Long.parseLong(otp));
-
-            // Save the updated employee data with the OTP
-            boolean isSaved = employeeService.saveEmployeeData(employeeDTO);
-
-            if (isSaved) {
-                // Send OTP to the user's email
-                otpMailSend.sendOtpEmail(employeeDTO.getEmailId(), otp);
-
-                log.info("OTP generated and sent to email: {}", emailId);
-                redirectAttributes.addFlashAttribute("generatedOTP", "OTP generated and sent to email");
-               // return "redirect:/employee-OTP-page";
-
-            } else {
-                redirectAttributes.addFlashAttribute("failed", "Failed to generate OTP, please try again.");
-                log.error("Failed to save OTP for email: {}", emailId);
-            }
-        } else {
-            redirectAttributes.addFlashAttribute("emailNotFound", "Email not found in the database");
+        if (employeeDTO == null) {
+            // If email does not exist, return an error message and redirect to login page
+            redirectAttributes.addFlashAttribute("emailNotFound", "Email does not exist.");
             log.error("Email not found in the database: {}", emailId);
+            return "redirect:/employeeLogin";
         }
 
-        return "redirect:/employee-OTP-page"; // Return the same view with model attributes
+        // Validate CAPTCHA
+        String sessionCaptcha = (String) session.getAttribute("captcha");
+        if (sessionCaptcha == null || !sessionCaptcha.equals(captchaInput)) {
+            // CAPTCHA is invalid, return an error message
+            redirectAttributes.addFlashAttribute("captchaError", "Invalid CAPTCHA.");
+            log.error("Invalid CAPTCHA for email: {}", emailId);
+            return "redirect:/employeeLogin";
+        }
+
+        // CAPTCHA is valid, proceed with OTP generation
+        String otp = emailOTPGenerator.generateOtp();
+        log.info("OTP generated: {}", otp);
+
+        // Save OTP in employeeDTO and update in the database
+        employeeDTO.setOtp(Long.parseLong(otp));
+        boolean isSaved = employeeService.saveEmployeeData(employeeDTO);
+
+        if (isSaved) {
+            // Send OTP to the user's email
+            otpMailSend.sendOtpEmail(employeeDTO.getEmailId(), otp);
+            redirectAttributes.addFlashAttribute("generatedOTP", "OTP generated and sent to email.");
+            log.info("OTP generated and sent to email: {}", emailId);
+            return "redirect:/employee-OTP-page";
+        } else {
+            redirectAttributes.addFlashAttribute("failedToGenerateOTPError", "Failed to generate OTP, please try again.");
+            log.error("Failed to save OTP for email: {}", emailId);
+        }
+
+        return "redirect:/employeeLogin"; // Redirect back to login page if there is an error
+    }
+
+    @GetMapping("employee-OTP-page")
+    public String employeeOtpPage() {
+        return "EmployeeOTPPage"; // Display OTP entry page
+    }
+
+    @GetMapping("employeeLogin")
+    public String employeeLoginPage() {
+        return "EmployeeLoginPage"; // Display login page
     }
 
 
-   @GetMapping("employee-OTP-page")
-    public String employeeLogin()
-    {
-        return "EmployeeOTPPage";
-    }
 
-    //************************************************************
-    //employee login the emailId and otp match then only he should login
+//*********************************************************
+//    //when i select allocate employeeName that id should saved to save in Complaint raise table
+
+@PostMapping("update-employeeId")
+public String updateEmployeeId(@RequestParam("complaintId") int complaintId,
+                               @RequestParam("employeeId") int employeeId,
+                               @RequestParam ("status")String status, Model model)
+{
+    System.out.println("updated employeeId");
+
+    System.out.println("Received complaintId: " + complaintId);
+    System.out.println("Received employeeId: " + employeeId);
+    System.out.println("Received status: " + status);
 
 
+    employeeService.updateEmployeeId(complaintId,employeeId);
+    employeeService.updateEmployeeStatus(employeeId,status);
 
-    //public String employeeLogin("")
+    model.addAttribute("updated-employeeId","Employee Allocated Successfully");
+
+    return "DepartmentAdminViewComplaintRaiseDetails";
+}
+
 
 }
+
+
+

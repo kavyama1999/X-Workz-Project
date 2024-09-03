@@ -11,7 +11,6 @@ public interface EmployeeService {
     boolean saveEmployeeData(EmployeeDTO employeeDTO);
 
 
-
     //to fetch employeeName from employee table
 
 
@@ -19,9 +18,16 @@ public interface EmployeeService {
 
 //to check whether emailId exists or not in database
 
-    EmployeeDTO findByEmail(String  emailId);
+    EmployeeDTO findByEmail(String emailId);
 
 
+//when i select allocate employeeName that id should saved to save in Complaint raise table
+
+    void updateEmployeeId(int complaintId, int employeeId);
+
+//when i select status
+
+    public void updateEmployeeStatus(int employeeId, String status);
 
 
 }

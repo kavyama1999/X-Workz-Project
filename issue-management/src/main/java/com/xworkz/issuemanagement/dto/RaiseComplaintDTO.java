@@ -67,6 +67,13 @@ public class RaiseComplaintDTO {
     @Column(name = "status")
     private String status;
 
+
+    // when i select allocated_employee_name  then Id should save to in raiseComplaint table
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id",referencedColumnName = "employee_id")
+    private EmployeeDTO  employeeDTO;
+
+
 //    vRQ7Unhv1:kavya
 //    1J2<yr87T1:soumya
 

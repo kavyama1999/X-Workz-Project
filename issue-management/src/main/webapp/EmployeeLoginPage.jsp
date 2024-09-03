@@ -7,26 +7,78 @@
 <title>Login Page</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- To include the Font Awesome library in your HTML and then use the appropriate classes to add the icons. -->
+<!-- Font Awesome library for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
     .oval-btn {
-        border-radius: 40px; /* Adjust the value as needed for an oval shape */
-        padding: 20px 20px;  /* Adjust the padding to control the button size */
+        border-radius: 40px;
+        padding: 10px 20px;
+        font-size: 1.2em;
     }
 
-
-        .bold-text {
-            font-weight: bold; /* Makes the text bold */
-            font-size: 1.5em;  /* Adjust the size as needed */
-        }
+    .bold-text {
+        font-weight: bold;
+    }
 
     body {
-                    background-color: white; /* Change this to the desired background color */
-                }
+        background-color: #f8f9fa; /* Light background color */
+    }
+
+    .card {
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for card */
+        border-radius: 20px;
+    }
+
+    .card-header h3 {
+        font-weight: bold;
+        color: #343a40; /* Dark color for the header */
+    }
+
+    .input-group-text {
+        background-color: #343a40;
+        color: #fff; /* White icon color */
+    }
+
+    #captcha {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border: 1px solid #ced4da;
+        height: calc(2.25rem + 2px);
+    }
+
+    #captchaImage {
+        border: 1px solid #ced4da;
+        border-right: none;
+        padding: 3px;
+        height: calc(2.25rem + 2px);
+        background-color: #e9ecef; /* Light grey background for CAPTCHA image */
+    }
+
+    #refreshCaptcha {
+        margin-left: 10px;
+        cursor: pointer;
+        color: #007bff;
+    }
+
+    #refreshCaptcha:hover {
+        color: black; /* Darker blue on hover */
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .container {
+        max-width: 500px;
+    }
+
+    .navbar-brand img {
+        border-radius: 10px;
+    }
+
 </style>
 
 <script>
@@ -37,6 +89,10 @@
         }
     }
     window.onload = disableButton;
+
+    function refreshCaptcha() {
+        document.getElementById('captchaImage').src = 'captcha?' + Math.random();
+    }
 </script>
 
 </head>
@@ -50,74 +106,53 @@
             </a>
             <a class="navbar-brand text-white" href="HomePage"><b>Home</b></a>
         </div>
-
-
     </div>
 </nav>
 
-<div class="card border-dark container  w-25 mt-5 mb-5 justify-content-center">
-    <div class="card-header">
-        <h3><b><center>Log In</center></b></h3>
+<div class="card border-dark container mt-5 mb-5 justify-content-center">
+    <div class="card-header text-center">
+        <h3>Log In</h3>
     </div>
 
     <div class="card-body text-dark">
 
         <span style="color:green"><strong>${msg}</strong></span>
-       <!-- <span style="color:red"><strong>${errorMsg}</strong></span>--!>
-
-                <span style="color:red"><strong>${error}</strong></span>
-                        <span style="color:red"><strong>${accountError}</strong></span>
-
-       <!-- <span style="color:red"><strong>${accountLocked}</strong></span> --!>
-
+        <span style="color:red"><strong>${captchaError}</strong></span>
+        <span style="color:red"><strong>${accountError}</strong></span>
+        <span style="color:red"><strong>${emailNotFound}</strong></span>
+        <span style="color:red"><strong>${generatedOTP}</strong></span>
+         <span style="color:red"><strong>${failedToGenerateOTPError}</strong></span>
 
 
 
 
-        <form action="sub-admin-log-in" method="post">
-
-
-
-<!--<div class="mb-3">
-        <span id="departmentNameError"></span>
-
-          <label for="complaintType" class="form-label"><b>DepartmentName:</b></label>
-     <select class="form-select" name="departmentName" id="complaintType" onblur="departmentNameValidation()">
-      <option value="" disabled selected>Select</option>
-
-            <c:forEach var="department" items="${departments}">
-          <option value="${department.departmentName}">${department.departmentName}</option>
-      </c:forEach>
-                    </select>
-                       </select>
-                 </div>--!>
-
-
-          <!--  <div class="row mb-3">
-                <span id="emailError" style="color:red;"></span><br>
-                <label for="emailId" class="form-label"><b>EmailID:</b></label>
+        <form action="generateOtp" method="post">
+            <!-- Email Field -->
+            <div class="mb-3">
+                <label for="emailId" class="form-label">Email ID:</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                    <input type="email" class="form-control" id="emailId" name="emailId" placeholder="Enter emailId" value="" onblur="emailValidation()" required>
-                </div>
-            </div>--!>
-
-
-            <div class="mb-3">
-                <span id="OTPError" style="color:red;"></span><br>
-                <label for="otp" class="form-label"><b>Enter OTP:</b></label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                    <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" value="" onblur="passwordValidation"  required>
+                    <input type="email" class="form-control" id="emailId" name="emailId" placeholder="Enter email ID" required>
                 </div>
             </div>
 
+            <!-- CAPTCHA Field -->
+            <div class="mb-3">
+                <label for="captcha" class="form-label">Enter CAPTCHA:</label>
+                <div class="input-group">
+                    <img src="captcha" alt="CAPTCHA Image" id="captchaImage">
+                    <input type="text" class="form-control" id="captcha" name="captcha" placeholder="Enter CAPTCHA" required>
+                    <span id="refreshCaptcha" onclick="refreshCaptcha()"><i class="fas fa-sync-alt"></i></span>
+                </div>
+            </div>
 
-
+            <!-- Submit Button -->
             <div class="d-flex justify-content-center mt-3">
-                <input type="submit" value="Login" class="btn btn-dark oval-btn bold-text" id="signInButton">
+                <button type="submit" class="btn btn-dark oval-btn bold-text" id="signInButton">Next</button>
             </div>
         </form>
+
+
     </div>
 </div>
 </body>

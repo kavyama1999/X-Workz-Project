@@ -337,3 +337,57 @@
 //    return false; // Password update failed
 //}
 
+
+//@PostMapping("generateOtp")
+//public String generateOtp(@RequestParam("emailId") String emailId,
+//                          @RequestParam("captcha") String captchaInput,
+//                          HttpSession httpSession,
+//                          Model model,
+//                          RedirectAttributes redirectAttributes) {
+//    log.info("generateOtp method running in EmployeeController..");
+//
+//    // Retrieve the CAPTCHA value stored in the session
+//    String sessionCaptcha = (String) httpSession.getAttribute("captcha");
+//
+//    // Validate CAPTCHA
+//    if (sessionCaptcha != null && sessionCaptcha.equals(captchaInput)) {
+//        // CAPTCHA is valid, proceed with OTP generation
+//
+//        // Check if the email exists in the database
+//        EmployeeDTO employeeDTO = employeeService.findByEmail(emailId);
+//        if (employeeDTO != null) {
+//            // Generate OTP
+//            String otp = emailOTPGenerator.generateOtp();
+//            System.out.println("OTP : " + otp);
+//
+//            // Set the OTP in the employeeDTO
+//            employeeDTO.setOtp(Long.parseLong(otp));
+//
+//            // Save the updated employee data with the OTP
+//            boolean isSaved = employeeService.saveEmployeeData(employeeDTO);
+//
+//            if (isSaved) {
+//                // Send OTP to the user's email
+//                otpMailSend.sendOtpEmail(employeeDTO.getEmailId(), otp);
+//
+//                log.info("OTP generated and sent to email: {}", emailId);
+//                redirectAttributes.addFlashAttribute("generatedOTP", "OTP generated and sent to email");
+//
+//                // Redirect to the OTP page
+//                return "redirect:/employee-OTP-page";
+//            } else {
+//                redirectAttributes.addFlashAttribute("failed", "Failed to generate OTP, please try again.");
+//                log.error("Failed to save OTP for email: {}", emailId);
+//            }
+//        } else {
+//            redirectAttributes.addFlashAttribute("emailNotFound", "Email not found in the database");
+//            log.error("Email not found in the database: {}", emailId);
+//        }
+//    } else {
+//        // CAPTCHA is invalid, return an error message
+//        redirectAttributes.addFlashAttribute("error", "Invalid CAPTCHA");
+//        log.error("Invalid CAPTCHA for email: {}", emailId);
+//    }
+//
+//    return "redirect:/EmployeeLoginPage.jsp"; // Redirect to the login page on failure
+//}

@@ -97,7 +97,7 @@
                 </span>
 
                 <div class="row mb-3">
-                    <label for="adminName" class="form-label "><b>AdminName:</b></label>
+                    <label for="adminName" class="form-label "><b>DepartmentAdminName:</b></label>
                     <div class="input-group">
                      <span id="adminNameError"></span><br>
 
@@ -147,21 +147,22 @@
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                     <input type="email" class="form-control" id="email" onblur="emailValidation()" onchange="emailAjaxValidation()"  name="email" placeholder="Enter email" >
+
                 </div>
             </div>
 
 
 
-   <div class="row mb-3">
+        <div class="row mb-3">
               <span id="contactNumberError"></span><br>
 
                     <label for="contactNumber" class="form-label"><b>Contact Number:</b></label>
                   <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                <input type="tel" class="form-control" id="contactNumber" onblur="contactNumberValidation()" onchange="contactNumberAjaxValidation()" name="contactNumber" placeholder="Enter contact number">
 
-        <input type="tel" class="form-control" id="contactNumber" onblur="contactNumberValidation()" onchange="contactNumberAjaxValidation()" name="contactNumber" placeholder="Enter contactnumber" >
-                </div>
-                </div>
+             </div>
+          </div>
 
 
 
@@ -176,13 +177,13 @@
 
 
 
-                          <div>
-                                <span id="agreeError"></span>
-                                <label for="agree" class="list-group-item">
-                                    <input name="agree" id="agree" onchange="agreeValidation()" class="form-check-input me-1" type="checkbox" value="agree" ${signUpDTO.agree eq 'agree' ? 'checked' : ''}>
-                                    <b>Agree</b>
-                                </label>
-                            </div><br>
+           <div>
+                 <span id="agreeError"></span>
+                 <label for="agree" class="list-group-item">
+                     <input name="agree" id="agree" onchange="agreeValidation()" class="form-check-input me-1" type="checkbox" value="agree" ${signUpDTO.agree eq 'agree' ? 'checked' : ''}>
+                     <b>Agree</b>
+                 </label>
+             </div><br>
 
 
                 <div>
@@ -200,6 +201,95 @@
         </div>
 
     </div>
+
+
+
+
+<script>
+
+<!-- ajax email validation--!>
+
+     function emailAjaxValidation() {
+           console.log("Validate email");
+          let email = document.getElementById("email").value;
+          console.log(email);
+          let error = document.getElementById("emailError");
+          if(email== "")
+          {
+          document.getElementById("emailError").innerHTML="Please Enter Valid email";
+
+          }
+          else
+          {
+
+              const request = new XMLHttpRequest();
+
+              request.open("GET", "http://localhost:8082/issue-management/subAdminValidateEmail/" + email);
+              request.send();
+              console.log(request);
+              request.onload = function () {
+                  var ref = this.responseText;
+                  console.log(ref);
+                  error.innerHTML = ref;
+
+                    <!--enable and disable submit button for ajax_email validation--!>
+
+                            if (ref === "") {
+                            fieldsChecks["email"] = true;
+                           } else {
+                           fieldsChecks["email"] = false;
+                           }
+
+                           validateAndEnableSubmit();
+                           }
+                        }
+
+}
+
+   function contactNumberAjaxValidation() {
+           console.log("Validate contact number");
+           let contactNumber = document.getElementById("contactNumber").value;
+           console.log(contactNumber);
+           let error = document.getElementById("contactNumberError");
+
+           if(contactNumber == "")
+
+           {
+           document.getElementById("contactNumberError").innerHTML="Please enter valid contactNumber";
+           }
+
+           else
+
+           {
+           const request = new XMLHttpRequest();
+           request.open("GET", "http://localhost:8082/issue-management/subAdminValidateContactNumber/" + contactNumber);
+           request.send();
+           console.log(request);
+           request.onload = function () {
+               var ref = this.responseText;
+               console.log(ref);
+               error.innerHTML = ref;
+
+               // Enable and disable submit button for AJAX contact number validation
+               if (ref === "") {
+                   fieldsChecks["contactNumber"] = true;
+               } else {
+                   fieldsChecks["contactNumber"] = false;
+               }
+
+               validateAndEnableSubmit();
+           }
+           request.onerror = function () {
+                       console.error("Request failed");
+                       error.innerHTML = "<span style='color:red;'>Validation failed. Please try again.</span>";
+                       fieldsChecks["contactNumber"] = false;
+                       validateAndEnableSubmit();
+                   }
+       }
+}
+</script>
+
+
 
 
 </body>

@@ -5,23 +5,9 @@
 <html>
 <head>
     <meta charset="ISO-8859-1">
-   <!-- <title>View Raised Complaints</title>
-   <link rel="stylesheet"
-   	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-   <link rel="stylesheet"
-   	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-   <link
-   	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-   	rel="stylesheet">
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-   <script
-   	src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>--!>
-
-
-   	 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-dark bg-dark">
@@ -34,39 +20,18 @@
             <a class="navbar-brand text-white" href="Profile.jsp"><b>Profile</b></a>
         </div>
 
-
-
-<div class="dropdown">
-                <div class="dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-
-                   <!----image display in icon when user sign in--!>
- <!--                 <img src="${pageContext.request.contextPath}${sessionScope.profileImage}" alt="Profile" width="80" height="80" class="rounded-circle">--!>
-
+        <div class="dropdown">
+            <div class="dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <!-- Image Display when User Signs In -->
             </div>
-
-
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-
-         <li><a class="dropdown-item" href="edit?email=${signUpDTO.email}"><strong>Edit</strong></a></li>
-
-       <li><a class="dropdown-item" href="ChangePasswordPage"><strong>Change Password</strong></a></li>
-
-      <li><a class="dropdown-item" href="view-profile"><strong>UserView</strong></a></li>
-
-
-     <!---<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewModal" ><strong> Modal</strong></a></li>--!>
-
-   <li><a class="dropdown-item" href="Raise_Complaint"><strong>RaiseComplaint</strong></a></li>
-
-        <li><a class="dropdown-item" href="HomePage"><strong>Logout</strong></a></li>
-
-
-
-   <!-- <a class="dropdown-item" href="raise-complaint-view?complaintId=${complaint.complaintId}">---!>
-
-                </ul>
-            </div>
-
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="edit?email=${signUpDTO.email}"><strong>Edit</strong></a></li>
+                <li><a class="dropdown-item" href="ChangePasswordPage"><strong>Change Password</strong></a></li>
+                <li><a class="dropdown-item" href="view-profile"><strong>UserView</strong></a></li>
+                <li><a class="dropdown-item" href="Raise_Complaint"><strong>RaiseComplaint</strong></a></li>
+                <li><a class="dropdown-item" href="HomePage"><strong>Logout</strong></a></li>
+            </ul>
+        </div>
     </div>
 </nav>
 
@@ -92,70 +57,61 @@
                         <th>Allocate Employee</th>
                         <th>Status</th>
                         <th>Submit</th>
-
-
-
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="particularData" items="${particularDepartment}" varStatus="status">
                         <tr>
-                            <td>${status.index + 1}</td>
-                            <td>${particularData.complaintId}</td>
-                            <td>${particularData.complaintType}</td>
-                            <td>${particularData.country}</td>
-                            <td>${particularData.state}</td>
-                            <td>${particularData.city}</td>
-                            <td>${particularData.area}</td>
-                            <td>${particularData.address}</td>
-                            <td>${particularData.description}</td>
-                            <th>${particularData.signUpDTO.id}</th>
+       <td>${status.index + 1}</td>
+       <td>${particularData.complaintId}</td>
+       <td>${particularData.complaintType}</td>
+       <td>${particularData.country}</td>
+       <td>${particularData.state}</td>
+       <td>${particularData.city}</td>
+       <td>${particularData.area}</td>
+       <td>${particularData.address}</td>
+       <td>${particularData.description}</td>
+       <th>${particularData.signUpDTO.id}</th>
 
+       <!-- Form Submission -->
+       <form action="update-employeeId" method="post">
+           <input type="hidden" name="complaintId" value="${particularData.complaintId}">
+           <input type="hidden" name="employeeId" value="${employeeId}">
 
+           <!-- Employee Allocation Dropdown -->
+           <td>
+               <select class="form-select" name="employeeId" required>
+                   <option value="" disabled selected>Select </option>
+                   <c:forEach var="fetchEmployee" items="${fetchEmployeeNames}">
+                       <option value="${fetchEmployee}"> ${fetchEmployee} </option>
+                   </c:forEach>
+               </select>
+           </td>
 
+           <!-- Status Dropdown -->
+           <td>
+               <select class="form-select" name="status" required>
+                   <option value="Select" disabled>Select Status</option>
+                   <option value="Pending" ${particularData.status == 'Pending' ? 'selected' : ''}>Pending</option>
+                   <option value="In Process" ${particularData.status == 'In Process' ? 'selected' : ''}>In Process</option>
+                   <option value="Completed" ${particularData.status == 'Completed' ? 'selected' : ''}>Completed</option>
+               </select>
+           </td>
 
-
-
-
-              <td>
-                  <select class="form-select status-select" name="employeeId">
-                      <option value="Select" disabled selected>Select</option>
-
-                      <c:forEach var="fetchEmployee" items="${fetchEmployeeNames}">
-                          <option value="${fetchEmployee}"> ${fetchEmployee}
-                          </option>
-                      </c:forEach>
-                  </select>
-              </td>
-
-
-
-
-                     <td>
-                      <select class="form-select status-select" name="status">
-                          <option value="Select" disabled>Select</option>
-                          <option value="Pending" ${viewRaiseComplaintUsers.status == 'Pending' ? 'selected' : ''}>Pending</option>
-                          <option value="In Process" ${viewRaiseComplaintUsers.status == 'In Process' ? 'selected' : ''}>In Process</option>
-                          <option value="Completed" ${viewRaiseComplaintUsers.status == 'Completed' ? 'selected' : ''}>Completed</option>
-                      </select>
-                                </td>
-
-                         <td>
-                              <button type="submit" class="btn btn-primary">Submit</button>
-                          </td>
-                        </tr>
-
-                    </c:forEach>
-                </tbody>
+           <!-- Submit Button -->
+           <td>
+               <button type="submit" class="btn btn-primary">Submit</button>
+           </td>
+       </form>
+              </tr>
+          </c:forEach>
+      </tbody>
             </table>
         </div>
     </div>
 </div>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-

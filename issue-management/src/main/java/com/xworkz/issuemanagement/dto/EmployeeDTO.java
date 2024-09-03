@@ -47,12 +47,16 @@ public class EmployeeDTO {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department_id",referencedColumnName = "department_id")  //name is employee table we added department_id
+    @JoinColumn(name = "department_id",referencedColumnName = "department_id")  //name ....in employee table we added department_id
     private DepartmentDTO departmentId;
 
 
 
     private Long otp;
+
+
+    @Column(name = "status")
+    private String status;
 
 //    //its coming from department table
 //    @ManyToOne(fetch = FetchType.LAZY)

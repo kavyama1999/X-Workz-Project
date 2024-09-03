@@ -50,7 +50,7 @@ public class AdminController {
             return "AdminProfilePage";
             //return "redirect:/adminPage";
         } else {
-            System.out.println("findByEmailAndPassword not successful in AdminController");
+            System.out.println("findByEmailAndPassword not successf9ul in AdminController");
             redirectAttributes.addFlashAttribute("errorAdminMessage", "Failed to login. Please check your email and password.");
             return "redirect:/adminPage";
         }
@@ -82,7 +82,7 @@ public class AdminController {
     }
 
 
-    //view Raise complaint details
+    // Admin view Raise complaint details
     @GetMapping("View-raise-complaint")
     public String viewRaiseComplaintDetails(RaiseComplaintDTO raiseComplaintDTO, Model model, DepartmentDTO departmentDTO) {
         System.out.println("viewUserDetails method running in AdminController");
@@ -263,8 +263,7 @@ public class AdminController {
                     System.out.println("saveDepartmentAdminData not saved successfully.");
                     redirectAttributes.addFlashAttribute("errorMsg", "Department Admin data not saved successfully.");
                 }
-            }
-            else {
+            } else {
                 System.out.println("Department not found.");
                 redirectAttributes.addFlashAttribute("errorMsg", "Invalid Department Name.");
             }
@@ -281,9 +280,6 @@ public class AdminController {
     }
 
 
-
-
-
     //********************************************************************************//
     //sub admin login
     @PostMapping("sub-admin-log-in")
@@ -292,7 +288,7 @@ public class AdminController {
                                 HttpServletRequest httpServletRequest) {
 
         System.out.println("subAdminLogin method running in AdminController..");
-        RegisterDepartmentAdminDTO login = adminService.findEmailAndPassword(email, password,departmentName);
+        RegisterDepartmentAdminDTO login = adminService.findEmailAndPassword(email, password, departmentName);
 
         if (login != null) {
             log.info("subAdminLogin successful AdminController..");
@@ -306,13 +302,10 @@ public class AdminController {
             //session
 
 
-            HttpSession session=httpServletRequest.getSession();
+            HttpSession session = httpServletRequest.getSession();
 
 
-
-            session.setAttribute("departmentAdmin",login.getDepartmentName());//session key
-
-
+            session.setAttribute("departmentAdmin", login.getDepartmentName());//session key
 
 
             //return "DepartmentAdminLoginPage";
@@ -353,7 +346,6 @@ public class AdminController {
     }
 
 
-
     //*****************************************************************
 
     //forgot password
@@ -390,7 +382,7 @@ public class AdminController {
     @PostMapping("change-password")
     public String subAdminChangePassword(Model model, @RequestParam String email, @RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String confirmPassword) {
 
-        System.out.println("email"+email+"old"+oldPassword+"new"+newPassword+"con"+confirmPassword);
+        System.out.println("email" + email + "old" + oldPassword + "new" + newPassword + "con" + confirmPassword);
 
         log.info("subAdminChangePassword method running in AdminController..");
 
@@ -413,45 +405,37 @@ public class AdminController {
     }
 
 
-
     //**************************************************************************
 
     //department admin can view particular department raise complaint details
-
-
-
+    // departAdmin signin through signIn
 
     @GetMapping("department-admin-view-particular-department")
-    public String  getParticularDepartment(RaiseComplaintDTO raiseComplaintDTO,Model model,
-                                           HttpServletRequest httpServletRequest)
-    {
-      log.info("getParticularDepartment method running in AdminController...");
+    public String getParticularDepartment(RaiseComplaintDTO raiseComplaintDTO, Model model,
+                                          HttpServletRequest httpServletRequest) {
+        log.info("getParticularDepartment method running in AdminController...");
 
-      //session
+        //session
 
-        HttpSession session=httpServletRequest.getSession();
-        String  departmentDTO= (String) session.getAttribute("departmentAdmin");
+        HttpSession session = httpServletRequest.getSession();
+        String departmentDTO = (String) session.getAttribute("departmentAdmin");
 
-    List<RaiseComplaintDTO> getData=  adminService.getParticularDepartments(departmentDTO);
-  List<String> getEmployeeNames=  employeeService.fetchEmployeeName();
+        List<RaiseComplaintDTO> getData = adminService.getParticularDepartments(departmentDTO);
+        List<String> getEmployeeNames = employeeService.fetchEmployeeName();
 
-  //log.info("EmployeeName: {}",getEmployeeNames);
+        //log.info("EmployeeName: {}",getEmployeeNames);
 
 
-    if(getData!=null)
-    {
-        log.info("getParticularDepartment data successful in AdminController");
-        model.addAttribute("particularDepartment",getData);
-        model.addAttribute("fetchEmployeeNames",getEmployeeNames);
+        if (getData != null) {
+            log.info("getParticularDepartment data successful in AdminController");
+            model.addAttribute("particularDepartment", getData); //values retain in view page
+            model.addAttribute("fetchEmployeeNames", getEmployeeNames); //fetch employeeName
+            return "DepartmentAdminViewComplaintRaiseDetails";
+        } else {
+            log.info("getParticularDepartment data not successful in AdminController..");
+        }
+
         return "DepartmentAdminViewComplaintRaiseDetails";
-    }
-
-    else
-    {
-        log.info("getParticularDepartment data not successful in AdminController..");
-    }
-
-    return "DepartmentAdminViewComplaintRaiseDetails";
     }
 }
 

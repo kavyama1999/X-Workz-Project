@@ -18,7 +18,7 @@ public class OTPMailSend {
         message.setTo(toEmail);
         message.setSubject("Your OTP Code");
         log.info("OTP is generated for you mail");
-        message.setText("Your OTP code is: " + otp);
+        message.setText("Your One Time Password (OTP) for login : " + otp);
         mailSender.send(message);
     }
 }

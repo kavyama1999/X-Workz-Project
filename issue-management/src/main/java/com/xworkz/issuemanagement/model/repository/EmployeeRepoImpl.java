@@ -58,7 +58,6 @@ public class EmployeeRepoImpl implements EmployeeRepo {
     }
 
 
-
     //***************************************************************
     //to check whether email exists or not in database
     @Override
@@ -99,5 +98,55 @@ public class EmployeeRepoImpl implements EmployeeRepo {
         }
 
         return null;
+    }
+
+
+    //when i select  employee name that id should go to save in raise complaint table
+
+    @Override
+    public void updateEmployeeId(int complaintId, int employeeId) {
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+
+        try {
+            entityTransaction.begin();
+            String updateQuery = "UPDATE RaiseComplaintDTO r SET r.employeeDTO.employeeId=:employeeId WHERE r.complaintId=:complaintId";
+            Query query1 = entityManager.createQuery(updateQuery);
+            query1.setParameter("employeeId", employeeId);
+            query1.setParameter("complaintId", complaintId);
+
+            int data = query1.executeUpdate();
+            System.out.println("UpdatedData: " + data);
+            entityTransaction.commit();
+        } catch (PersistenceException persistenceException) {
+            persistenceException.printStackTrace();
+        } finally {
+            System.out.println("Connection closed");
+            entityManager.close();
+        }
+
+    }
+
+
+    //******************************************************
+    @Override
+    public void updateEmployeeStatus(int employeeId, String status) {
+        System.out.println("updateEmployeeStatus method running in EmployeeRepoImpl");
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+
+        entityTransaction.begin();
+        String query = "UPDATE EmployeeDTO e SET e.status=:status WHERE e.employeeId=:employeeId";
+
+        Query query1 = entityManager.createQuery(query);
+        query1.setParameter("status", status);
+        query1.setParameter("employeeId", employeeId);
+
+        int updatedData = query1.executeUpdate();
+
+        System.out.println("UpdatedData :" +updatedData);
+        entityTransaction.commit();
     }
 }

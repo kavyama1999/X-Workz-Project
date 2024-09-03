@@ -103,8 +103,8 @@ Admin
                 <thead>
                     <tr>
                       <th>Serial Number</th>
-                        <th>ID</th>
-                  <th>Complaint Type</th>
+                         <th>ID</th>
+                     <th>Complaint Type</th>
                         <th>Country</th>
                         <th>State</th>
                         <th>City</th>
@@ -131,7 +131,7 @@ Admin
     <td>${viewRaiseComplaintUsers.description}</td>
     <td>${viewRaiseComplaintUsers.signUpDTO.id}</td>
 
-                            <form action="update-department" method="post">
+    <form action="update-department" method="post">
         <input type="hidden" name="complaintId" value="${viewRaiseComplaintUsers.complaintId}">
 
            <td>

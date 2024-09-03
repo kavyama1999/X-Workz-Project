@@ -47,15 +47,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         List<String> fetchEmployeeName = employeeRepo.fetchEmployeeName();
 
-        if(fetchEmployeeName!=null)
-        {
+        if (fetchEmployeeName != null) {
             log.info("EmployeeName fetched successfully.. ");
             return fetchEmployeeName;
-        }
-
-        else
-
-        {
+        } else {
             log.info("EmployeeName not fetched successfully..");
         }
         return Collections.emptyList();
@@ -81,5 +76,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
         return null;
+    }
+
+    //************************************************************
+    //when i select allocate employeeName that id should saved to save in Complaint raise table
+
+
+    @Override
+    public void updateEmployeeId(int complaintId, int employeeId) {
+        System.out.println("update employeeId");
+
+
+        employeeRepo.updateEmployeeId(complaintId, employeeId);
+
+    }
+
+
+    //*****************************************
+    @Override
+    public void updateEmployeeStatus(int employeeId, String status) {
+        System.out.println("updateEmployeeStatus method running in EmployeeServiceImpl");
+        employeeRepo.updateEmployeeStatus(employeeId,status);
+
     }
 }
