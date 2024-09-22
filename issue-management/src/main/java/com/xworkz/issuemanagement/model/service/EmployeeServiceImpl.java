@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -41,11 +40,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     //*************************************************************
     //to fetch all employee name from employee table
+    //here we can take <String> or <EmployeeDTO>
     @Override
-    public List<String> fetchEmployeeName() {
+    public List<EmployeeDTO> fetchEmployeeNamesByDepartment(String departmentName) {
         log.info("fetchEmployeeName method running in EmployeeServiceImpl..");
 
-        List<String> fetchEmployeeName = employeeRepo.fetchEmployeeName();
+        List<EmployeeDTO> fetchEmployeeName = employeeRepo.fetchEmployeeNamesByDepartment(departmentName);
 
         if (fetchEmployeeName != null) {
             log.info("EmployeeName fetched successfully.. ");
@@ -53,7 +53,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         } else {
             log.info("EmployeeName not fetched successfully..");
         }
-        return Collections.emptyList();
+
+        return fetchEmployeeName;
+
     }
 
     //****************************************************************
@@ -78,25 +80,42 @@ public class EmployeeServiceImpl implements EmployeeService {
         return null;
     }
 
-    //************************************************************
-    //when i select allocate employeeName that id should saved to save in Complaint raise table
-
-
+    //    @Transactional
     @Override
-    public void updateEmployeeId(int complaintId, int employeeId) {
-        System.out.println("update employeeId");
-
-
-        employeeRepo.updateEmployeeId(complaintId, employeeId);
-
+    public boolean updateEmployeeForComplaint(int employeeId, int complaintId) {
+        boolean data = employeeRepo.updateEmployeeForComplaint(employeeId, complaintId);
+        return data;
     }
 
 
-    //*****************************************
-    @Override
-    public void updateEmployeeStatus(int employeeId, String status) {
-        System.out.println("updateEmployeeStatus method running in EmployeeServiceImpl");
-        employeeRepo.updateEmployeeStatus(employeeId,status);
+    //****************************************
+    //department admin delete allocated employee name
 
+    @Override
+    //@Transactional
+    public boolean deleteAllocatedEmployee(int employeeId, int complaintId) {
+
+        // Delete allocated employee from complaint_raise
+      // boolean deleteSuccess = employeeRepo.deleteAllocatedEmployee(employeeName);
+
+        // Update the employee status to 'inactive'
+        boolean updateSuccess = employeeRepo.updateEmployeeStatusToInActive(employeeId,complaintId);
+
+        // If both operations succeed, return true
+        return updateSuccess;
     }
+    //return false;
 }
+
+
+//************************************************************
+//when i select allocate employeeName that id should saved to save in Complaint raise table
+
+
+
+
+
+
+
+
+

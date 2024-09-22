@@ -79,6 +79,9 @@
     <div class="card-body text-dark">
         <span style="color:green"><strong>${DepartmentAdminChangePasswordMessage}</strong></span>
         <span style="color:red"><strong>${DepartmentAdminChangePasswordError}</strong></span>
+       <!-- <span style="color:red"><strong>${email}</strong></span>---!>
+                <span style="color:red"><strong>${msg}</strong></span>
+
 
         <form action="change-password" method="post">
 
@@ -88,8 +91,9 @@
                 <label for="email" class="form-label"><b>Email:</b></label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                  <input type="email" class="form-control" id="email" name="email" value=""  autocomplete="email" placeholder="Enter email">
+        <input type="email" class="form-control" id="email" name="email" value="${sessionScope.departmentAdminEmail}" readonly />
 
+                 <!--   <input type="email" class="form-control" id="email" name="email" value="${sessionScope.signedInUserEmail}" readonly autocomplete="email" placeholder="Enter email">--!>
 
                 </div>
             </div>

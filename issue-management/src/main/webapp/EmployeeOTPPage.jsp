@@ -24,10 +24,8 @@
     }
 
     body {
-        background-image: url("https://pics.craiyon.com/2023-09-12/789e617172884be1b6955a4f15b7eac5.webp"); /* Replace with your image URL */
-        background-size: cover;
-      background-size: 100%; /* Adjust the percentage to make the image smaller */
-
+        background-image: url("https://pics.craiyon.com/2023-09-12/789e617172884be1b6955a4f15b7eac5.webp");
+        background-size: 100%;
         background-position: center;
         background-repeat: no-repeat;
         background-color: #f8f9fa; /* Fallback background color */
@@ -66,8 +64,8 @@
 </style>
 
 <script>
-    // Set the countdown time in seconds (5 minutes = 300 seconds)
-    var countdownTime = 300;
+    // Set the countdown time in seconds (1 minute = 30 seconds)
+    var countdownTime = 30;
 
     function startCountdown() {
         var timerElement = document.getElementById("timer");
@@ -119,10 +117,13 @@
     </div>
 
     <div class="card-body text-dark">
-
+        <!-- Displaying status messages -->
         <span style="color:green"><strong>${generatedOTP}</strong></span>
         <span style="color:red"><strong>${failed}</strong></span>
+        <span style="color:red"><strong>${emailNotFound}</strong></span>
+        <span style="color:red"><strong>${invalidOtpError}</strong></span>
 
+        <!-- OTP Validation Form -->
         <form action="validateOtp" method="post">
             <div class="mb-3">
                 <label for="otp" class="form-label">OTP:</label>
@@ -131,12 +132,18 @@
 
             <!-- Timer Display -->
             <div class="mb-3 text-center">
-                <span class="timer" id="timer">5:00</span> <!-- Initial timer value -->
+                <span class="timer" id="timer">10:00</span> <!-- Initial timer value -->
             </div>
 
             <div class="d-flex justify-content-center mt-3">
                 <input type="submit" value="Login" class="btn btn-dark oval-btn bold-text">
             </div>
+        </form>
+
+        <!-- Resend OTP Form (Separate Form) -->
+        <form action="resendOtp" method="post" class="text-center mt-4">
+            <input type="hidden" name="emailId" value="${emailId}"> <!-- Ensure emailId is passed here -->
+            <input type="submit" value="Resend OTP" class="btn btn-dark oval-btn bold-text">
         </form>
 
     </div>

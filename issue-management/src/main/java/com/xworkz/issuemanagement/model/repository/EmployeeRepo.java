@@ -1,6 +1,7 @@
 package com.xworkz.issuemanagement.model.repository;
 
 import com.xworkz.issuemanagement.dto.EmployeeDTO;
+import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
 
 import java.util.List;
 
@@ -15,7 +16,9 @@ public interface EmployeeRepo {
     //fetch all emplyee name
 
 
-   List<String> fetchEmployeeName();
+//   List<String> fetchEmployeeName();
+ List<EmployeeDTO > fetchEmployeeNamesByDepartment(String departmentName);
+
 
 
     //to check whether email exists or not in database
@@ -25,12 +28,18 @@ public interface EmployeeRepo {
 
     //when i select allocate employeeName that id should saved to save in Complaint raise table
 
-    void updateEmployeeId(int complaintId,int employeeId);
 
-    //when i select status that should
+        boolean updateEmployeeForComplaint( int employeeId, int complaintId);
 
-    void updateEmployeeStatus(int employeeId,String status);
+//department admin delete allocated employee
 
-}
+  //boolean deleteAllocatedEmployee(String employeeName);
+
+
+    //update  delete status(inActive) in employeeDTO
+     boolean  updateEmployeeStatusToInActive(int employeeId,int complaintId) ;
+
+
+    }
 //void updateStatusAndDepartmentId(int complaintId, int departmentId, String status);
 

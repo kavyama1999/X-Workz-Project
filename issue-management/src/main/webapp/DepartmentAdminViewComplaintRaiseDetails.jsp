@@ -55,61 +55,80 @@
                         <th>Description</th>
                         <th>ComplaintId</th>
                         <th>Allocate Employee</th>
-                        <th>Status</th>
                         <th>Submit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Ensure particularDepartment is properly passed from the Controller -->
                     <c:forEach var="particularData" items="${particularDepartment}" varStatus="status">
                         <tr>
-       <td>${status.index + 1}</td>
-       <td>${particularData.complaintId}</td>
-       <td>${particularData.complaintType}</td>
-       <td>${particularData.country}</td>
-       <td>${particularData.state}</td>
-       <td>${particularData.city}</td>
-       <td>${particularData.area}</td>
-       <td>${particularData.address}</td>
-       <td>${particularData.description}</td>
-       <th>${particularData.signUpDTO.id}</th>
+                            <td>${status.index + 1}</td>
+                            <td>${particularData.complaintId}</td>
+                            <td>${particularData.complaintType}</td>
+                            <td>${particularData.country}</td>
+                            <td>${particularData.state}</td>
+                            <td>${particularData.city}</td>
+                            <td>${particularData.area}</td>
+                            <td>${particularData.address}</td>
+                            <td>${particularData.description}</td>
+                            <td>${particularData.signUpDTO.id}</td>
 
-       <!-- Form Submission -->
-       <form action="update-employeeId" method="post">
-           <input type="hidden" name="complaintId" value="${particularData.complaintId}">
-           <input type="hidden" name="employeeId" value="${employeeId}">
+                            <!-- Form for submitting employee allocation -->
 
-           <!-- Employee Allocation Dropdown -->
-           <td>
-               <select class="form-select" name="employeeId" required>
-                   <option value="" disabled selected>Select </option>
-                   <c:forEach var="fetchEmployee" items="${fetchEmployeeNames}">
-                       <option value="${fetchEmployee}"> ${fetchEmployee} </option>
-                   </c:forEach>
-               </select>
-           </td>
+                                   <td>
 
-           <!-- Status Dropdown -->
-           <td>
-               <select class="form-select" name="status" required>
-                   <option value="Select" disabled>Select Status</option>
-                   <option value="Pending" ${particularData.status == 'Pending' ? 'selected' : ''}>Pending</option>
-                   <option value="In Process" ${particularData.status == 'In Process' ? 'selected' : ''}>In Process</option>
-                   <option value="Completed" ${particularData.status == 'Completed' ? 'selected' : ''}>Completed</option>
-               </select>
-           </td>
 
-           <!-- Submit Button -->
-           <td>
-               <button type="submit" class="btn btn-primary">Submit</button>
-           </td>
-       </form>
-              </tr>
-          </c:forEach>
-      </tbody>
+        <span style="color:green"><strong>${successMessage}</strong></span>
+        <span style="color:red"><strong>${errorMessage}</strong></span>
+
+
+
+                     <form action="update-employeeId" method="post">
+                         <input type="hidden" name="complaintId" value="${particularData.complaintId}">
+                         <select class="form-select" name="employeeId" required>
+
+              <!--name="complaintId" DTO propertyName--!>
+
+                  <option value="" disabled selected>Select</option>
+
+                  <!-- Ensure fetchEmployeeNames is set correctly -->
+                  <c:forEach var="fetchEmployee" items="${fetchEmployeeNames}">
+                      <option value="${fetchEmployee.employeeId}"
+                          ${particularData.employeeDTO != null &&
+                            particularData.employeeDTO.employeeId == fetchEmployee.employeeId ? 'selected' : ''}>
+                          ${fetchEmployee.employeeName}
+                      </option>
+                             </c:forEach>
+                         </select>
+                        </td>
+
+
+                     <td>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                 </td>
+
+
+
+                 <!--- to delete allocated employee ---!>
+                        <td>
+                           <form action="delete-employee-allocation" method="post">
+                              <input type="hidden" name="complaintId" value="${particularData.complaintId}">
+                           <input type="hidden" name="employeeId" value="${particularData.employeeDTO.employeeId}">
+
+                              <button type="submit" class="btn btn-danger">Delete</button>
+                          </form>
+                      </td>
+
+                  </tr>
+                </c:forEach>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

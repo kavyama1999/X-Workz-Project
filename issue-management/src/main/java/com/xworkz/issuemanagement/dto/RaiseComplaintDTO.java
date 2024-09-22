@@ -74,8 +74,11 @@ public class RaiseComplaintDTO {
     private EmployeeDTO  employeeDTO;
 
 
-//    vRQ7Unhv1:kavya
-//    1J2<yr87T1:soumya
 
-//    N#6V39ZACw
+
+//    @ManyToOne
+//    @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
+//    private EmployeeDTO employeeDTO;
+
+
 }

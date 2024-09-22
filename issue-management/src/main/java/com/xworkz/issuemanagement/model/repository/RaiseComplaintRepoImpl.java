@@ -28,7 +28,8 @@ public class RaiseComplaintRepoImpl implements RaiseComplaintRepo {
 
         try {
             entityTransaction.begin();
-            entityManager.persist(raiseComplaintDTO);
+            //entityManager.persist(raiseComplaintDTO);
+            entityManager.merge(raiseComplaintDTO);
             entityTransaction.commit();
         } catch (PersistenceException e) {
             e.printStackTrace();

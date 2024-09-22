@@ -118,8 +118,9 @@ Admin
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="viewRaiseComplaintUsers" items="${viewRaiseComplaint}" varStatus="status">
-                        <tr>
+
+      <c:forEach var="viewRaiseComplaintUsers" items="${viewRaiseComplaint}" varStatus="status">
+      <tr>
     <td>${status.index + 1}</td>
     <td>${viewRaiseComplaintUsers.complaintId}</td>
     <td>${viewRaiseComplaintUsers.complaintType}</td>

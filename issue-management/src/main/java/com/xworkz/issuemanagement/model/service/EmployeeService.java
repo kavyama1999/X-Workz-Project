@@ -1,6 +1,7 @@
 package com.xworkz.issuemanagement.model.service;
 
 import com.xworkz.issuemanagement.dto.EmployeeDTO;
+import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
 
 import java.util.List;
 
@@ -14,7 +15,9 @@ public interface EmployeeService {
     //to fetch employeeName from employee table
 
 
-    List<String> fetchEmployeeName();
+    //    List<String> fetchEmployeeName();
+    List<EmployeeDTO> fetchEmployeeNamesByDepartment(String departmentName);
+
 
 //to check whether emailId exists or not in database
 
@@ -23,11 +26,10 @@ public interface EmployeeService {
 
 //when i select allocate employeeName that id should saved to save in Complaint raise table
 
-    void updateEmployeeId(int complaintId, int employeeId);
+    boolean updateEmployeeForComplaint(int employeeId,int complaintId);
 
-//when i select status
+//delete allocated employee
 
-    public void updateEmployeeStatus(int employeeId, String status);
-
+    boolean deleteAllocatedEmployee(int employeeId,int complaintId);
 
 }

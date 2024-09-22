@@ -2,19 +2,23 @@ package com.xworkz.issuemanagement.dto;
 
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
-@Entity   //mapping to database
+   //mapping to database
 @Slf4j
 @Data
 @ToString
+@Getter
+@Setter
+
+@Entity
 @Table(name = "employee_table")
 public class EmployeeDTO {
-
-
 
 
     @Id
@@ -42,6 +46,7 @@ public class EmployeeDTO {
     @Column(name = "contact_number")
     private Long contactNumber;
 
+
     @Column(name = "alternative_contact_number")
     private Long alternativeContactNumber;
 
@@ -57,6 +62,7 @@ public class EmployeeDTO {
 
     @Column(name = "status")
     private String status;
+
 
 //    //its coming from department table
 //    @ManyToOne(fetch = FetchType.LAZY)
