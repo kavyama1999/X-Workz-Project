@@ -32,4 +32,11 @@ public interface EmployeeService {
 
     boolean deleteAllocatedEmployee(int employeeId,int complaintId);
 
+    //Employee can view particular data
+    List<RaiseComplaintDTO> getParticularDepartments(String emailId);
+
+    public  void  updateStatusRaiseComplaintAndNotifyUser(int  complaintId, String complaintStatus);
+
+    public void updateUserFeedback(int complaintId, String feedbackText) ;
+
 }

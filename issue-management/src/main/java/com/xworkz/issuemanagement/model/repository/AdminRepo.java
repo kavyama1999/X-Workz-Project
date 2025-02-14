@@ -88,7 +88,7 @@ public interface AdminRepo {
     public List<DepartmentDTO> getAllDepartments();
 
 
-    //admin can view particular department raise complaint details
+    //subAdmin can view particular department raise complaint details
 
     List<RaiseComplaintDTO> getParticularDepartments(String complaintType);
 

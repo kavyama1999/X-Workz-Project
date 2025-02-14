@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -90,6 +91,7 @@ public class EmployeeController {
     //employee login
     // Employee Login with CAPTCHA validation
     // Employee Login with CAPTCHA and OTP generation
+
     @PostMapping("generateOtp")
     public String generateOtp(@RequestParam("emailId") String emailId,
                               @RequestParam("captcha") String captchaInput,
@@ -98,10 +100,19 @@ public class EmployeeController {
                               RedirectAttributes redirectAttributes) {
         log.info("generateOtp method running in EmployeeController..");
 
+
+        // Validate employee email and password
+        //EmployeeDTO employee = employeeService.validateLogin(emailId, password);
+
         // Check if the email exists in the database
         EmployeeDTO employeeDTO = employeeService.findByEmail(emailId);
         if (employeeDTO == null) {
             // If email does not exist, return an error message and redirect to login page
+            session.setAttribute("emailId", employeeDTO.getEmailId());
+//            session.setAttribute("departmentName", employeeDTO.getDepartmentName());
+            session.setAttribute("employeeId", employeeDTO.getEmployeeId());
+
+
             redirectAttributes.addFlashAttribute("emailNotFound", "Email does not exist.");
             log.error("Email not found in the database: {}", emailId);
             return "redirect:/employeeLogin";
@@ -142,7 +153,6 @@ public class EmployeeController {
     }
 
 
-
     @GetMapping("employeeLogin")
     public String employeeLoginPage() {
         return "EmployeeLoginPage"; // Display login page
@@ -154,11 +164,10 @@ public class EmployeeController {
     }
 
 
-
 //Validate OTP
 
     @PostMapping("validateOtp")
-    public String validateOtp(@RequestParam("otp") String  otp,
+    public String validateOtp(@RequestParam("otp") String otp,
                               HttpSession session,
                               Model model,
                               RedirectAttributes redirectAttributes) {
@@ -166,6 +175,8 @@ public class EmployeeController {
 
         // Check if emailId exists in the session
         String sessionEmail = (String) session.getAttribute("emailId");
+//        String sessionEmail = (String) session.getAttribute("emailId");
+
         if (sessionEmail == null) {
             // If session has expired or emailId is null, return an error message
             redirectAttributes.addFlashAttribute("failed", "Session expired. Please try again.");
@@ -199,11 +210,20 @@ public class EmployeeController {
         employeeService.saveEmployeeData(employeeDTO); // Save updated employee data to the database
 
         // Remove the email from session to avoid re-use of the session
-        session.removeAttribute("emailId");
+
+//        session.removeAttribute("emailId");
+        // Store email and department name in session
+        session.setAttribute("emailId", employeeDTO.getEmailId());
+        session.setAttribute("departmentName", employeeDTO.getDepartmentName());
+        session.setAttribute("employeeId", employeeDTO.getEmployeeId());
+
+
+        log.info("Employee successfully logged in with email: {} and department: {}",
+                employeeDTO.getEmailId(), employeeDTO.getDepartmentName());
+
 
         return "redirect:/employeeProfile"; // Redirect to the employee profile page
     }
-
 
 
     @GetMapping("employeeProfile")
@@ -214,11 +234,9 @@ public class EmployeeController {
     }
 
 
-
-
     //To resend otp
     @PostMapping("/resendOtp")
-    public String resendOtp(HttpSession session,@RequestParam("emailId") String emailId, RedirectAttributes redirectAttributes) {
+    public String resendOtp(HttpSession session, @RequestParam("emailId") String emailId, RedirectAttributes redirectAttributes) {
         // Retrieve email from session
         String email = (String) session.getAttribute("emailId");  //TO RESEND OTP SAME EMAIL TO USE SESSION
 
@@ -254,17 +272,15 @@ public class EmployeeController {
     }
 
 
-
-
     //********************************************************************
     //int employeeId,int complaintId
     @PostMapping("/delete-employee-allocation")
-    public String deleteEmployeeAllocation(@RequestParam("employeeId")  int employeeId,int complaintId, RedirectAttributes redirectAttributes) {
-        boolean isDeleted = employeeService.deleteAllocatedEmployee(employeeId,complaintId);
+    public String deleteEmployeeAllocation(@RequestParam("employeeId") int employeeId, int complaintId, RedirectAttributes redirectAttributes) {
+        boolean isDeleted = employeeService.deleteAllocatedEmployee(employeeId, complaintId);
 
         if (isDeleted) {
             redirectAttributes.addFlashAttribute("successMessage", "Employee allocation deleted and status set to inactive.");
-       return "redirect:/department-admin-view-particular-department";
+            return "redirect:/department-admin-view-particular-department";
 
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete employee allocation.");
@@ -275,30 +291,85 @@ public class EmployeeController {
 
     }
 
+
+    @GetMapping("employee-view-particular-department")
+    public String getParticularDepartment(Model model, HttpServletRequest httpServletRequest) {
+        log.info("getParticularDepartment method running in EmployeeController");
+
+        // Retrieve the current session
+        HttpSession session = httpServletRequest.getSession();
+
+        // Retrieve the employeeId from the session
+//        Integer employeeId = (Integer) session.getAttribute("employeeId");
+        String getEmail = (String) session.getAttribute("emailId");
+
+        // Validate employeeId
+        if (getEmail == null) {
+            log.error("Employee ID not found in session. Redirecting to error page.");
+            model.addAttribute("errorMessage", "Employee ID not found. Please log in again.");
+            return "EmployeeViewParticularComplaint";
+        }
+
+        log.info("Retrieved employeeId from session: {}", getEmail);
+
+        // Fetch the complaints assigned to the logged-in employee
+        List<RaiseComplaintDTO> complaintData = employeeService.getParticularDepartments(getEmail);
+
+        // Check if data exists
+        if (complaintData != null && !complaintData.isEmpty()) {
+            log.info("Successfully fetched complaints for employeeId: {}", getEmail);
+            model.addAttribute("particularDepartment1", complaintData);
+            return "EmployeeViewParticularComplaint"; // Return the JSP page to display the data
+        } else {
+            log.warn("No complaints found for employeeId: {}", getEmail);
+            model.addAttribute("errorMessage1", "No complaints found for your account.");
+            return "EmployeeViewParticularComplaint"; // Redirect to an error page with an appropriate message
+        }
+    }
+
+
+    @PostMapping("update-complaintId")
+    public String updateStatusInComplaintRaiseTable(@RequestParam("complaintId") int complaintId,
+                                                    @RequestParam("complaintStatus") String complaintStatus,
+                                                    Model model, RedirectAttributes redirectAttributes) {
+        // Update the RaiseComplaint assignment for the complaint
+
+        employeeService.updateStatusRaiseComplaintAndNotifyUser(complaintId, complaintStatus);
+
+        log.info("Updated successfully in controller..");
+
+        // Add success message (optional)
+        redirectAttributes.addFlashAttribute("success", "Complaint status updated successfully!");
+
+
+        // Redirect to the GET method which fetches data and displays the updated page
+        return "redirect:employee-view-particular-department";
+    }
+
+
+    @PostMapping("/submit-feedback")
+    public String submitFeedback(@RequestParam("complaintId") int complaintId,
+                                 @RequestParam("feedbackText") String feedbackText,
+                                 RedirectAttributes redirectAttributes) {
+        log.info("submitFeedback method running in EmployeeController");
+
+        employeeService.updateUserFeedback(complaintId, feedbackText);
+
+        redirectAttributes.addFlashAttribute("success", "Feedback submitted successfully!");
+
+//        return "redirect:employee-view-particular-department";
+        return "redirect:/submit-feedback-page";
+    }
+
+
+
+    @GetMapping("/submit-feedback-page")
+    public String showFeedbackPage(@RequestParam("complaintId") int complaintId, Model model) {
+        model.addAttribute("complaintId", complaintId);
+        return "SubmitUserFeedback"; // The JSP page name
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //    @PostMapping("/delete-employee-allocation")

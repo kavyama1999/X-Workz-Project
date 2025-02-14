@@ -74,7 +74,7 @@ public class AdminRepoImpl implements AdminRepo {
     }
 
 
-    //admin can view all userraise complaint details
+    //admin can view all user raise complaint details
     @Override
     public List<RaiseComplaintDTO> findById(RaiseComplaintDTO raiseComplaintDTO) {
 

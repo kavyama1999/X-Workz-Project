@@ -50,7 +50,7 @@ public class AdminController {
             return "AdminProfilePage";
             //return "redirect:/adminPage";
         } else {
-            System.out.println("findByEmailAndPassword not successf9ul in AdminController");
+            System.out.println("findByEmailAndPassword not successful in AdminController");
             redirectAttributes.addFlashAttribute("errorAdminMessage", "Failed to login. Please check your email and password.");
             return "redirect:/adminPage";
         }
@@ -588,7 +588,8 @@ public class AdminController {
     }
 
 
-//--------------------or we can do like this only-------
+
+    //--------------------or we can do like this only-------
 
 
 

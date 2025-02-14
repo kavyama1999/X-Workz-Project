@@ -39,7 +39,18 @@ public interface EmployeeRepo {
     //update  delete status(inActive) in employeeDTO
      boolean  updateEmployeeStatusToInActive(int employeeId,int complaintId) ;
 
+     //Employee can view particular department
+     List<RaiseComplaintDTO> getParticularDepartments(String emailId);
+
+     public String updateStatusRaiseComplaintAndNotifyUser(int complaintId, String complaintStatus);
+
+
+    public void updateUserFeedback(int complaintId, String feedbackText) ;
 
     }
+
+
+
+
 //void updateStatusAndDepartmentId(int complaintId, int departmentId, String status);
 

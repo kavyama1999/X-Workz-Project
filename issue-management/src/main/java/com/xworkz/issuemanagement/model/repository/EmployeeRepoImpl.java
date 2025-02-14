@@ -6,7 +6,6 @@ import com.xworkz.issuemanagement.dto.RaiseComplaintDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
@@ -152,7 +151,7 @@ public class EmployeeRepoImpl implements EmployeeRepo {
     //update delete status (iActive) in employee table and in raise complaint table employee_id fk  becomes null
 
     @Override
-    public boolean updateEmployeeStatusToInActive(int employeeId,int complaintId) {
+    public boolean updateEmployeeStatusToInActive(int employeeId, int complaintId) {
 
         log.info("updateEmployeeStatusToInactive method  running in EmployeeRepoImpl");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -165,7 +164,7 @@ public class EmployeeRepoImpl implements EmployeeRepo {
             updateResult.setParameter("employeeId", employeeId);
             int updatedData = updateResult.executeUpdate();
             log.info("Updated Data: {}", updatedData);
-           // entityTransaction.commit();
+            // entityTransaction.commit();
 
             // 2. Set employeeDTO(employeeID) to null in RaiseComplaintDTO
             String jpqlUpdateComplaint = "UPDATE RaiseComplaintDTO r SET r.employeeDTO = null WHERE r.complaintId= :complaintId";
@@ -190,30 +189,117 @@ public class EmployeeRepoImpl implements EmployeeRepo {
 
         return false;
     }
+
+
+    @Override
+    public List<RaiseComplaintDTO> getParticularDepartments(String emailId) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        // Corrected JPQL query to use the proper condition
+//        String jpql = "SELECT r FROM RaiseComplaintDTO r WHERE r.emailId = :emailId";
+
+
+//        String jpql = "SELECT r FROM RaiseComplaintDTO r WHERE r.employeeDTO.employeeId = :employeeId11";
+
+        String jpql = "SELECT r FROM RaiseComplaintDTO r WHERE r.employeeDTO.emailId = :emailId";
+
+
+        Query query = entityManager.createQuery(jpql);
+        query.setParameter("emailId", emailId);
+
+        List<RaiseComplaintDTO> allocatedComplaints = query.getResultList();
+
+        return allocatedComplaints;
+    }
+
+    @Override
+    public String updateStatusRaiseComplaintAndNotifyUser(int complaintId, String complaintStatus) {
+//        log.info("updateStatusInComplaintRaiseTable method running in EmployeeRepoImpl");
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//        EntityTransaction entityTransaction = entityManager.getTransaction();
+//
+//        try {
+//            entityTransaction.begin();
+//            String updateQuery = "UPDATE RaiseComplaintDTO r set r.complaintStatus=:complaintStatus WHERE r.complaintId=:complaintId";
+//            Query query = entityManager.createQuery(updateQuery);
+//            query.setParameter("complaintStatus", complaintStatus);
+//            query.setParameter("complaintId", complaintId);
+//
+//            int data = query.executeUpdate();
+//            log.info("data : {}", data);
+//            entityTransaction.commit();
+//        } catch (Exception e) {
+//
+//
+//            e.printStackTrace();
+//            log.error("somthing went wrong");
+//        } finally {
+//            entityManager.close();
+//        }
+
+
+        log.info("updateStatusAndNotifyUser method running in EmployeeRepoImpl");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+
+        try {
+            entityTransaction.begin();
+            // Update the status in the table
+            String updateQuery = "UPDATE RaiseComplaintDTO r SET r.complaintStatus = :complaintStatus WHERE r.complaintId = :complaintId";
+            Query query = entityManager.createQuery(updateQuery);
+            query.setParameter("complaintStatus", complaintStatus);
+            query.setParameter("complaintId", complaintId);
+            int data = query.executeUpdate();
+            log.info("Complaint status updated: {}", data);
+
+            // Fetch the user's email if the status is "Completed"
+            if ("Completed".equalsIgnoreCase(complaintStatus)) {
+                String selectQuery = "SELECT r.signUpDTO.email FROM RaiseComplaintDTO r WHERE r.complaintId = :complaintId";
+                String email = (String) entityManager.createQuery(selectQuery)
+                        .setParameter("complaintId", complaintId)
+                        .getSingleResult();
+                log.info("Email of the user: {}", email);
+                // Pass the email to the service for sending notifications
+                entityTransaction.commit();
+                return email;
+            }
+
+            entityTransaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Something went wrong in updateStatusAndNotifyUser");
+            entityTransaction.rollback();
+        } finally {
+            entityManager.close();
+        }
+        return null;
+
+    }
+
+    @Override
+    public void updateUserFeedback(int complaintId, String feedbackText) {
+        log.info("updateFeedback method running in EmployeeRepoImpl");
+
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+
+        try {
+            entityTransaction.begin();
+            String updateQuery = "UPDATE RaiseComplaintDTO r SET r.feedbackText = :feedback WHERE r.complaintId = :complaintId";
+            Query query = entityManager.createQuery(updateQuery);
+            query.setParameter("feedback", feedbackText);
+            query.setParameter("complaintId", complaintId);
+            int updatedRecords = query.executeUpdate();
+            log.info("Feedback updated successfully for complaintId: {}", updatedRecords);
+            entityTransaction.commit();
+        } catch (Exception e) {
+            log.error("Error updating feedback: ", e);
+            entityTransaction.rollback();
+        } finally {
+            entityManager.close();
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //when i select  employee name that id should go to save in raise complaint table

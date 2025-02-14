@@ -73,12 +73,15 @@ public class RaiseComplaintDTO {
     @JoinColumn(name = "employee_id",referencedColumnName = "employee_id")
     private EmployeeDTO  employeeDTO;
 
-
-
-
+    @Column(name = "complaint_status")
+    private String complaintStatus;
 //    @ManyToOne
 //    @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
 //    private EmployeeDTO employeeDTO;
+
+
+    @Column(name="feedback_text")
+    private  String feedbackText;
 
 
 }

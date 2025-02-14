@@ -35,9 +35,11 @@ public class SpringConfiguration implements WebMvcConfigurer {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/"); //mapping..static files
         resolver.setSuffix(".jsp");
+
         return resolver;
     }
-
+//    resolver.setPrefix("/WEB-INF/views/"); // Correct prefix for JSP files in the WEB-INF/views directory
+//        resolver.setSuffix(".jsp"); // Suffix for JSP files
 
     // js validation to write one ,method
 

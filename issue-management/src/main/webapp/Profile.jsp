@@ -67,7 +67,7 @@
 
                    <!--<li><a class="dropdown-item" href="raise-complaint-view"><strong>ViewRaiseComplaint</strong></a></li>--!>
 
-                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewModal" ><strong> Modal</strong></a></li>
+                  <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewModal" ><strong> Modal hjhjhjj</strong></a></li>
 
                     <li><a class="dropdown-item" href="Raise_Complaint"><strong>RaiseComplaint</strong></a></li>
                     <li><a class="dropdown-item" href="HomePage"><strong>Logout</strong></a></li>

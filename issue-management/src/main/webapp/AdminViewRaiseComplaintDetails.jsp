@@ -147,16 +147,14 @@ Admin
                   </select>
               </td>
 
-
-
                                 <td>
                       <select class="form-select status-select" name="status">
                           <option value="Select">Select</option>
                           <option value="Pending" ${viewRaiseComplaintUsers.status == 'Pending' ? 'selected' : ''}>Pending</option>
-                          <option value="In Process" ${viewRaiseComplaintUsers.status == 'In Process' ? 'selected' : ''}>In Process</option>
+                          <option value="In Progress" ${viewRaiseComplaintUsers.status == 'In Progress' ? 'selected' : ''}>In Progress</option>
                           <option value="Completed" ${viewRaiseComplaintUsers.status == 'Completed' ? 'selected' : ''}>Completed</option>
                       </select>
-                                </td>
+                        </td>
 
 
                                 <td>
